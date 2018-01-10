@@ -1,6 +1,11 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
+    <div id="main-nav">
+        <router-link to="/">Home</router-link>
+        <router-link to="/events">Events Page</router-link>
+    </div>
+    
     <router-view/>
   </div>
 </template>
@@ -12,6 +17,12 @@ export default {
 </script>
 
 <style>
+#main-nav {
+    background: #ccc;
+    li {
+        color: green;
+    }
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
