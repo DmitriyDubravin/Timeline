@@ -2,22 +2,18 @@ import fetch from 'isomorphic-fetch';
 
 const server = 'http://localhost:8081'
 
-export default (route, data) => {
-    // let response;
-
-    return fetch(`${server}${route}`, {
+export default ({path, data, callback}) => {
+    console.log('query were send!')
+    return fetch(`${server}${path}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data),
-    }).then(function(resp) {
-        if (resp.status >= 400) {
+    }).then(function(response) {
+        if (response.status >= 400) {
             throw new Error("Bad response from server");
         }
-        return resp.json();
+        return response.json();
     }).then(function(parsedResponse) {
-        
-        return parsedResponse;
+        callback(parsedResponse)
     });
-
-    // return response;
 }

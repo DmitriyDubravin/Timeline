@@ -15,6 +15,19 @@ app.get('/status', (req, res) => {
     })
 });
 
+app.post('/login', (req, res) => {
+    if (req.body.login === 'admin' && req.body.password === 'pass') {
+        res.send({
+            message: 'Logged In!'
+        })
+    } else {
+        res.send({
+            message: 'Wrong Login / Password!'
+        })
+    }
+    
+})
+
 app.post('/register', (req, res) => {
     res.send({
         message: req.body.txt + '!!'

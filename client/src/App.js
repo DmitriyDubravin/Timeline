@@ -5,28 +5,32 @@ import { renderRoutes } from 'react-router-config';
 import apiQuery from './Api';
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            x: 1
+        }
+        this.updateX = this.updateX.bind(this)
+    }
+    updateX(data) {
+        this.setState({x: data.message});
+    }
     componentDidMount() {
-        
-        apiQuery('/register', {txt: 'lolypop'}).then(function(s) {
-            console.log(s);
+        apiQuery({
+            path: '/register',
+            data: {txt: 'lolypop'},
+            callback: this.updateX
         });
-        
     }
     render() {
         return (
             <div className="App">
                 <ul>
                     <li>
-                        <Link to="/"> Root </Link>
+                        <Link to="/"> / </Link>
                     </li>
                     <li>
-                        <Link to="/home"> Home </Link>
-                    </li>
-                    <li>
-                        <Link to="/list"> List </Link>
-                    </li>
-                    <li>
-                        <Link to="/list/sublist"> SubList </Link>
+                        <Link to="/login">Login</Link>
                     </li>
                 </ul>
                 {renderRoutes(this.props.route.routes)}

@@ -1,8 +1,8 @@
 
 import App from './App';
 import Home from './pages/Home';
-import List from './pages/List';
-import SubList from './pages/SubList';
+import Login from './pages/Login';
+import NoMatch from './pages/NoMatch';
 
 export default [
     {
@@ -14,18 +14,17 @@ export default [
                 component: Home
             },
             {
-                path: '/home',
-                component: Home
+                path: '/login',
+                exact: true,
+                component: Login
             },
             {
-                path: '/list',
-                component: List,
-                routes: [
-                    {
-                        path: '/list/sublist',
-                        component: SubList
-                    }
-                ]
+                path: '/404',
+                exact: true,
+                component: NoMatch
+            },
+            {
+                component: NoMatch
             }
         ]
     }
