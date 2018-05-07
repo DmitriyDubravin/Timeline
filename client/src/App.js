@@ -17,7 +17,7 @@ class App extends Component {
     }
     componentDidMount() {
         apiQuery({
-            path: '/register',
+            path: '/',
             data: {txt: 'lolypop'},
             callback: this.updateX
         });
@@ -27,10 +27,19 @@ class App extends Component {
             <div className="App">
                 <ul>
                     <li>
-                        <Link to="/"> / </Link>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/register">Register</Link>
                     </li>
                     <li>
                         <Link to="/login">Login</Link>
+                    </li>
+                    <li>
+                        <Link to="/user-edit">Edit</Link>
+                    </li>
+                    <li>
+                        <Link to="/user-remove">Remove</Link>
                     </li>
                 </ul>
                 {renderRoutes(this.props.route.routes)}
