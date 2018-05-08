@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import './App.css';
-import {Link} from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
+import {connect} from 'react-redux';
+import {renderRoutes} from 'react-router-config';
+
 import apiQuery from './Api';
+import Header from './components/Header';
+import * as action from './store/actions';
+
+
 
 class App extends Component {
     constructor(props) {
@@ -14,6 +18,7 @@ class App extends Component {
     }
     updateX(data) {
         this.setState({x: data.message});
+        this.props.setUserName(this.state.x);
     }
     componentDidMount() {
         apiQuery({
@@ -23,29 +28,25 @@ class App extends Component {
         });
     }
     render() {
+        console.log(this.props.name);
         return (
             <div className="App">
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/register">Register</Link>
-                    </li>
-                    <li>
-                        <Link to="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link to="/user-edit">Edit</Link>
-                    </li>
-                    <li>
-                        <Link to="/user-remove">Remove</Link>
-                    </li>
-                </ul>
+                <Header />
                 {renderRoutes(this.props.route.routes)}
             </div>
         );
     }
 }
 
-export default App;
+
+
+export default connect(
+    state => ({
+        name: state.user.name
+    }),
+    dispatch => ({
+        setUserName: function(name) {
+            dispatch(action.setUserName(name))
+        }
+    })
+)(App)

@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import NoMatch from './pages/NoMatch';
 import UserRemove from './pages/UserRemove';
 import UserEdit from './pages/UserEdit';
+import User from './pages/User';
 
 export default [
     {
@@ -15,6 +16,11 @@ export default [
                 path: '/',
                 exact: true,
                 component: Home
+            },
+            {
+                path: '/user',
+                exact: true,
+                component: User,
             },
             {
                 path: '/register',

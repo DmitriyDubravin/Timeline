@@ -128,4 +128,46 @@ app.post('/user-remove', (req, res) => {
 });
 
 
+app.post('/user-change-password', (req, res) => {
+
+    let login = req.body.login;
+    let currentPassword = req.body.currentPassword;
+    let newPassword = req.body.newPassword;
+    let query = {name: login, password: currentPassword};
+    let data = {name: login, password: newPassword};
+
+    console.log(query)
+    Users.find(query, (err, resp) => {
+        if (err) {
+            console.log(err);
+        } else {
+            if (resp.length !== 0) {
+                Users.update(
+                    query,
+                    data,
+                    function(err) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.send({
+                                data: {
+                                    message: "Password were changed!"
+                                }
+                            });
+                        }
+                    }
+                );
+            } else {
+                res.send({
+                    data: {
+                        message: "Wrong current password!",
+                        status: 'error'
+                    }
+                });
+            }
+        }
+    })
+});
+
+
 app.listen(process.env.PORT || 8081);

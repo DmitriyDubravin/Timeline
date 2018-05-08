@@ -31,7 +31,7 @@ export default class extends Component {
     }
 
     render() {
-        const {login, password} = this.state;
+        const {login} = this.state;
         return (
             <div>
                 <h2>User remove page</h2>
