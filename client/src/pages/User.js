@@ -6,7 +6,7 @@ export default class User extends Component {
         return (
             <div>
                 <h2>User page</h2>
-                <UserChangePasswordForm />
+                <UserChangePasswordForm x={333} />
             </div>
         )
     }

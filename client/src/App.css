@@ -1,6 +1,9 @@
 body {
   background: #dcdcdc; }
 
+input.error {
+  border-color: #f00 !important; }
+
 * {
   box-sizing: border-box; }
   *:before, *:after {

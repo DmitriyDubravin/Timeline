@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 const server = 'http://localhost:8081'
 
 export default ({path, data, callback}) => {
-    console.log('query were send!')
+    // console.log('query were send!')
     return fetch(`${server}${path}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
