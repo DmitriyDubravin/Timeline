@@ -151,7 +151,8 @@ app.post('/user-change-password', (req, res) => {
                         } else {
                             res.send({
                                 data: {
-                                    message: "Password were changed!"
+                                    message: "Password were changed!",
+                                    status: 'success'
                                 }
                             });
                         }

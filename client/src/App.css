@@ -16,26 +16,47 @@ ul {
   ul li {
     padding: 10px 0; }
 
+form {
+  margin: 0 auto;
+  max-width: 280px; }
+
+.form-valid-msg {
+  margin: -24px 0 0;
+  line-height: 24px;
+  font-size: 12px;
+  color: red; }
+
+input.error {
+  border-color: #f00 !important; }
+
 input[type="text"],
 input[type="password"] {
   display: block;
-  margin: 0 auto 10px;
+  margin: 0 auto 24px;
   border: 1px solid transparent;
   padding: 4px 15px;
   width: 100%;
-  max-width: 280px;
   height: 30px;
   line-height: 20px;
   font-size: 14px; }
 
 input[type="submit"] {
   display: block;
-  margin: 0 auto 10px;
+  margin: 0 auto 24px;
   border: 1px solid transparent;
   padding: 4px 15px;
   width: 100%;
-  max-width: 280px;
   height: 30px;
   line-height: 20px;
   font-size: 14px;
-  background: #ccc; }
+  background: #ccc;
+  cursor: pointer; }
+
+[disabled] {
+  cursor: default !important; }
+
+.msg.error {
+  color: red; }
+
+.msg.success {
+  color: green; }

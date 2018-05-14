@@ -4,115 +4,66 @@ import {connect} from 'react-redux';
 import apiQuery from './../Api';
 import * as action from './../store/actions';
 
+import FormGen from './../formGen';
+import { PasswordField, SubmitField } from './../formElements';
 
 
-const Input = ({props: {type, name, placeholder, value, onChange, cls}}) => {
-    return (
-        <input
-            className={cls}
-            type={type}
-            name={name}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-        />
-    );
-}
 
 const formData = [
     {
-        component: Input,
-        type: 'password',
+        component: PasswordField,
         name: 'currentPassword',
+        cls: 'custom-class',
         placeholder: 'current password',
-        value: '',
-        onChange: this.inputHandler
+        required: true,
+        rules: {
+            minLength: 6,
+            maxLength: 10
+        }
     },
     {
-        component: Input,
-        type: "password",
+        component: PasswordField,
         name: "newPassword",
         placeholder: "new password",
-        value: '',
-        onChange: this.inputHandler
+        required: true,
+        rules: {
+            minLength: 6,
+            maxLength: 10
+        }
     },
     {
-        component: Input,
-        type: "password",
+        component: PasswordField,
         name: "repeatNewPassword",
-        placeholder: "Repeat new password",
-        value: "",
-        onChange: this.inputHandler
+        placeholder: "repeat new password",
+        required: true,
+        rules: {
+            minLength: 6,
+            maxLength: 10
+        }
     },
     {
-        component: Input,
-        type: "submit",
-        disabled: false,
+        component: SubmitField,
         value: "Change Password"
     }
 ];
+
+
 
 class ChangePasswordForm extends Component {
     constructor(props) {
         super(props);
 
-        this.myForm = formData.map(field => {
-            if (field.name === 'currentPassword') {
-                return {...field, value: this.props.x}
-            } else {
-                return field;
-            }
-        });
-
-        let formFields = this.myForm
-            .filter(field => field.name !== undefined)
-            .map((field) => ({[field.name]: field.value}))
-            .reduce((acc, val) => ({...acc, ...val}));
+        this.form = new FormGen(formData, this);
 
         this.state = {
             message: '',
             messageStatus: '',
-            isFormValid: true,
-            form: formFields
+            isFormValid: false,
+            form: this.form.getFormData()
         }
 
-        this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.serverResponse = this.serverResponse.bind(this);
-
-    }
-
-    formValidator() {
-        let obj = this.state;
-        let arr = [];
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                if (key.indexOf('-isValid') >= 0) {
-                    arr.push(obj[key]);
-                }
-            }
-        }
-        this.setState({isFormValid: arr.every(item => item)})
-    }
-    inputValidator(value) {
-        return value.length >= 6
-    }
-
-    inputHandler(event) {
-        const {name, value} = event.target;
-
-        let sss = {
-            [name]: value,
-            [name +'-isValid']: this.inputValidator(value)
-        }
-        let newF = {
-            ...this.state,
-            form: {
-                ...this.state.form, ...sss
-            }
-        }
-
-        this.setState(newF, this.formValidator);
     }
 
     serverResponse(response) {
@@ -125,42 +76,39 @@ class ChangePasswordForm extends Component {
             path: '/user-change-password',
             data: {
                 login: 'admin', // this.props.login, // will be token later
-                currentPassword: this.state.currentPassword,
-                newPassword: this.state.newPassword
+                currentPassword: this.state.form[0].value,
+                newPassword: this.state.form[1].value
             },
             callback: this.serverResponse
         });
     }
 
     render() {
-        const {form, message} = this.state;
-        console.log('form', form);
+        const {message, messageStatus} = this.state;
 
-        let myForm = this.myForm
-            .map(field => {
-
-                let isValid = form[field.name + '-isValid'];
-                let cls = '';
-                if (isValid !== undefined && !isValid) {
-                    cls = 'error'
-                }
-                return {
-                    ...field,
-                    value: form[field.name],
-                    cls: cls,
-                    onChange: this.inputHandler
-                }
-            })
-            .map((field, i) => <field.component key={i} props={field} />);
+        let myForm = this.form.generateForm();
 
         return (
             <form onSubmit={this.submitHandler}>
                 {myForm}
-                {message.length > 0 && <div className="msg">{message}</div>}
+                {message.length > 0 && <div className={`msg ${messageStatus}`}>{message}</div>}
             </form>
         )
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
