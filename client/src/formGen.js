@@ -56,6 +56,14 @@ export default class FormGen {
     ruleMaxLength(value, ruleValue) {
         return value.length <= ruleValue ? '' : `max length: ${ruleValue} symbols`
     }
+    isEmail(value) {
+        var rgx = /\S+@\S+\.\S+/; // yes, I don't bother too much
+        return rgx.test(String(value).toLowerCase()) ? '' : `this is not an email`
+    }
+    matchTo(value, matchToField) {
+        return value === matchToField.value ? '' : `should match with "${matchToField.name}" field`
+    }
+
 
 
     validate(rules, value) {
@@ -69,6 +77,13 @@ export default class FormGen {
                 }
                 if (key === 'maxLength') {
                     results.push(this.ruleMaxLength(value, rules[key]));
+                }
+                if (key === 'isEmail' && rules[key]) {
+                    results.push(this.isEmail(value));
+                }
+                if (key === 'matchTo') {
+                    let matchToField = this.ctx.state.form.filter(field => field.name === rules[key])[0];
+                    results.push(this.matchTo(value, matchToField));
                 }
             }
         }
@@ -91,8 +106,6 @@ export default class FormGen {
             if (field.name === name) {
 
                 let validationResult = this.ctx.form.validate(field.rules, value).filter(msg => msg.length > 0);
-
-                
 
                 let isValid = validationResult.length === 0;
                 let msg = !isValid && validationResult[0];

@@ -1,51 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import apiQuery from './../Api';
-import * as action from './../store/actions';
+import apiQuery from './../../Api';
+import * as action from './../../store/actions';
+import FormGen from './../../formGen';
+import { changePasswordFormData } from './../../pages/formsData';
 
-import FormGen from './../formGen';
-import { PasswordField, SubmitField } from './../formElements';
-
-
-
-const formData = [
-    {
-        component: PasswordField,
-        name: 'currentPassword',
-        cls: 'custom-class',
-        placeholder: 'current password',
-        required: true,
-        rules: {
-            minLength: 6,
-            maxLength: 10
-        }
-    },
-    {
-        component: PasswordField,
-        name: "newPassword",
-        placeholder: "new password",
-        required: true,
-        rules: {
-            minLength: 6,
-            maxLength: 10
-        }
-    },
-    {
-        component: PasswordField,
-        name: "repeatNewPassword",
-        placeholder: "repeat new password",
-        required: true,
-        rules: {
-            minLength: 6,
-            maxLength: 10
-        }
-    },
-    {
-        component: SubmitField,
-        value: "Change Password"
-    }
-];
 
 
 
@@ -53,7 +13,7 @@ class ChangePasswordForm extends Component {
     constructor(props) {
         super(props);
 
-        this.form = new FormGen(formData, this);
+        this.form = new FormGen(changePasswordFormData, this);
 
         this.state = {
             message: '',
@@ -64,8 +24,12 @@ class ChangePasswordForm extends Component {
 
         this.submitHandler = this.submitHandler.bind(this);
         this.serverResponse = this.serverResponse.bind(this);
+        this.getField = this.getField.bind(this);
     }
 
+    getField(fieldName) {
+        return this.state.form.filter(field => field.name === fieldName)[0].value;
+    }
     serverResponse(response) {
         const {message, status} = response.data;
         this.setState({message: message, messageStatus: status})
@@ -96,19 +60,6 @@ class ChangePasswordForm extends Component {
         )
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

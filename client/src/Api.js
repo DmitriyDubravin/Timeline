@@ -9,6 +9,7 @@ export default ({path, data, callback}) => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data),
     }).then(function(response) {
+        console.log(response);
         if (response.status >= 400) {
             throw new Error("Bad response from server");
         }

@@ -1,11 +1,9 @@
 
 import App from './App';
 import Home from './pages/Home';
+import Chronometry from './pages/Chronometry';
 import Register from './pages/Register';
-import Login from './pages/Login';
 import NoMatch from './pages/NoMatch';
-import UserRemove from './pages/UserRemove';
-import UserEdit from './pages/UserEdit';
 import User from './pages/User';
 
 export default [
@@ -18,29 +16,19 @@ export default [
                 component: Home
             },
             {
-                path: '/user',
-                exact: true,
-                component: User,
-            },
-            {
                 path: '/register',
                 exact: true,
                 component: Register
             },
             {
-                path: '/login',
+                path: '/chronometry',
                 exact: true,
-                component: Login
+                component: Chronometry
             },
             {
-                path: '/user-edit',
+                path: '/:user',
                 exact: true,
-                component: UserEdit
-            },
-            {
-                path: '/user-remove',
-                exact: true,
-                component: UserRemove
+                component: User
             },
             {
                 path: '/404',

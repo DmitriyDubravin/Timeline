@@ -34,7 +34,8 @@ input.error {
     border-color: #f00 !important;
 }
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
     display: block;
     margin: 0 auto 24px;
     border: 1px solid transparent;
@@ -62,10 +63,36 @@ input[type="submit"] {
 
 
 .msg {
+    text-align: center;
     &.error {
         color: red;
     }
     &.success {
         color: green;
     }
+}
+
+.popup {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #bbb;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+}
+
+
+.user-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }

@@ -23,7 +23,7 @@ class App extends Component {
     componentDidMount() {
         apiQuery({
             path: '/',
-            data: {txt: 'lolypop'},
+            data: {txt: 'guest'},
             callback: this.updateX
         });
     }

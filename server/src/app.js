@@ -7,23 +7,13 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/timeline');
 let db = mongoose.connection;
 
-// users Schema
-let usersSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    }
-});
 
-let Users = mongoose.model('Users', usersSchema);
+const Users = require('./schemas/schema-user');
+const userRegister = require('./user-register');
+const userLogin = require('./user-login');
+const userRemove = require('./user-remove');
+
+
 
 // check connection
 db.once('open', function(err) {
@@ -44,52 +34,12 @@ app.use(cors());
 
 app.post('/', (req, res) => {
     res.send({
-        message: req.body.txt + '!!'
+        message: req.body.txt
     })
 });
 
-app.post('/register', (req, res) => {
-
-    let addingData = {
-        name: req.body.login,
-        password: req.body.password
-    };
-
-    Users.find(addingData, function(err, resp) {
-        if (err) {
-            console.log(err);
-        } else {
-            if (resp.length === 0) {
-                let newUser = new Users(addingData);
-                newUser.save(function(err) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        res.send({
-                            message: "New user was added!"
-                        });
-                    }
-                });
-            } else {
-                res.send({
-                    message: "This user already exists!"
-                })
-            }
-        }
-    });
-});
-
-app.post('/login', (req, res) => {
-    Users.find({}, function(err, resp) {
-        if(err) {
-            console.log(err);
-        } else {
-            res.send({
-                message: resp
-            })
-        }
-    });
-});
+app.post('/user-register', userRegister);
+app.post('/user-login', userLogin);
 
 
 app.post('/user-edit', (req, res) => {
@@ -115,22 +65,7 @@ app.post('/user-edit', (req, res) => {
 
 });
 
-app.post('/user-remove', (req, res) => {
-
-    Users.remove(
-        {name: req.body.login},
-        function(err) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send({
-                    message: "User was deleted!"
-                });
-            }
-        }
-    );
-});
-
+app.post('/user-remove', userRemove);
 
 app.post('/user-change-password', (req, res) => {
 
@@ -140,7 +75,6 @@ app.post('/user-change-password', (req, res) => {
     let query = {name: login, password: currentPassword};
     let data = {name: login, password: newPassword};
 
-    console.log(query)
     Users.find(query, (err, resp) => {
         if (err) {
             console.log(err);
