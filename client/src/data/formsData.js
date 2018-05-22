@@ -1,5 +1,5 @@
 
-import {TextField, PasswordField, EmailField, SubmitField} from './../formElements';
+import {TextField, PasswordField, EmailField, SubmitField} from './../components/formElements';
 
 export const registerFormData = [
     {
@@ -112,7 +112,6 @@ export const changePasswordFormData = [
         value: "Change Password"
     }
 ];
-
 
 export const removeFormData = [
     {

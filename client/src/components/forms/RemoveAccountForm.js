@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import apiQuery from './../../Api';
 import * as action from './../../store/actions';
-import FormGen from './../../formGen';
-import { loginFormData } from './../../pages/formsData';
+// import * as action from './../../store/actions';
+import FormGen from './../../support/formGen';
+import { removeFormData } from './../../data/formsData';
 
-class Login extends Component {
+class RemoveAccountForm extends Component {
     constructor(props) {
         super(props);
 
-        this.form = new FormGen(loginFormData, this);
+        this.form = new FormGen(removeFormData, this);
 
         this.state = {
             message: '',
@@ -27,32 +28,32 @@ class Login extends Component {
     }
 
     serverResponse(response) {
-        const {message, status, data} = response.data;
+        const {message, status} = response.data;
         this.setState({message: message, messageStatus: status})
         if (status === 'success') {
-            this.props.setUserName(data.name);
+            this.props.setUserName('guest');
         }
     }
 
     submitHandler(event) {
         event.preventDefault();
         apiQuery({
-            path: '/user-login',
+            path: '/user-remove',
             data: {
-                login: this.getField('name'),
+                login: this.props.name,
                 password: this.getField('password')
             },
             callback: this.serverResponse
         });
     }
-
     render() {
         const {message, messageStatus} = this.state;
 
         let myForm = this.form.generateForm();
 
         return (
-            <form className="login-form" onSubmit={this.submitHandler}>
+            <form onSubmit={this.submitHandler}>
+                <h3>Remove me</h3>
                 {myForm}
                 {message.length > 0 && <div className={`msg ${messageStatus}`}>{message}</div>}
             </form>
@@ -60,16 +61,13 @@ class Login extends Component {
     }
 }
 
-
-
 export default connect(
-    null,
-    // state => ({
-    //     name: state.user.name
-    // }),
+    state => ({
+        name: state.user.name
+    }),
     dispatch => ({
         setUserName: function(name) {
             dispatch(action.setUserName(name))
         }
     })
-)(Login)
+)(RemoveAccountForm)

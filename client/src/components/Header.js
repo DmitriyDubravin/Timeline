@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import Login from './forms/Login';
+import LoginAccountForm from './forms/LoginAccountForm';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
 
@@ -15,7 +15,8 @@ class Header extends Component {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
     }
-    login() {
+    login(e) {
+        e.preventDefault();
         this.setState({showLogin: !this.state.showLogin});
     }
     logout() {
@@ -33,15 +34,25 @@ class Header extends Component {
         return (
             <div>
                 <div className="user-box">
-                    {name === 'guest' && <button onClick={this.login}>Login</button>}
-                    {name !== 'guest' && <div><Link to={`/${name}`}>{name}</Link> <button onClick={this.logout}>Logout</button></div>}
+                    {
+                        name === 'guest' &&
+                        <div>
+                            <a href="/" onClick={this.login}>Login</a> | <Link to="/register">Register</Link>
+                        </div>
+                    }
+                    {
+                        name !== 'guest' &&
+                        <div>
+                            <Link to={`/${name}`}>{name}</Link> <button onClick={this.logout}>Logout</button>
+                        </div>
+                    }
                 </div>
                 {
                     this.state.showLogin &&
                     name === 'guest' &&
                     (
                         <div className="popup">
-                            <Login />
+                            <LoginAccountForm />
                             <button onClick={this.login} className="close">X</button>
                         </div>
                     )
@@ -52,9 +63,6 @@ class Header extends Component {
                     </li>
                     <li>
                         <Link to="/chronometry">Chronometry</Link>
-                    </li>
-                    <li>
-                        <Link to="/register">Register</Link>
                     </li>
                 </ul>
             </div>

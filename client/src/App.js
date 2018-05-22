@@ -20,7 +20,13 @@ class App extends Component {
         this.setState({x: data.message});
         this.props.setUserName(this.state.x);
     }
+    checkCookie() {
+        
+    }
     componentDidMount() {
+
+        this.checkCookie();
+
         apiQuery({
             path: '/',
             data: {txt: 'guest'},

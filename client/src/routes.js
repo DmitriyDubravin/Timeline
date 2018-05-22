@@ -1,10 +1,10 @@
 
 import App from './App';
-import Home from './pages/Home';
-import Chronometry from './pages/Chronometry';
-import Register from './pages/Register';
-import NoMatch from './pages/NoMatch';
-import User from './pages/User';
+import HomePage from './pages/HomePage';
+import ChronometryPage from './pages/ChronometryPage';
+import RegisterPage from './pages/RegisterPage';
+import NoMatchPage from './pages/NoMatchPage';
+import UserPage from './pages/UserPage';
 
 export default [
     {
@@ -13,30 +13,30 @@ export default [
             {
                 path: '/',
                 exact: true,
-                component: Home
+                component: HomePage
             },
             {
                 path: '/register',
                 exact: true,
-                component: Register
+                component: RegisterPage
             },
             {
                 path: '/chronometry',
                 exact: true,
-                component: Chronometry
+                component: ChronometryPage
             },
             {
                 path: '/:user',
                 exact: true,
-                component: User
+                component: UserPage
             },
             {
                 path: '/404',
                 exact: true,
-                component: NoMatch
+                component: NoMatchPage
             },
             {
-                component: NoMatch
+                component: NoMatchPage
             }
         ]
     }

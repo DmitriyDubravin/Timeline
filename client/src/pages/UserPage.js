@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ChangePassword from './../components/forms/ChangePassword';
-import Remove from './../components/forms/Remove';
+import ChangePasswordForm from './../components/forms/ChangePasswordForm';
+import RemoveAccountForm from './../components/forms/RemoveAccountForm';
 
-class User extends Component {
+class UserPage extends Component {
     render() {
         return (
             <div>
                 <h2>{this.props.name}'s page</h2>
-                <ChangePassword x={333} />
-                <Remove />
+                <ChangePasswordForm x={333} />
+                <RemoveAccountForm />
             </div>
         )
     }
@@ -20,4 +20,4 @@ export default connect(
     state => ({
         name: state.user.name
     })
-)(User)
+)(UserPage)

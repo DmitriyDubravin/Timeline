@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
 import apiQuery from './../../Api';
+import * as action from './../../store/actions';
+import FormGen from './../../support/formGen';
+import { changePasswordFormData } from './../../data/formsData';
 
-import FormGen from './../../formGen';
-import { registerFormData } from './../../pages/formsData';
 
 
-export default class extends Component {
+class ChangePasswordForm extends Component {
     constructor(props) {
         super(props);
 
-        this.form = new FormGen(registerFormData, this);
+        this.form = new FormGen(changePasswordFormData, this);
 
         this.state = {
             message: '',
@@ -17,6 +20,7 @@ export default class extends Component {
             isFormValid: false,
             form: this.form.getFormData()
         }
+
         this.submitHandler = this.submitHandler.bind(this);
         this.serverResponse = this.serverResponse.bind(this);
         this.getField = this.getField.bind(this);
@@ -25,7 +29,6 @@ export default class extends Component {
     getField(fieldName) {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
-
     serverResponse(response) {
         const {message, status} = response.data;
         this.setState({message: message, messageStatus: status})
@@ -33,11 +36,11 @@ export default class extends Component {
     submitHandler(event) {
         event.preventDefault();
         apiQuery({
-            path: '/user-register',
+            path: '/user-change-password',
             data: {
-                login: this.getField('name'),
-                email: this.getField('email'),
-                password: this.getField('password')
+                login: this.props.name,
+                currentPassword: this.state.form[0].value,
+                newPassword: this.state.form[1].value
             },
             callback: this.serverResponse
         });
@@ -50,9 +53,23 @@ export default class extends Component {
 
         return (
             <form onSubmit={this.submitHandler}>
+                <h3>Change Password</h3>
                 {myForm}
                 {message.length > 0 && <div className={`msg ${messageStatus}`}>{message}</div>}
             </form>
         )
     }
 }
+
+
+
+export default connect(
+    state => ({
+        name: state.user.name
+    }),
+    dispatch => ({
+        setUserName: function(name) {
+            dispatch(action.setUserName(name))
+        }
+    })
+)(ChangePasswordForm)

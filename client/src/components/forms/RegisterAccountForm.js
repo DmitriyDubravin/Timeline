@@ -1,19 +1,15 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-
 import apiQuery from './../../Api';
-import * as action from './../../store/actions';
-import FormGen from './../../formGen';
-import { changePasswordFormData } from './../../pages/formsData';
+
+import FormGen from './../../support/formGen';
+import { registerFormData } from './../../data/formsData';
 
 
-
-
-class ChangePasswordForm extends Component {
+export default class RegisterAccountForm extends Component {
     constructor(props) {
         super(props);
 
-        this.form = new FormGen(changePasswordFormData, this);
+        this.form = new FormGen(registerFormData, this);
 
         this.state = {
             message: '',
@@ -21,7 +17,6 @@ class ChangePasswordForm extends Component {
             isFormValid: false,
             form: this.form.getFormData()
         }
-
         this.submitHandler = this.submitHandler.bind(this);
         this.serverResponse = this.serverResponse.bind(this);
         this.getField = this.getField.bind(this);
@@ -30,6 +25,7 @@ class ChangePasswordForm extends Component {
     getField(fieldName) {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
+
     serverResponse(response) {
         const {message, status} = response.data;
         this.setState({message: message, messageStatus: status})
@@ -37,11 +33,11 @@ class ChangePasswordForm extends Component {
     submitHandler(event) {
         event.preventDefault();
         apiQuery({
-            path: '/user-change-password',
+            path: '/user-register',
             data: {
-                login: 'admin', // this.props.login, // will be token later
-                currentPassword: this.state.form[0].value,
-                newPassword: this.state.form[1].value
+                login: this.getField('name'),
+                email: this.getField('email'),
+                password: this.getField('password')
             },
             callback: this.serverResponse
         });
@@ -60,16 +56,3 @@ class ChangePasswordForm extends Component {
         )
     }
 }
-
-
-
-export default connect(
-    state => ({
-        name: state.user.name
-    }),
-    dispatch => ({
-        setUserName: function(name) {
-            dispatch(action.setUserName(name))
-        }
-    })
-)(ChangePasswordForm)
