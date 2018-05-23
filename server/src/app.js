@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/timeline');
 let db = mongoose.connection;
 
-const Users = require('./schemas/schema-user');
 const userRegister = require('./user-register');
 const userLogin = require('./user-login');
 const userRemove = require('./user-remove');
@@ -35,10 +34,12 @@ app.post('/', (req, res) => {
     })
 });
 
-app.post('/user-register', userRegister(Users));
-app.post('/user-login', userLogin(Users));
-app.post('/user-change-password', userChangePassword(Users));
-app.post('/user-remove', userRemove(Users));
+app.post('/user-register', userRegister);
+app.post('/user-login', userLogin);
+app.post('/user-change-password', userChangePassword);
+app.post('/user-remove', userRemove, (req, res) => {
+    res.redirect('/')
+});
 
 
 

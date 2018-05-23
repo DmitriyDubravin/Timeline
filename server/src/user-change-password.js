@@ -1,43 +1,37 @@
+const f = require('./support/functions');
 
-module.exports = function(schema) {
-    return function(req, res) {
+module.exports = async function(req, res) {
 
-        let login = req.body.login;
-        let currentPassword = req.body.currentPassword;
-        let newPassword = req.body.newPassword;
-        let query = {name: login, password: currentPassword};
-        let data = {name: login, password: newPassword};
+    const login = req.body.login;
+    const password = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
 
-        schema.find(query, (err, resp) => {
-            if (err) {
-                console.log(err);
-            } else {
-                if (resp.length !== 0) {
-                    schema.update(
-                        query,
-                        data,
-                        function(err) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                res.send({
-                                    data: {
-                                        message: "Password were changed!",
-                                        status: 'success'
-                                    }
-                                });
-                            }
-                        }
-                    );
-                } else {
-                    res.send({
-                        data: {
-                            message: "Wrong current password!",
-                            status: 'error'
-                        }
-                    });
-                }
+    const user = {name: login};
+    const update = {password: f.hashPassword(newPassword)};
+
+    const found = await f.to(f.findUser(user));
+    if (found.err) res.status(500).send({message: '\nServer error while searching for user name\n\n'});
+
+    if (f.isUserFound(found.data) && f.isPasswordMatches(password, found.data)) {
+
+        const updated = await f.to(f.updateUser(user, update))
+        if (updated.err) res.status(500).send({message: '\nServer error while updating user password\n\n'});
+
+        res.send({
+            data: {
+                message: "Password were changed!",
+                status: 'success'
             }
-        })
+        });
+
+    } else {
+
+        res.send({
+            data: {
+                message: "Wrong current password!",
+                status: 'error'
+            }
+        });
+
     }
 }

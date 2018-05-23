@@ -1,49 +1,47 @@
-const bcrypt = require('bcryptjs');
+const f = require('./support/functions');
 
-module.exports = function(schema) {
-    return function(req, res) {
+module.exports = async function(req, res) {
+    const login = req.body.login;
+    const password = req.body.password;
+    const email = req.body.email;
+    let user = {
+        name: login
+    }
 
-        let isNameAlreadyTaken = {
-            name: req.body.login
-        }
+    const found = await f.to(f.findUser(user));
+    if (found.err) res.status(500).send({message: '\nServer error while searching for user name\n\n'});
 
-        schema.find(isNameAlreadyTaken, function(err, resp) {
-            if (err) {
-                console.log(err);
-            } else {
-                if (resp.length === 0) {
+    if (f.isUserFound(found.data)) {
 
-                    var salt = bcrypt.genSaltSync(10);
-                    var hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
-                    let addingData = {
-                        name: req.body.login,
-                        password: hashedPassword,
-                        email: req.body.email
-                    };
-
-                    let newUser = new schema(addingData);
-                    newUser.save(function(err) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.send({
-                                data: {
-                                    message: "New user was added!",
-                                    status: 'success'
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    res.send({
-                        data: {
-                            message: "This username already taken!",
-                            status: 'error'
-                        }
-                    });
-                }
+        res.send({
+            data: {
+                message: "This username already taken!",
+                status: 'error'
             }
         });
+
+    } else {
+
+        const hashedPassword = f.hashPassword(password);
+        const token = f.generateToken(login + password);
+
+        let addingData = {
+            name: login,
+            password: hashedPassword,
+            email: email,
+            token: token,
+            role: 'user'
+        };
+
+        const added = await f.to(f.addUser(addingData));
+        if (added.err) res.status(500).send({message: '\nServer error while adding new user\n\n'});
+
+        res.send({
+            data: {
+                message: "New user was added!",
+                status: 'success'
+            }
+        });
+
     }
 }

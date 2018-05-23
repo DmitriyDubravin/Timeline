@@ -1,52 +1,42 @@
-const bcrypt = require('bcryptjs');
+const f = require('./support/functions');
 
-module.exports = function(schema) {
-    return function(req, res) {
+module.exports = async function(req, res) {
 
-        const user = {
-            name: req.body.login
-        }
+    const login = req.body.login;
+    const password = req.body.password;
+    const user = {
+        name: login
+    }
 
-        schema.find(user, function(err, resp) {
-            if(err) {
-                console.log(err);
-            } else {
-                if (
-                    resp.length > 0 &&
-                    bcrypt.compareSync(req.body.password, resp[0].password)
-                ) {
+    const found = await f.to(f.findUser(user));
+    if (found.err) res.status(500).send({message: '\nServer error while searching for user name\n\n'});
 
-                    // GENERATE TOKEN HERE
-                    var salt = bcrypt.genSaltSync(10);
-                    var token = bcrypt.hashSync(req.body.login + req.body.password, salt);
+    if (f.isUserFound(found.data) && f.isPasswordMatches(password, found.data)) {
 
-                    schema.update(user, {token: token}, function(err, numAffected) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log(numAffected, token);
-                            res.send({
-                                data: {
-                                    message: "You've been logged in",
-                                    status: 'success',
-                                    data: {
-                                        name: resp[0].name,
-                                        token: token
-                                    }
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    res.send({
-                        data: {
-                            message: "Wrong login / password",
-                            status: 'error',
-                            data: {
-                                name: 'guest'
-                            }
-                        }
-                    });
+        const token = f.generateToken(login + password);
+
+        const updated = await f.to(f.updateUser(user, {token: token}));
+        if (updated.err) res.status(500).send({message: '\nServer error while updating token\n\n'});
+
+        res.send({
+            data: {
+                message: "You've been logged in",
+                status: 'success',
+                data: {
+                    name: found.data[0].name,
+                    token: token
+                }
+            }
+        });
+
+    } else {
+
+        res.send({
+            data: {
+                message: "Wrong login / password",
+                status: 'error',
+                data: {
+                    name: 'guest'
                 }
             }
         });
