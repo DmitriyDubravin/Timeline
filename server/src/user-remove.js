@@ -1,6 +1,6 @@
 const f = require('./support/functions');
 
-module.exports = async function(req, res, next) {
+module.exports = async function(req, res) {
     const login = req.body.login;
     const password = req.body.password;
     const user = {
@@ -17,27 +17,22 @@ module.exports = async function(req, res, next) {
         if (removed.err) res.status(500).send({message: '\nServer error while removing user\n\n'});
 
         res.send({
+            message: "User were deleted!",
+            status: 'success',
             data: {
-                message: "User were deleted!",
-                status: 'success',
-                data: {
-                    name: 'guest'
-                }
+                name: false
             }
         });
 
     } else {
 
         res.send({
+            message: "Wrong password",
+            status: 'error',
             data: {
-                message: "Wrong password",
-                status: 'error',
-                data: {
-                    name: 'guest'
-                }
+                name: false
             }
         });
 
     }
-    return next();
 }

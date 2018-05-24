@@ -14,10 +14,8 @@ module.exports = async function(req, res) {
     if (f.isUserFound(found.data)) {
 
         res.send({
-            data: {
-                message: "This username already taken!",
-                status: 'error'
-            }
+            message: "This username already taken!",
+            status: 'error'
         });
 
     } else {
@@ -37,9 +35,11 @@ module.exports = async function(req, res) {
         if (added.err) res.status(500).send({message: '\nServer error while adding new user\n\n'});
 
         res.send({
+            message: "New user was added! Check your email to activate your account.",
+            status: 'success',
             data: {
-                message: "New user was added!",
-                status: 'success'
+                name: login,
+                token: token
             }
         });
 

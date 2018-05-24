@@ -4,6 +4,7 @@ import apiQuery from './../../Api';
 import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { loginFormData } from './../../data/formsData';
+import { setCookie } from './../../support/cookies';
 
 class LoginAccountForm extends Component {
     constructor(props) {
@@ -27,11 +28,11 @@ class LoginAccountForm extends Component {
     }
 
     serverResponse(response) {
-        const {message, status, data} = response.data;
-        console.log(data);
+        const {message, status, data} = response;
         this.setState({message: message, messageStatus: status})
         if (status === 'success') {
             this.props.setUserName(data.name);
+            setCookie(data.token);
         }
     }
 

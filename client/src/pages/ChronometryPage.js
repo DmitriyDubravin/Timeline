@@ -4,8 +4,7 @@ import DefaultChronometryPage from './DefaultChronometryPage';
 
 class ChronometryPage extends Component {
     render() {
-        if (this.props.name === undefined) return null;
-        if (this.props.name === 'guest') return <DefaultChronometryPage />;
+        if (!this.props.name) return <DefaultChronometryPage />;
 
         return <h2>Chronometry page</h2>
     }

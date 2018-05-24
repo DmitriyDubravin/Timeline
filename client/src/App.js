@@ -1,40 +1,43 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {renderRoutes} from 'react-router-config';
+import { connect } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
 
 import apiQuery from './Api';
 import Header from './components/Header';
 import * as action from './store/actions';
+import { getCookie, deleteCookie } from './support/cookies';
 
 
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            x: 1
+        this.serverResponse = this.serverResponse.bind(this)
+    }
+    serverResponse(response) {
+        const { name } = response.data;
+        if (!name) {
+            deleteCookie();
         }
-        this.updateX = this.updateX.bind(this)
-    }
-    updateX(data) {
-        this.setState({x: data.message});
-        this.props.setUserName(this.state.x);
-    }
-    checkCookie() {
-        
+        this.props.setUserName(name);
     }
     componentDidMount() {
 
-        this.checkCookie();
+        const cookie = getCookie('token');
 
-        apiQuery({
-            path: '/',
-            data: {txt: 'guest'},
-            callback: this.updateX
-        });
+        if (cookie) {
+            apiQuery({
+                path: '/token-acknowledge',
+                data: {token: cookie.token},
+                callback: this.serverResponse
+            });
+        } else {
+            this.props.setUserName(false);
+        }
+
     }
     render() {
-        // console.log(this.props.name);
+        if (this.props.name === undefined) return null;
         return (
             <div className="App">
                 <Header />

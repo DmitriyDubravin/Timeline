@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import ChronometryPage from './pages/ChronometryPage';
 import RegisterPage from './pages/RegisterPage';
 import NoMatchPage from './pages/NoMatchPage';
+import UsersPage from './pages/UsersPage';
 import UserPage from './pages/UserPage';
 
 export default [
@@ -26,9 +27,14 @@ export default [
                 component: ChronometryPage
             },
             {
-                path: '/:user',
+                path: '/users',
                 exact: true,
-                component: UserPage
+                component: UsersPage,
+            },
+            {
+                path: '/users/:user',
+                exact: true,
+                component: UserPage,
             },
             {
                 path: '/404',

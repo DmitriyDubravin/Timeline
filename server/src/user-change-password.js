@@ -18,19 +18,15 @@ module.exports = async function(req, res) {
         if (updated.err) res.status(500).send({message: '\nServer error while updating user password\n\n'});
 
         res.send({
-            data: {
-                message: "Password were changed!",
-                status: 'success'
-            }
+            message: "Password were changed!",
+            status: 'success'
         });
 
     } else {
 
         res.send({
-            data: {
-                message: "Wrong current password!",
-                status: 'error'
-            }
+            message: "Wrong current password!",
+            status: 'error'
         });
 
     }

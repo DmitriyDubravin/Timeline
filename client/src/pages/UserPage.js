@@ -4,12 +4,22 @@ import ChangePasswordForm from './../components/forms/ChangePasswordForm';
 import RemoveAccountForm from './../components/forms/RemoveAccountForm';
 
 class UserPage extends Component {
+    componentDidMount() {
+        // apiQuery to get user's data
+    }
     render() {
+
+        let pathName = this.props.match.params.user;
+        let username = this.props.name;
+        let owner = username === pathName;
+
         return (
             <div>
-                <h2>{this.props.name}'s page</h2>
-                <ChangePasswordForm x={333} />
-                <RemoveAccountForm />
+                <h2>{pathName}'s page</h2>
+                {!owner && <h4>{pathName}'s public data</h4>}
+                {owner && <h4>{username}'s secured data</h4>}
+                {owner && <ChangePasswordForm x={333} />}
+                {owner && <RemoveAccountForm />}
             </div>
         )
     }

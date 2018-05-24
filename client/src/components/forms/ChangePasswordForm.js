@@ -30,8 +30,8 @@ class ChangePasswordForm extends Component {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
     serverResponse(response) {
-        const {message, status} = response.data;
-        this.setState({message: message, messageStatus: status})
+        const {message, status} = response;
+        this.setState({message: message, messageStatus: status});
     }
     submitHandler(event) {
         event.preventDefault();

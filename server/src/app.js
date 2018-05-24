@@ -10,8 +10,8 @@ const userRegister = require('./user-register');
 const userLogin = require('./user-login');
 const userRemove = require('./user-remove');
 const userChangePassword = require('./user-change-password');
-
-
+const tokenAcknowledge = require('./token-acknowledge');
+const usersList = require('./users-list');
 
 // check connection
 db.once('open', function(err) {
@@ -37,10 +37,10 @@ app.post('/', (req, res) => {
 app.post('/user-register', userRegister);
 app.post('/user-login', userLogin);
 app.post('/user-change-password', userChangePassword);
-app.post('/user-remove', userRemove, (req, res) => {
-    res.redirect('/')
-});
-
+app.post('/user-remove', userRemove);
+app.post('/token-acknowledge', tokenAcknowledge);
+// app.get('/email-confirmation')
+app.post('/users-list', usersList);
 
 
 app.listen(process.env.PORT || 8081);

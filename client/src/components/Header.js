@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import LoginAccountForm from './forms/LoginAccountForm';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
+import { deleteCookie } from './../support/cookies';
 
 class Header extends Component {
     constructor(props) {
@@ -20,36 +21,36 @@ class Header extends Component {
         this.setState({showLogin: !this.state.showLogin});
     }
     logout() {
-        this.props.setUserName('guest');
+        deleteCookie();
+        this.props.setUserName(false);
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.name !== this.props.name && this.props.name !== 'guest') {
+        if (prevProps.name !== this.props.name && !!this.props.name) {
             this.setState({showLogin: false});
         }
     }
     render() {
-        if (this.props.name === undefined) return null;
         const {name} = this.props;
 
         return (
             <div>
                 <div className="user-box">
                     {
-                        name === 'guest' &&
+                        !name &&
                         <div>
                             <a href="/" onClick={this.login}>Login</a> | <Link to="/register">Register</Link>
                         </div>
                     }
                     {
-                        name !== 'guest' &&
+                        !!name &&
                         <div>
-                            <Link to={`/${name}`}>{name}</Link> <button onClick={this.logout}>Logout</button>
+                            <Link to={`/users/${name}`}>{name}</Link> <button onClick={this.logout}>Logout</button>
                         </div>
                     }
                 </div>
                 {
                     this.state.showLogin &&
-                    name === 'guest' &&
+                    !name &&
                     (
                         <div className="popup">
                             <LoginAccountForm />
@@ -63,6 +64,9 @@ class Header extends Component {
                     </li>
                     <li>
                         <Link to="/chronometry">Chronometry</Link>
+                    </li>
+                    <li>
+                        <Link to="/users">Users</Link>
                     </li>
                 </ul>
             </div>
