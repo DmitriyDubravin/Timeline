@@ -12,6 +12,9 @@ const userRemove = require('./user-remove');
 const userChangePassword = require('./user-change-password');
 const tokenAcknowledge = require('./token-acknowledge');
 const usersList = require('./users-list');
+const emailConfirmation = require('./email-confirmation');
+const userData = require('./user-data');
+
 
 // check connection
 db.once('open', function(err) {
@@ -39,8 +42,10 @@ app.post('/user-login', userLogin);
 app.post('/user-change-password', userChangePassword);
 app.post('/user-remove', userRemove);
 app.post('/token-acknowledge', tokenAcknowledge);
-// app.get('/email-confirmation')
 app.post('/users-list', usersList);
 
+app.get('/email-confirmation/*', emailConfirmation);
+
+app.post('/user-get-data', userData);
 
 app.listen(process.env.PORT || 8081);

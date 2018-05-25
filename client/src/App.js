@@ -7,6 +7,7 @@ import Header from './components/Header';
 import * as action from './store/actions';
 import { getCookie, deleteCookie } from './support/cookies';
 
+// import axios from 'axios';
 
 
 class App extends Component {
@@ -22,6 +23,10 @@ class App extends Component {
         this.props.setUserName(name);
     }
     componentDidMount() {
+
+        // axios.get('http://localhost:8081/email-confirmation/testcode').then(response => {
+        //     console.log(response.data);
+        // });
 
         const cookie = getCookie('token');
 

@@ -1,10 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import apiQuery from './../Api';
 import ChangePasswordForm from './../components/forms/ChangePasswordForm';
 import RemoveAccountForm from './../components/forms/RemoveAccountForm';
 
 class UserPage extends Component {
+    constructor(props) {
+        super(props);
+        this.serverResponse = this.serverResponse.bind(this)
+    }
+    serverResponse(response) {
+
+    }
     componentDidMount() {
+        apiQuery({
+            path: '/user-get-data',
+            data: {name: this.props.match.params.user},
+            callback: this.serverResponse
+        });
         // apiQuery to get user's data
     }
     render() {

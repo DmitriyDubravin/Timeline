@@ -11,4 +11,3 @@ export default ({path, data, callback}) => {
             console.log(error.response.data.message);
         });
 }
-

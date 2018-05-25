@@ -31,7 +31,7 @@ class RemoveAccountForm extends Component {
         const {message, status} = response;
         this.setState({message: message, messageStatus: status})
         if (status === 'success') {
-            this.props.setUserName('guest');
+            this.props.setUserName(false);
         }
     }
 

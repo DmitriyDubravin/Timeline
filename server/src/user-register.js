@@ -1,4 +1,5 @@
 const f = require('./support/functions');
+const sendEmail = require('./email-sender');
 
 module.exports = async function(req, res) {
     const login = req.body.login;
@@ -14,7 +15,7 @@ module.exports = async function(req, res) {
     if (f.isUserFound(found.data)) {
 
         res.send({
-            message: "This username already taken!",
+            message: "This username is already taken!",
             status: 'error'
         });
 
@@ -22,17 +23,21 @@ module.exports = async function(req, res) {
 
         const hashedPassword = f.hashPassword(password);
         const token = f.generateToken(login + password);
+        const verificationHash = token.slice(-12);
 
         let addingData = {
             name: login,
             password: hashedPassword,
             email: email,
             token: token,
-            role: 'user'
+            role: verificationHash
         };
 
         const added = await f.to(f.addUser(addingData));
         if (added.err) res.status(500).send({message: '\nServer error while adding new user\n\n'});
+
+        // SEND EMAIL
+        sendEmail(email, verificationHash);
 
         res.send({
             message: "New user was added! Check your email to activate your account.",

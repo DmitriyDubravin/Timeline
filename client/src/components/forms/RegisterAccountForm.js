@@ -4,6 +4,9 @@ import apiQuery from './../../Api';
 import FormGen from './../../support/formGen';
 import { registerFormData } from './../../data/formsData';
 
+import GlobalMessage from './../GlobalMessage';
+import LocalMessage from './../LocalMessage';
+
 
 export default class RegisterAccountForm extends Component {
     constructor(props) {
@@ -27,6 +30,7 @@ export default class RegisterAccountForm extends Component {
     }
 
     serverResponse(response) {
+        console.log(response);
         const {message, status} = response;
         this.setState({message: message, messageStatus: status})
     }
@@ -48,11 +52,15 @@ export default class RegisterAccountForm extends Component {
 
         let myForm = this.form.generateForm();
 
-        return (
+        let content = messageStatus === 'success'
+        ? <GlobalMessage cls={messageStatus} txt={message} />
+        : <div>
             <form onSubmit={this.submitHandler}>
                 {myForm}
-                {message.length > 0 && <div className={`msg ${messageStatus}`}>{message}</div>}
             </form>
-        )
+            <LocalMessage cls={messageStatus} txt={message} />
+        </div>
+
+        return content
     }
 }
