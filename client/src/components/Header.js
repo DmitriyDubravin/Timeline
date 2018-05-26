@@ -33,7 +33,7 @@ class Header extends Component {
         const {name} = this.props;
 
         return (
-            <div>
+            <div className="header">
                 <div className="user-box">
                     {
                         !name &&
@@ -58,7 +58,7 @@ class Header extends Component {
                         </div>
                     )
                 }
-                <ul>
+                <ul className="main-nav">
                     <li>
                         <Link to="/">Home</Link>
                     </li>

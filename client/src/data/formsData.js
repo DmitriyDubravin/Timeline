@@ -104,7 +104,8 @@ export const changePasswordFormData = [
         required: true,
         rules: {
             minLength: 6,
-            maxLength: 10
+            maxLength: 10,
+            matchTo: 'newPassword'
         }
     },
     {

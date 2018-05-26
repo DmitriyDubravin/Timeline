@@ -1,0 +1,33 @@
+
+body {
+    font: 18px/24px $mff;
+}
+
+h1 {
+    margin: 0 0 30px;
+    line-height: 30px;
+    font-size: 24px;
+}
+h2 {
+    margin: 0 0 26px;
+    line-height: 26px;
+    font-size: 22px;
+}
+h3 {
+    margin: 0 0 24px;
+    line-height: 24px;
+    font-size: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: $mbc;
+    &:focus,
+    &:hover {
+        outline: none;
+        color: $mbch;
+    }
+    // &:focus {
+    //     text-decoration: underline;
+    // }
+}

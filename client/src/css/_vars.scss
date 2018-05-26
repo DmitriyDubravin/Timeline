@@ -1,0 +1,18 @@
+
+// colors
+
+$white: #fff;
+$black: #000;
+$gray: #ccc;
+$orange: #282;
+
+$mbc: $orange; // main brand color
+$mbch: darken($orange, 10%);
+
+$mfgc: $black; // main foreground color
+$mbgc: $white; // main background color
+
+$sfgc: $white; // secondary foreground color
+$sbgc: $mbc; // secondary background color
+
+$mff: 'Roboto', 'Arial', 'Helvetica', sans-serif;
