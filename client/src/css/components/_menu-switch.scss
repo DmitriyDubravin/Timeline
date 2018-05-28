@@ -1,0 +1,65 @@
+
+.menu-switch {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    transition: opacity 0.5s linear 0.3s;
+    span,
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 3px;
+        width: 48px;
+        height: 6px;
+        background: $mbc;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+    }
+    span {
+        transform: translate(50px, -100px) rotate(-180deg);
+        transition: all 0.5s ease-out 0.15s;
+    }
+    &:before {
+        transform: translate(-100px, -100px) rotate(-270deg);
+        transition: all 0.5s ease-out;
+    }
+    &:after {
+        transform: translate(-100px, 0px) rotate(180deg);
+        transition: all 0.5s ease-out 0.3s;
+    }
+    &.shown {
+        opacity: 1;
+        transition: opacity 0.5s;
+        span,
+        &:before,
+        &:after {
+            top: 50%;
+            left: 50%;
+            opacity: 1;
+            transform: translate(-50%, -50%) rotate(0);
+            transition: all 0.5s ease-out 0.15s;
+        }
+        &:before {
+            top: 25%;
+            transition: all 0.5s ease-out 0.3s;
+        }
+        &:after {
+            top: 75%;
+            transition: all 0.5s ease-out;
+        }
+    }
+    &:hover {
+        span {
+        }
+        &:before {
+        }
+        &:after {
+        }
+    }
+}

@@ -89,9 +89,53 @@ input[type="submit"] {
   input[type="submit"]:focus {
     background: #185f18; }
 
+.menu-switch {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  opacity: 0;
+  transition: opacity 0.5s linear 0.3s; }
+  .menu-switch span, .menu-switch:before, .menu-switch:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 3px;
+    width: 48px;
+    height: 6px;
+    background: #282;
+    opacity: 0;
+    transform: translate(-50%, -50%); }
+  .menu-switch span {
+    transform: translate(50px, -100px) rotate(-180deg);
+    transition: all 0.5s ease-out 0.15s; }
+  .menu-switch:before {
+    transform: translate(-100px, -100px) rotate(-270deg);
+    transition: all 0.5s ease-out; }
+  .menu-switch:after {
+    transform: translate(-100px, 0px) rotate(180deg);
+    transition: all 0.5s ease-out 0.3s; }
+  .menu-switch.shown {
+    opacity: 1;
+    transition: opacity 0.5s; }
+    .menu-switch.shown span, .menu-switch.shown:before, .menu-switch.shown:after {
+      top: 50%;
+      left: 50%;
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(0);
+      transition: all 0.5s ease-out 0.15s; }
+    .menu-switch.shown:before {
+      top: 25%;
+      transition: all 0.5s ease-out 0.3s; }
+    .menu-switch.shown:after {
+      top: 75%;
+      transition: all 0.5s ease-out; }
+
 .main-nav {
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   left: 20px;
   margin: 0;
   padding: 0;

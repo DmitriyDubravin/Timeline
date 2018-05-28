@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 
 import apiQuery from './Api';
+import MenuSwitch from './components/MenuSwitch';
 import Header from './components/Header';
 import * as action from './store/actions';
 import { getCookie, deleteCookie } from './support/cookies';
@@ -45,6 +46,7 @@ class App extends Component {
         if (this.props.name === undefined) return null;
         return (
             <div className="App">
+                <MenuSwitch />
                 <Header />
                 {renderRoutes(this.props.route.routes)}
             </div>
