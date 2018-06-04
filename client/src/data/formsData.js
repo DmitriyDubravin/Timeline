@@ -1,5 +1,5 @@
 
-import {TextField, PasswordField, EmailField, SubmitField} from './../components/formElements';
+import {TextField, PasswordField, EmailField, SubmitField, SelectField} from './../components/formElements';
 
 export const registerFormData = [
     {
@@ -132,3 +132,19 @@ export const removeFormData = [
     }
 ];
 
+export const addChronometryEventFormData = [
+    {
+        component: SelectField,
+        name: 'type',
+        placeholder: 'Event Type',
+        required: true,
+        rules: {
+            minLength: 3,
+            maxLength: 32
+        }
+    },
+    {
+        component: SubmitField,
+        value: "Add Event"
+    }
+];

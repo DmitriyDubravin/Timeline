@@ -60,3 +60,19 @@ export const SubmitField = ({props: {name, placeholder, value, onChange, cls, di
         />
     );
 }
+
+export const SelectField = ({props: {name, placeholder, value, onChange, cls, msg}}) => {
+    return (
+        <div>
+            <select
+                className={cls}
+                type="email"
+                name={name}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+            ></select>
+            {msg && <div className="form-valid-msg">{msg}</div>}
+        </div>
+    );
+}

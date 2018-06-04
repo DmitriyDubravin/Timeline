@@ -36,17 +36,24 @@ module.exports = async function(req, res) {
         const added = await f.to(f.addUser(addingData));
         if (added.err) res.status(500).send({message: '\nServer error while adding new user\n\n'});
 
-        // SEND EMAIL
-        sendEmail(email, verificationHash);
+        if (added.data.name === login) {
+            // SEND EMAIL
+            sendEmail(email, verificationHash);
 
-        res.send({
-            message: "New user was added! Check your email to activate your account.",
-            status: 'success',
-            data: {
-                name: login,
-                token: token
-            }
-        });
+            res.send({
+                message: "New user has been added! Check your email to activate your account.",
+                status: 'success',
+                data: {
+                    name: login,
+                    token: token
+                }
+            });
+        } else {
+            res.send({
+                message: "New user hasn't been added due to unknown error",
+                status: 'error'
+            });
+        }
 
     }
 }

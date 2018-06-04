@@ -4,6 +4,48 @@ form {
     max-width: 280px;
 }
 
+.side-btn {
+    float: right;
+    margin: 0;
+    padding: 4px;
+    width: 30px;
+}
+
+
+select {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    border: 1px solid transparent;
+    padding: 4px 15px;
+    height: 30px;
+    font-family: $mff;
+    line-height: 20px;
+    font-size: 14px;
+    outline: none;
+    border-color: $gray;
+    background: $mbgc;
+    form & {
+        display: block;
+        margin: 0 auto 24px;
+        width: 100%;
+    }
+    .side-btn + & {
+        margin-left: 0;
+        width: calc(100% - 50px);
+    }
+    &:focus {
+        border-color: $mbc;
+    }
+    &[disabled] {
+        opacity: 0.5;
+        cursor: default !important;
+    }
+    &.error {
+        color: #f00 !important;
+        border-color: #f00 !important;
+    }
+}
 
 input[type="text"],
 input[type="password"],
@@ -24,6 +66,10 @@ button {
         display: block;
         margin: 0 auto 24px;
         width: 100%;
+    }
+    .side-btn + & {
+        margin-left: 0;
+        width: calc(100% - 50px);
     }
     &[disabled] {
         opacity: 0.5;

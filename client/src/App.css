@@ -31,6 +31,41 @@ form {
   margin: 0 auto;
   max-width: 280px; }
 
+.side-btn {
+  float: right;
+  margin: 0;
+  padding: 4px;
+  width: 30px; }
+
+select {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  border: 1px solid transparent;
+  padding: 4px 15px;
+  height: 30px;
+  font-family: "Roboto", "Arial", "Helvetica", sans-serif;
+  line-height: 20px;
+  font-size: 14px;
+  outline: none;
+  border-color: #ccc;
+  background: #fff; }
+  form select {
+    display: block;
+    margin: 0 auto 24px;
+    width: 100%; }
+  .side-btn + select {
+    margin-left: 0;
+    width: calc(100% - 50px); }
+  select:focus {
+    border-color: #282; }
+  select[disabled] {
+    opacity: 0.5;
+    cursor: default !important; }
+  select.error {
+    color: #f00 !important;
+    border-color: #f00 !important; }
+
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -54,6 +89,13 @@ button {
     display: block;
     margin: 0 auto 24px;
     width: 100%; }
+  .side-btn + input[type="text"], .side-btn +
+  input[type="password"], .side-btn +
+  input[type="email"], .side-btn +
+  input[type="submit"], .side-btn +
+  button {
+    margin-left: 0;
+    width: calc(100% - 50px); }
   input[type="text"][disabled],
   input[type="password"][disabled],
   input[type="email"][disabled],
