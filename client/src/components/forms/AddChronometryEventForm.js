@@ -5,12 +5,13 @@ class AddChronometryEventForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            'new-type': false,
-            'new-category': false,
-            'new-subcategory': false,
+            newType: false,
+            newCategory: false,
+            newSubcategory: false,
             type: '',
             category: '',
-            subcategory: ''
+            subcategory: '',
+            comment: ''
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
@@ -21,75 +22,162 @@ class AddChronometryEventForm extends Component {
         this.setState({[name]: value});
     }
     btnHandler(event) {
-        const {name} = event.target
-        this.setState({
-            [name]: !this.state[name],
-            [name.slice(4)]: ''
-        });
+        const {name} = event.target;
+        if (name === 'newType') {
+            this.setState({
+                newType: true,
+                newCategory: true,
+                newSubcategory: true,
+                type: '',
+                category: '',
+                subcategory: ''
+            });
+        }
+        if (name === 'type') {
+            this.setState({
+                newType: false,
+                newCategory: false,
+                newSubcategory: false,
+                type: '',
+                category: '',
+                subcategory: ''
+            });
+        }
+
+        if (name === 'newCategory') {
+            this.setState({
+                newCategory: true,
+                newSubcategory: true,
+                category: '',
+                subcategory: ''
+            });
+        }
+        if (name === 'category') {
+            this.setState({
+                newCategory: false,
+                newSubcategory: false,
+                category: '',
+                subcategory: ''
+            });
+        }
+
+        if (name === 'newSubcategory') {
+            this.setState({
+                newSubcategory: true,
+                subcategory: ''
+            });
+        }
+        if (name === 'subcategory') {
+            this.setState({
+                newSubcategory: false,
+                subcategory: ''
+            });
+        }
     }
     submitHandler(event) {
         event.preventDefault();
     }
 
-    render() {
-        console.log(this.state);
 
-        let showCategory = !this.state['new-category'] && this.state.type.length > 0;
-        let showNewCategory = this.state['new-category'] && this.state.type.length > 0;
-        let showSubCategory = !this.state['new-subcategory'] && this.state.category.length > 0;
-        let showNewSubCategory = 
-            this.state.category.length > 0 &&
-            !this.state['category'] &&
-            this.state['new-subcategory'];
+    render() {
+
+        const {type, newType, category, newCategory, newSubcategory} = this.state;
+
+        const showType = !newType;
+        const showNewType = newType;
+        const showCategory = !newCategory && type.length > 0;
+        const showNewCategory = newCategory && type.length > 0;
+        const showSubcategory = !newSubcategory && category.length > 0;
+        const showNewSubcategory = newSubcategory && category.length > 0;
+
+        const startOptions = Array.from({length: 288}, (v, i) => i * 5)
+            .map(item => {
+                let hrsRaw = Math.floor(item / 60);
+                let hrs = hrsRaw < 10 ? '0' + hrsRaw : hrsRaw;
+                let minsRaw = item - hrs * 60;
+                let mins = minsRaw < 10 ? '0' + minsRaw: minsRaw;
+                return `${hrs}:${mins}`;
+            })
+            .map((item, i) => <option key={i}>{item}</option>);
+
+        const finishOptions = Array.from({length: 288}, (v, i) => (i + 1) * 5)
+            .map(item => {
+                let hrsRaw = Math.floor(item / 60);
+                let hrs = hrsRaw < 10 ? '0' + hrsRaw : hrsRaw;
+                let minsRaw = item - hrs * 60;
+                let mins = minsRaw < 10 ? '0' + minsRaw: minsRaw;
+                return `${hrs}:${mins}`;
+            })
+            .map((item, i) => <option key={i}>{item}</option>);
 
         return (
             <form className="add-chronometry-event-form" onSubmit={this.submitHandler}>
-                {!this.state['new-type'] &&
-                    <div>
-                        <button name="new-type" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
+
+                <div className="line">
+                    <select name="start" onChange={this.inputHandler}>
+                        <option>Start</option>
+                        {startOptions}
+                    </select>
+                    <select name="finish" onChange={this.inputHandler}>
+                        <option>Finish</option>
+                        {finishOptions}
+                    </select>
+                </div>
+                {
+                    showType &&
+                    <div className="line">
                         <select name="type" onChange={this.inputHandler}>
                             <option>Type</option>
                             <option>1</option>
                         </select>
+                        <button name="newType" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
                     </div>
                 }
-                {this.state['new-type'] &&
-                    <div>
-                        <button name="new-type" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>
+                {
+                    showNewType &&
+                    <div className="line">
                         <input type="text" name="type" placeholder="New Type" onChange={this.inputHandler} />
+                        <button name="type" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>
                     </div>
                 }
 
-                {showCategory &&
-                    <div>
-                        <button name="new-category" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
+                {
+                    showCategory &&
+                    <div className="line">
                         <select name="category" onChange={this.inputHandler}>
                             <option>Category</option>
-                            <option>1</option>
+                            <option>2</option>
                         </select>
+                        <button name="newCategory" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
                     </div>
                 }
-                {showNewCategory &&
-                    <div>
-                        <button name="new-category" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>
+                {
+                    showNewCategory &&
+                    <div className="line">
                         <input type="text" name="category" placeholder="New Category" onChange={this.inputHandler} />
+                        {!newType && <button name="category" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>}
                     </div>
                 }
 
-                {showSubCategory &&
-                    <div>
-                        <button name="new-subcategory" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
+                {
+                    showSubcategory &&
+                    <div className="line">
                         <select name="subcategory" onChange={this.inputHandler}>
                             <option>Subcategory</option>
+                            <option>3</option>
                         </select>
+                        <button name="newSubcategory" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
                     </div>
                 }
-                {showNewSubCategory &&
-                    <div>
-                        {showNewCategory && <button name="new-subcategory" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>}
+                {
+                    showNewSubcategory &&
+                    <div className="line">
                         <input type="text" name="subcategory" placeholder="New Subcategory" onChange={this.inputHandler} />
+                        {!newCategory && <button name="subcategory" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>}
                     </div>
                 }
+                <textarea name="comment" onChange={this.inputHandler} ></textarea>
+
                 <input type="submit" value="Add event" />
             </form>
         )

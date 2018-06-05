@@ -5,12 +5,25 @@ form {
 }
 
 .side-btn {
-    float: right;
-    margin: 0;
     padding: 4px;
     width: 30px;
+    flex-shrink: 0;
 }
 
+form .line {
+    display: flex;
+    justify-content: space-between;
+    >* {
+        margin-left: 12px;
+        margin-right: 12px;
+        &:first-child {
+            margin-left: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
 
 select {
     display: inline-block;
@@ -27,12 +40,8 @@ select {
     background: $mbgc;
     form & {
         display: block;
-        margin: 0 auto 24px;
+        margin-bottom: 24px;
         width: 100%;
-    }
-    .side-btn + & {
-        margin-left: 0;
-        width: calc(100% - 50px);
     }
     &:focus {
         border-color: $mbc;
@@ -44,6 +53,32 @@ select {
     &.error {
         color: #f00 !important;
         border-color: #f00 !important;
+    }
+}
+
+textarea {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    border: 1px solid $gray;
+    padding: 4px 15px;
+    height: 90px;
+    font-family: $mff;
+    line-height: 20px;
+    font-size: 14px;
+    background: $mbgc;
+    outline: none;
+    &:focus {
+        border-color: $mbc;
+    }
+    &.error {
+        color: #f00 !important;
+        border-color: #f00 !important;
+    }
+    form & {
+        display: block;
+        margin: 0 auto 24px;
+        width: 100%;
     }
 }
 
@@ -66,10 +101,6 @@ button {
         display: block;
         margin: 0 auto 24px;
         width: 100%;
-    }
-    .side-btn + & {
-        margin-left: 0;
-        width: calc(100% - 50px);
     }
     &[disabled] {
         opacity: 0.5;
