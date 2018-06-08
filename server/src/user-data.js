@@ -1,17 +1,15 @@
 const f = require('./support/functions');
+const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
     const name = req.body.name;
-    let user = {
-        name: name
-    }
-    console.log('error?', name )
+    const findUserNameOptions = {name: name}
 
-    const found = await f.to(f.findUser(user));
-    if (found.err) res.status(500).send({message: '\nServer error while searching for user name\n\n'});
+    const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
+    if (foundUser.err) e.findUserNameError(res);
 
-    if (f.isUserFound(found.data)) {
+    if (f.isUserFound(foundUser.data)) {
         res.send({
             message: "User found"
         })

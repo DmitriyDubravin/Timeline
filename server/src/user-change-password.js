@@ -1,4 +1,5 @@
 const f = require('./support/functions');
+const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
@@ -6,16 +7,16 @@ module.exports = async function(req, res) {
     const password = req.body.currentPassword;
     const newPassword = req.body.newPassword;
 
-    const user = {name: login};
-    const update = {password: f.hashPassword(newPassword)};
+    const findUserNameOptions = {name: login}
+    const updateUserPasswordOptions = {password: f.hashPassword(newPassword)};
 
-    const found = await f.to(f.findUser(user));
-    if (found.err) res.status(500).send({message: '\nServer error while searching for user name\n\n'});
+    const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
+    if (foundUser.err) e.findUserNameError(res);
 
-    if (f.isUserFound(found.data) && f.isPasswordMatches(password, found.data)) {
+    if (f.isUserFound(foundUser.data) && f.isPasswordMatches(password, foundUser.data)) {
 
-        const updated = await f.to(f.updateUser(user, update))
-        if (updated.err) res.status(500).send({message: '\nServer error while updating user password\n\n'});
+        const updated = await f.tryCatch(f.updateUser(findUserNameOptions, updateUserPasswordOptions))
+        if (updated.err) e.updateUserPasswordError(res);
 
         res.send({
             message: "Password were changed!",

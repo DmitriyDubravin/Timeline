@@ -1,20 +1,18 @@
 const f = require('./support/functions');
+const e = require('./support/errors');
 
 module.exports = async function(req, res) {
     const login = req.body.login;
     const password = req.body.password;
-    const user = {
-        name: login
-    }
-    console.log(login, password);
+    const findUserNameOptions = {name: login}
 
-    const found = await f.to(f.findUser(user));
-    if (found.err) res.status(500).send({message: '\nServer error while searching for user name\n\n'});
+    const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
+    if (foundUser.err) e.findUserNameError(res);
 
-    if (f.isUserFound(found.data) && f.isPasswordMatches(password, found.data)) {
+    if (f.isUserFound(foundUser.data) && f.isPasswordMatches(password, foundUser.data)) {
 
-        const removed = await f.to(f.removeUser(user));
-        if (removed.err) res.status(500).send({message: '\nServer error while removing user\n\n'});
+        const removedUser = await f.tryCatch(f.removeUser(findUserNameOptions));
+        if (removedUser.err) e.removeUserError(res);
 
         res.send({
             message: "User were deleted!",

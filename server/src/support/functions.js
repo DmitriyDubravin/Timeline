@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs');
-const Users = require('./../schemas/schema-user');
+const Users = require('../models/users');
+const Events = require('../models/events');
 
 module.exports = {
+
     addUser: userData => new Users(userData).save(),
     updateUser: (user, data) => Users.update(user, data),
     removeUser: user => Users.remove(user),
@@ -11,5 +13,9 @@ module.exports = {
     isPasswordMatches: (password, response) => bcrypt.compareSync(password, response[0].password),
     hashPassword: password => bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
     generateToken: secret => bcrypt.hashSync(secret , bcrypt.genSaltSync(10)),
-    to: promise => promise.then(data => ({data})).catch(err => ({err}))
+    tryCatch: promise => promise.then(data => ({data})).catch(err => ({err})),
+    getTypes: options => Events.distinct("type", options),
+    getCategories: options => Events.distinct("category", options),
+    getSubcategories: options => Events.distinct("subcategory", options),
+
 }

@@ -1,29 +1,25 @@
 const f = require('./support/functions');
+const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const token = req.body.token;
-    const user = {
-        token: token
-    }
+    const findUserTokenOptions = {token: req.body.token}
 
-    const found = await f.to(f.findUser(user));
-    if (found.err) res.status(500).send({message: '\nServer error while searching for token\n\n'});
+    const foundUser = await f.tryCatch(f.findUser(findUserTokenOptions));
+    if (foundUser.err) e.findUserTokenError(res);
 
-    if (f.isUserFound(found.data)) {
+    if (f.isUserFound(foundUser.data)) {
         res.send({
             message: "You've been logged in",
             status: 'success',
             data: {
-                name: found.data[0].name,
-                token: token
+                name: foundUser.data[0].name
             }
         });
 
     } else {
 
         res.send({
-            message: "Wrong login / password",
             status: 'error',
             data: {
                 name: false

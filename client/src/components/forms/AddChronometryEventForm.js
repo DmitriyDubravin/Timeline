@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import apiQuery from './../../Api';
 
 class AddChronometryEventForm extends Component {
     constructor(props) {
@@ -11,15 +12,98 @@ class AddChronometryEventForm extends Component {
             type: '',
             category: '',
             subcategory: '',
-            comment: ''
+            comment: '',
+            types: [],
+            categories: [],
+            subcategories: []
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
     }
 
+    componentDidMount() {
+        this.getTypes();
+    }
+
+    getTypes() {
+        apiQuery({
+            path: '/get-types',
+            data: {
+                user: 'admin'
+            },
+            callback: this.gotTypes.bind(this)
+        });
+    }
+    gotTypes(response) {
+        let typesList = response.data;
+        let sortedTypesList = typesList.filter(type => type.length !== 0).sort();
+        this.setState({types: sortedTypesList});
+    }
+
+    getCategories(type) {
+        apiQuery({
+            path: '/get-categories',
+            data: {
+                user: 'admin',
+                type: type
+            },
+            callback: this.gotCategories.bind(this)
+        });
+    }
+    gotCategories(response) {
+        let categoriesList = response.data;
+        let sortedCategoriesList = categoriesList.filter(category => category.length !== 0).sort();
+        this.setState({categories: sortedCategoriesList});
+    }
+
+    getSubcategories(category) {
+        apiQuery({
+            path: '/get-subcategories',
+            data: {
+                user: 'admin',
+                category: category
+            },
+            callback: this.gotSubcategories.bind(this)
+        });
+    }
+    gotSubcategories(response) {
+        let subCategoriesList = response.data;
+        let sortedSubcategoriesList = subCategoriesList.filter(subcategory => subcategory.length !== 0).sort();
+        this.setState({subcategories: sortedSubcategoriesList});
+    }
+
     inputHandler(event) {
         const {name, value} = event.target;
         this.setState({[name]: value});
+        if (name === 'type') {
+            if (value !== 'Type') {
+                this.setState({
+                    category: '',
+                    subcategory: '',
+                    categories: [],
+                    subcategories: [],
+                });
+                this.getCategories(value)
+            } else {
+                this.setState({
+                    type: '',
+                    category: '',
+                    subcategory: '',
+                    categories: [],
+                    subcategories: [],
+                });
+            }
+        }
+        if (name === 'category') {
+            if (value !== 'Category') {
+                this.getSubcategories(value)
+            } else {
+                this.setState({
+                    category: '',
+                    subcategories: [],
+                });
+            }
+        }
     }
     btnHandler(event) {
         const {name} = event.target;
@@ -81,7 +165,13 @@ class AddChronometryEventForm extends Component {
 
     render() {
 
-        const {type, newType, category, newCategory, newSubcategory} = this.state;
+        // console.log(this.state);
+
+        const {types, categories, subcategories, type, newType, category, newCategory, newSubcategory} = this.state;
+
+        const typesList = types.map((type, i) => <option key={type}>{type}</option>);
+        const categoriesList = categories.map((category, i) => <option key={category}>{category}</option>);
+        const subCategoriesList = subcategories.map((subcategory, i) => <option key={subcategory}>{subcategory}</option>);
 
         const showType = !newType;
         const showNewType = newType;
@@ -128,7 +218,7 @@ class AddChronometryEventForm extends Component {
                     <div className="line">
                         <select name="type" onChange={this.inputHandler}>
                             <option>Type</option>
-                            <option>1</option>
+                            {typesList}
                         </select>
                         <button name="newType" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
                     </div>
@@ -146,7 +236,7 @@ class AddChronometryEventForm extends Component {
                     <div className="line">
                         <select name="category" onChange={this.inputHandler}>
                             <option>Category</option>
-                            <option>2</option>
+                            {categoriesList}
                         </select>
                         <button name="newCategory" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
                     </div>
@@ -164,7 +254,7 @@ class AddChronometryEventForm extends Component {
                     <div className="line">
                         <select name="subcategory" onChange={this.inputHandler}>
                             <option>Subcategory</option>
-                            <option>3</option>
+                            {subCategoriesList}
                         </select>
                         <button name="newSubcategory" className="side-btn add-btn" type="button" onClick={this.btnHandler}>+</button>
                     </div>

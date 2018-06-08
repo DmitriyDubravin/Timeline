@@ -14,6 +14,9 @@ const tokenAcknowledge = require('./token-acknowledge');
 const usersList = require('./users-list');
 const emailConfirmation = require('./email-confirmation');
 const userData = require('./user-data');
+const getTypes = require('./get-types');
+const getCategories = require('./get-categories');
+const getSubcategories = require('./get-subcategories');
 
 
 // check connection
@@ -47,5 +50,9 @@ app.post('/users-list', usersList);
 app.get('/email-confirmation/*', emailConfirmation);
 
 app.post('/user-get-data', userData);
+
+app.post('/get-types', getTypes);
+app.post('/get-categories', getCategories);
+app.post('/get-subcategories', getSubcategories);
 
 app.listen(process.env.PORT || 8081);

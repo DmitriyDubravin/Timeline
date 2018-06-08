@@ -1,22 +1,22 @@
 const f = require('./support/functions');
+const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
     const login = req.body.login;
     const password = req.body.password;
-    const user = {
-        name: login
-    }
+    const findUserNameOptions = {name: login}
 
-    const found = await f.to(f.findUser(user));
-    if (found.err) res.status(500).send({message: '\nServer error while searching for user name\n\n'});
+    const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
+    if (foundUser.err) e.findUserNameOptions(res);
 
-    if (f.isUserFound(found.data) && f.isPasswordMatches(password, found.data)) {
+    if (f.isUserFound(foundUser.data) && f.isPasswordMatches(password, foundUser.data)) {
 
         const token = f.generateToken(login + password);
+        const updateUserTokenOptions = {token: token}
 
-        const updated = await f.to(f.updateUser(user, {token: token}));
-        if (updated.err) res.status(500).send({message: '\nServer error while updating token\n\n'});
+        const updatedUser = await f.tryCatch(f.updateUser(findUserNameOptions, updateUserTokenOptions));
+        if (updatedUser.err) e.updateUserTokenError(res);
 
         res.send({
             message: "You've been logged in",

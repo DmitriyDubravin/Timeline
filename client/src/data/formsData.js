@@ -8,7 +8,7 @@ export const registerFormData = [
         placeholder: 'your name',
         required: true,
         rules: {
-            minLength: 6,
+            minLength: 5,
             maxLength: 10
         }
     },
@@ -55,7 +55,7 @@ export const loginFormData = [
         placeholder: 'login',
         required: true,
         rules: {
-            minLength: 6,
+            minLength: 5,
             maxLength: 10
         }
     },

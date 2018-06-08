@@ -1,14 +1,15 @@
 const f = require('./support/functions');
+const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const found = await f.to(f.findUsers({}));
-    if (found.err) res.status(500).send({message: '\nServer error while searching for users\n\n'});
+    const findUsersOptions = {}
 
-    if (f.isUserFound(found.data)) {
-        let usersList = found.data.map(user => {
-            return user.name
-        })
+    const foundUsers = await f.tryCatch(f.findUsers(findUsersOptions));
+    if (foundUsers.err) e.findUsersError(res);
+
+    if (f.isUserFound(foundUsers.data)) {
+        let usersList = foundUsers.data.map(user => user.name);
 
         res.send({
             message: "Users were found",
