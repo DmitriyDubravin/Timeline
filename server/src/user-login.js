@@ -11,7 +11,7 @@ module.exports = async function(req, res) {
 
     if (f.isUserFound(foundUser.data) && f.isPasswordMatches(password, foundUser.data)) {
 
-        if (f.isUserEmailConfirmed(foundUser.data)) {
+        if (f.isUserEmailConfirmed(foundUser.data[0])) {
 
             const token = f.generateToken(login + password);
             const updateUserTokenOptions = {token: token}

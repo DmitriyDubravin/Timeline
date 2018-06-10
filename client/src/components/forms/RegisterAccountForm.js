@@ -34,7 +34,9 @@ export default class RegisterAccountForm extends Component {
 
         const {status} = response;
 
-        const message = status === "success" ? m.registerSuccess() : m.registerFailure();
+        const message = status === "success"
+            ? m.registerSuccess()
+            : m.registerFailure();
 
         this.setState({message, messageStatus: status})
 

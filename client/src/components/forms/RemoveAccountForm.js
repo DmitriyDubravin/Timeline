@@ -5,6 +5,7 @@ import * as action from './../../store/actions';
 // import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { removeFormData } from './../../data/formsData';
+import m from "./../../support/messages";
 
 class RemoveAccountForm extends Component {
     constructor(props) {
@@ -28,11 +29,18 @@ class RemoveAccountForm extends Component {
     }
 
     serverResponse(response) {
-        const {message, status} = response;
-        this.setState({message: message, messageStatus: status})
-        if (status === 'success') {
+        const {status} = response;
+
+        let message = status === "success"
+            ? m.userRemoveSuccess()
+            : m.userRemoveFailure();
+
+        this.setState({message: message, messageStatus: status});
+
+        if (status === "success") {
             this.props.setUserName(false);
         }
+
     }
 
     submitHandler(event) {

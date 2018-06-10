@@ -26,50 +26,62 @@ class AddChronometryEventForm extends Component {
     }
 
     getTypes() {
+
         apiQuery({
             path: '/get-types',
             data: {
-                user: 'admin'
+                name: 'admin'
             },
             callback: this.gotTypes.bind(this)
         });
+
     }
     gotTypes(response) {
-        let typesList = response.data;
+
+        let typesList = response.types;
         let sortedTypesList = typesList.filter(type => type.length !== 0).sort();
         this.setState({types: sortedTypesList});
+
     }
 
     getCategories(type) {
+
         apiQuery({
             path: '/get-categories',
             data: {
-                user: 'admin',
+                name: 'admin',
                 type: type
             },
             callback: this.gotCategories.bind(this)
         });
+
     }
     gotCategories(response) {
-        let categoriesList = response.data;
+
+        let categoriesList = response.categories;
         let sortedCategoriesList = categoriesList.filter(category => category.length !== 0).sort();
         this.setState({categories: sortedCategoriesList});
+
     }
 
     getSubcategories(category) {
+
         apiQuery({
             path: '/get-subcategories',
             data: {
-                user: 'admin',
+                name: 'admin',
                 category: category
             },
             callback: this.gotSubcategories.bind(this)
+
         });
     }
     gotSubcategories(response) {
-        let subCategoriesList = response.data;
+
+        let subCategoriesList = response.subcategories;
         let sortedSubcategoriesList = subCategoriesList.filter(subcategory => subcategory.length !== 0).sort();
         this.setState({subcategories: sortedSubcategoriesList});
+
     }
 
     inputHandler(event) {

@@ -5,6 +5,7 @@ import apiQuery from './../../Api';
 import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { changePasswordFormData } from './../../data/formsData';
+import m from "./../../support/messages";
 
 
 
@@ -30,8 +31,13 @@ class ChangePasswordForm extends Component {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
     serverResponse(response) {
-        const {message, status} = response;
+
+        const {status} = response;
+        let message = status === "success"
+            ? m.userPasswordChangeSuccess()
+            : m.userPasswordChangeFailure();
         this.setState({message: message, messageStatus: status});
+
     }
     submitHandler(event) {
         event.preventDefault();

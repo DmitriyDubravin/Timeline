@@ -13,7 +13,12 @@ class UsersList extends Component {
         this.serverResponse = this.serverResponse.bind(this);
     }
     serverResponse(response) {
-        this.setState({usersList: response.data.usersList})
+
+        let usersList = response.usersList.length > 0 
+            ? response.usersList
+            : null;
+        this.setState({usersList: usersList})
+
     }
     componentDidMount() {
         apiQuery({

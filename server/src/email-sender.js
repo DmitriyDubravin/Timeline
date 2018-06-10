@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const server = require("./support/constants").server;
 
 
 module.exports = function sendEmail(email, hash) {
@@ -27,7 +28,7 @@ module.exports = function sendEmail(email, hash) {
         to: email, // list of receivers
         subject: 'Hello ✔', // Subject line
         text: 'Hello world?', // plain text body
-        html: `<a href="http://localhost:8081/email-confirmation/${hash}">link</a>` // html body
+        html: `<a href="${server}/email-confirmation/${hash}">link</a>` // html body
     };
 
     // send mail with defined transport object

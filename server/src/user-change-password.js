@@ -3,32 +3,24 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const login = req.body.login;
-    const password = req.body.currentPassword;
-    const newPassword = req.body.newPassword;
+    const {login, password, newPassword} = req.body;
 
     const findUserNameOptions = {name: login}
-    const updateUserPasswordOptions = {password: f.hashPassword(newPassword)};
 
     const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
-    if (foundUser.err) e.findUserNameError(res);
+    foundUser.err && e.findUserNameError(res);
 
     if (f.isUserFound(foundUser.data) && f.isPasswordMatches(password, foundUser.data)) {
 
-        const updated = await f.tryCatch(f.updateUser(findUserNameOptions, updateUserPasswordOptions))
-        if (updated.err) e.updateUserPasswordError(res);
+        const updateUserPasswordOptions = {password: f.hashPassword(newPassword)};
+        const updatedUser = await f.tryCatch(f.updateUser(findUserNameOptions, updateUserPasswordOptions))
+        updatedUser.err && e.updateUserPasswordError(res);
 
-        res.send({
-            message: "Password were changed!",
-            status: 'success'
-        });
+        f.success(res);
 
     } else {
 
-        res.send({
-            message: "Wrong current password!",
-            status: 'error'
-        });
+        f.failure(res);
 
     }
 }

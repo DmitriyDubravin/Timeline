@@ -1,6 +1,5 @@
-import axios from 'axios';
-
-const server = 'http://localhost:8081';
+import axios from "axios";
+import {server} from "./support/constants";
 
 export default ({path, data, callback}) => {
     return axios.post(`${server}${path}`, data)
