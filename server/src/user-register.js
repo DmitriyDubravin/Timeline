@@ -4,56 +4,36 @@ const sendEmail = require('./email-sender');
 
 module.exports = async function(req, res) {
 
-    const login = req.body.login;
-    const password = req.body.password;
-    const email = req.body.email;
-    const findUserNameOptions =  {name: login}
+    const {login, password, email} = req.body;
+    const findUserNameOptions = {name: login}
 
     const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
-    if (foundUser.err) e.findUserNameError(res);
+    foundUser.err && e.findUserNameError(res);
 
-    if (f.isUserFound(foundUser.data)) {
-
-        res.send({
-            message: "This username is already taken!",
-            status: 'error'
-        });
-
-    } else {
+    if (!f.isUserFound(foundUser.data)) {
 
         const hashedPassword = f.hashPassword(password);
-        const token = f.generateToken(login + password);
-        const verificationHash = token.slice(-12);
+        const verificationHash = f.generateVerificationHash(login + password);
 
-        let addUserOptions = {
+        const addUserOptions = {
             name: login,
             password: hashedPassword,
             email: email,
-            token: token,
+            token: "",
             role: verificationHash
         };
 
         const addedUser = await f.tryCatch(f.addUser(addUserOptions));
-        if (addedUser.err) 
+        addedUser.err && e.addUserError(res);
 
-        if (addedUser.data.name === login) {
-            // SEND EMAIL
-            sendEmail(email, verificationHash);
+        // SEND EMAIL
+        sendEmail(email, verificationHash);
 
-            res.send({
-                message: "New user has been added! Check your email to activate your account.",
-                status: 'success',
-                data: {
-                    name: login,
-                    token: token
-                }
-            });
-        } else {
-            res.send({
-                message: "New user hasn't been added due to unknown error",
-                status: 'error'
-            });
-        }
+        f.success(res);
+
+    } else {
+
+        f.failure(res);
 
     }
 }

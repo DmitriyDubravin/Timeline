@@ -3,38 +3,38 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const login = req.body.login;
-    const password = req.body.password;
+    const {login, password} = req.body;
     const findUserNameOptions = {name: login}
 
     const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
-    if (foundUser.err) e.findUserNameOptions(res);
+    foundUser.err && e.findUserNameOptions(res);
 
     if (f.isUserFound(foundUser.data) && f.isPasswordMatches(password, foundUser.data)) {
 
-        const token = f.generateToken(login + password);
-        const updateUserTokenOptions = {token: token}
+        if (f.isUserEmailConfirmed(foundUser.data)) {
 
-        const updatedUser = await f.tryCatch(f.updateUser(findUserNameOptions, updateUserTokenOptions));
-        if (updatedUser.err) e.updateUserTokenError(res);
+            const token = f.generateToken(login + password);
+            const updateUserTokenOptions = {token: token}
 
-        res.send({
-            message: "You've been logged in",
-            status: 'success',
-            data: {
-                name: found.data[0].name,
+            const updatedUser = await f.tryCatch(f.updateUser(findUserNameOptions, updateUserTokenOptions));
+            updatedUser.err && e.updateUserTokenError(res);
+
+            f.success(res, {
+                name: login,
                 token: token
-            }
-        });
+            });
+
+        } else {
+
+            f.failure(res, {
+                cause: 'email'
+            });
+
+        }
 
     } else {
 
-        res.send({
-            message: "Wrong login / password",
-            status: 'error',
-            data: {
-                name: false
-            }
-        });
+        f.failure(res);
+
     }
 }

@@ -5,6 +5,7 @@ import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { loginFormData } from './../../data/formsData';
 import { setCookie } from './../../support/cookies';
+import m from './../../support/messages';
 
 class LoginAccountForm extends Component {
     constructor(props) {
@@ -28,11 +29,26 @@ class LoginAccountForm extends Component {
     }
 
     serverResponse(response) {
-        const {message, status, data} = response;
-        this.setState({message: message, messageStatus: status})
+
+        const {status} = response;
+
+        let message = "";
         if (status === 'success') {
-            this.props.setUserName(data.name);
-            setCookie(data.token);
+            message = m.loginSuccess()
+        } else {
+            if (response.cause === "email") {
+                message = m.loginFailureEmail();
+            } else {
+                message = m.loginFailure()
+            }
+        }
+
+        this.setState({message, messageStatus: status})
+
+        if (status === 'success') {
+            this.props.setUserName(response.name);
+            this.props.setUserToken(response.token);
+            setCookie(response.token);
         }
     }
 
@@ -72,6 +88,9 @@ export default connect(
     dispatch => ({
         setUserName: function(name) {
             dispatch(action.setUserName(name))
+        },
+        setUserToken: function(token) {
+            dispatch(action.setUserToken(token))
         }
     })
 )(LoginAccountForm)
