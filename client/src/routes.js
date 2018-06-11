@@ -6,6 +6,7 @@ import RegisterPage from './pages/RegisterPage';
 import NoMatchPage from './pages/NoMatchPage';
 import UsersPage from './pages/UsersPage';
 import UserPage from './pages/UserPage';
+import EmailConfirmedPage from './pages/EmailConfirmedPage';
 
 export default [
     {
@@ -35,6 +36,11 @@ export default [
                 path: '/users/:user',
                 exact: true,
                 component: UserPage,
+            },
+            {
+                path: '/email-confirmation/:hash',
+                exact: true,
+                component: EmailConfirmedPage,
             },
             {
                 path: '/404',

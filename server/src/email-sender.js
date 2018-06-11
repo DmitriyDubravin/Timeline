@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const server = require("./support/constants").server;
+const feserver = require("./support/constants").feserver;
 
 
 module.exports = function sendEmail(email, hash) {
@@ -14,7 +14,7 @@ module.exports = function sendEmail(email, hash) {
         service: 'Gmail',
         auth: {
             user: 'dmitry.dubravin@bigdropinc.com', // generated ethereal user
-            pass: 'password' // generated ethereal password
+            pass: 'sinapsis' // generated ethereal password
         },
         tls: {
             // do not fail on invalid certs
@@ -28,7 +28,7 @@ module.exports = function sendEmail(email, hash) {
         to: email, // list of receivers
         subject: 'Hello ✔', // Subject line
         text: 'Hello world?', // plain text body
-        html: `<a href="${server}/email-confirmation/${hash}">link</a>` // html body
+        html: `<a href="${feserver}/email-confirmation/${hash}">link</a>` // html body
     };
 
     // send mail with defined transport object

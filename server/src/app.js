@@ -47,7 +47,7 @@ app.post('/user-remove', userRemove);
 app.post('/token-acknowledge', tokenAcknowledge);
 app.post('/users-list', usersList);
 
-app.get('/email-confirmation/*', emailConfirmation);
+app.post('/email-confirmation', emailConfirmation);
 
 app.post('/user-get-data', userData);
 
