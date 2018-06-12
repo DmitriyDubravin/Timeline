@@ -14,7 +14,7 @@ module.exports = function sendEmail(email, hash) {
         service: 'Gmail',
         auth: {
             user: 'dmitry.dubravin@bigdropinc.com', // generated ethereal user
-            pass: 'sinapsis' // generated ethereal password
+            pass: 'password' // generated ethereal password
         },
         tls: {
             // do not fail on invalid certs

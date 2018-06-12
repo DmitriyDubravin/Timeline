@@ -10,7 +10,8 @@
     list-style: none;
     li {
         display: inline-block;
-        margin: 0 10px 0 0;
+        position: relative;
+        margin: 0 3px 0 0;
     }
     a {
         display: inline-block;
@@ -21,6 +22,27 @@
         &:hover,
         &:focus {
             background: $mbch;
+        }
+    }
+    li:hover ul {
+        display: block;
+    }
+    ul {
+        position: absolute;
+        display: none;
+        bottom: 100%;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-width: 100px;
+        li {
+            display: block;
+            margin: 0;
+            padding: 3px 0;
+        }
+        a {
+            display: block;
         }
     }
 }

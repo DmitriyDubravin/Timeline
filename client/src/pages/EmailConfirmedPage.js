@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import apiQuery from './../Api';
-import {Redirect} from 'react-router-dom';
+import m from './../support/messages';
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            redirect: false
-        }
 
         this.serverResponse = this.serverResponse.bind(this);
     }
 
     serverResponse(response) {
-        setTimeout(() => {
-            this.setState({redirect: true})
-        }, 250)
+        const message = response.status === "success"
+            ? m.emailConfirmationSuccess()
+            : m.emailConfirmationFailure();
+        console.log(message);
     }
 
     componentDidMount() {
@@ -31,8 +29,7 @@ class HomePage extends Component {
 
         return (
             <div>
-                {this.state.redirect && <Redirect to="/" />}
-                <h2>Email Confirmed</h2>
+                <h2>Email confirmation...</h2>
             </div>
         );
     }

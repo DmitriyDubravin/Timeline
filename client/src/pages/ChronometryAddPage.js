@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import DefaultChronometryPage from './DefaultChronometryPage';
-import EventsList from './../components/EventsList';
-import DatePicker from './../components/DatePicker';
+import AddChronometryEventForm from './../components/forms/AddChronometryEventForm';
 
 class ChronometryPage extends Component {
     render() {
@@ -10,9 +9,8 @@ class ChronometryPage extends Component {
 
         return (
             <div>
-                <h2>Chronometry page</h2>
-                <DatePicker />
-                <EventsList />
+                <h2>Chronometry add page</h2>
+                <AddChronometryEventForm />
             </div>
         )
     }

@@ -8,7 +8,10 @@ module.exports = {
     updateUser: (user, data) => Users.update(user, data),
     removeUser: user => Users.remove(user),
     findUser: user => Users.find(user).exec(),
+
     findUsers: users => Users.find(users).sort({name: 1}).exec(),
+    findEvents: events => Events.find(events).sort({start: 1}).exec(),
+
     isUserFound: response => response.length > 0,
     isUserEmailConfirmed: user => user.role.length < 10,
     isPasswordMatches: (password, response) => bcrypt.compareSync(password, response[0].password),

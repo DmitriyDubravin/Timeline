@@ -64,6 +64,11 @@ class Header extends Component {
                     </li>
                     <li>
                         <Link to="/chronometry">Chronometry</Link>
+                        <ul>
+                            <li>
+                                <Link to="/chronometry/add">Add</Link>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <Link to="/users">Users</Link>

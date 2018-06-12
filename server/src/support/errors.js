@@ -37,5 +37,7 @@ module.exports = {
     getSubcategoriesError: res => res.status(500).send({
         message: '\nServer error while searching for subcategories\n\n'
     }),
-
+    findEventsError: res => res.status(500).send({
+        message: '\nServer error while searching for events\n\n'
+    }),
 }

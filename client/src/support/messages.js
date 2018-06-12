@@ -1,19 +1,23 @@
 
 module.exports = {
-    loginSuccess: () => "You've been logged in",
-    loginFailure: () => "Wrong login / password",
-    loginFailureEmail: () => "Please, confirm your email first",
 
-    registerSuccess: () => "New user has been added! Check your email to activate your account.",
-    registerFailure: () => "This username is already taken!",
+    loginSuccess: () => "\nYou've been logged in\n\n",
+    loginFailure: () => "\nWrong login / password\n\n",
+    loginFailureEmail: () => "\nPlease, confirm your email first\n\n",
 
-    userRemoveSuccess: () => "User were deleted!",
-    userRemoveFailure: () => "Wrong password",
+    registerSuccess: () => "\nNew user has been added! Check your email to activate your account.\n\n",
+    registerFailure: () => "\nThis username is already taken!\n\n",
 
-    userPasswordChangeSuccess: () => "Password were changed!",
-    userPasswordChangeFailure: () => "Wrong current password!",
+    userRemoveSuccess: () => "\nUser were deleted!\n\n",
+    userRemoveFailure: () => "\nWrong password\n\n",
 
-    tokenAcknowledgeSuccess: () => "Token accepted. You've been logged in",
-    tokenAcknowledgeFailure: () => "Deprecated / Invalid token",
+    userPasswordChangeSuccess: () => "\nPassword were changed!\n\n",
+    userPasswordChangeFailure: () => "\nWrong current password!\n\n",
+
+    tokenAcknowledgeSuccess: () => "\nToken accepted. You've been logged in\n\n",
+    tokenAcknowledgeFailure: () => "\nDeprecated / Invalid token\n\n",
+
+    emailConfirmationSuccess: () => "\nEmail is successfully verified. You may now log in\n\n",
+    emailConfirmationFailure: () => "\nEmail is not verified. Verification link is broken\n\n",
 
 }
