@@ -4,10 +4,10 @@
 $white: #fff;
 $black: #000;
 $gray: #ccc;
-$orange: #282;
+$brand: #683;
 
-$mbc: $orange; // main brand color
-$mbch: darken($orange, 10%);
+$mbc: $brand; // main brand color
+$mbch: darken($brand, 10%);
 
 $mfgc: $black; // main foreground color
 $mbgc: $white; // main background color

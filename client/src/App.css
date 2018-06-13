@@ -18,10 +18,10 @@ h3 {
 
 a {
   text-decoration: none;
-  color: #282; }
+  color: #683; }
   a:focus, a:hover {
     outline: none;
-    color: #185f18; }
+    color: #4a6325; }
 
 body {
   margin: 0;
@@ -65,7 +65,7 @@ select {
     margin-bottom: 24px;
     width: 100%; }
   select:focus {
-    border-color: #282; }
+    border-color: #683; }
   select[disabled] {
     opacity: 0.5;
     cursor: default !important; }
@@ -86,7 +86,7 @@ textarea {
   background: #fff;
   outline: none; }
   textarea:focus {
-    border-color: #282; }
+    border-color: #683; }
   textarea.error {
     color: #f00 !important;
     border-color: #f00 !important; }
@@ -141,17 +141,17 @@ input[type="email"] {
   input[type="text"]:focus,
   input[type="password"]:focus,
   input[type="email"]:focus {
-    border-color: #282; }
+    border-color: #683; }
 
 button,
 input[type="submit"] {
   color: #fff;
-  background: #282;
+  background: #683;
   cursor: pointer; }
   button:hover, button:focus,
   input[type="submit"]:hover,
   input[type="submit"]:focus {
-    background: #185f18; }
+    background: #4a6325; }
 
 .menu-switch {
   position: absolute;
@@ -169,7 +169,7 @@ input[type="submit"] {
     border-radius: 3px;
     width: 48px;
     height: 6px;
-    background: #282;
+    background: #683;
     opacity: 0;
     transform: translate(-50%, -50%); }
   .menu-switch span {
@@ -215,9 +215,9 @@ input[type="submit"] {
     vertical-align: middle;
     padding: 5px 20px;
     color: #fff;
-    background: #282; }
+    background: #683; }
     .main-nav a:hover, .main-nav a:focus {
-      background: #185f18; }
+      background: #4a6325; }
   .main-nav li:hover ul {
     display: block; }
   .main-nav ul {
@@ -236,18 +236,51 @@ input[type="submit"] {
     .main-nav ul a {
       display: block; }
 
-.datepicker .days {
-  overflow: hidden;
-  width: 210px; }
-
-.datepicker .day {
-  float: left;
-  border: 1px solid black;
-  width: 30px;
-  height: 30px;
-  line-height: 28px;
-  font-size: 14px;
-  text-align: center; }
+.datepicker {
+  padding: 3px 0; }
+  .datepicker .days {
+    overflow: hidden;
+    border: solid #000;
+    border-width: 0 0 1px 1px;
+    width: 212px;
+    width: 400px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; }
+  .datepicker .day {
+    position: relative;
+    border: solid #000;
+    border-width: 1px 1px 0 0;
+    overflow: hidden;
+    width: calc(100% / 7);
+    padding-top: calc(100% / 7);
+    line-height: 28px;
+    font-size: 14px;
+    text-align: center; }
+    .datepicker .day button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: 0;
+      border: 0;
+      padding: 0;
+      width: 110%;
+      height: 110%;
+      line-height: inherit;
+      font-size: inherit;
+      color: #fff;
+      background: #683;
+      transform: translate(-50%, -50%); }
+      .datepicker .day button:hover {
+        color: #fff;
+        background: #4a6325; }
+    .datepicker .day.chosen button {
+      color: #fff;
+      background: #2e3e17;
+      cursor: default; }
+    .datepicker .day.off button {
+      background: #fff;
+      cursor: default; }
 
 * {
   box-sizing: border-box; }

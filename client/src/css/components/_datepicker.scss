@@ -1,17 +1,64 @@
 
+$border-color: $black;
+$fg: $white;
+$bg: $mbc;
+$bgh: $mbch;
+$bg-chosen: darken($mbc, 20%);
+
 
 .datepicker {
+    padding: 3px 0;
     .days {
         overflow: hidden;
-        width: 210px;
+        border: solid $border-color;
+        border-width: 0 0 1px 1px;
+        width: 212px;
+        width: 400px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
     }
     .day {
-        float: left;
-        border: 1px solid black;
-        width: 30px;
-        height: 30px;
+        position: relative;
+        border: solid $border-color;
+        border-width: 1px 1px 0 0;
+        overflow: hidden;
+        width: calc(100% / 7);
+        padding-top: calc(100% / 7);
         line-height: 28px;
         font-size: 14px;
         text-align: center;
+        button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: 0;
+            border: 0;
+            padding: 0;
+            width: 110%;
+            height: 110%;
+            line-height: inherit;
+            font-size: inherit;
+            color: $fg;
+            background: $bg;
+            transform: translate(-50%, -50%);
+            &:hover {
+                color: $fg;
+                background: $bgh;
+            }
+        }
+        &.chosen {
+            button {
+                color: $fg;
+                background: $bg-chosen;
+                cursor: default;
+            }
+        }
+        &.off {
+            button {
+                background: $fg;
+                cursor: default;
+            }
+        }
     }
 }
