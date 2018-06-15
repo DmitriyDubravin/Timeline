@@ -19,7 +19,15 @@ class EventsList extends Component {
         this.setState({eventsList: eventsList})
     }
     componentDidMount() {
-        let range = this.getRange("01.04.2018", "01.04.2018");
+        this.getList();
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.date !== this.props.date) {
+            this.getList();
+        }
+    }
+    getList() {
+        let range = this.getRange(this.props.date, this.props.date);
         apiQuery({
             path: '/events-list',
             data: {
@@ -61,6 +69,7 @@ class EventsList extends Component {
 
 export default connect(
     state => ({
-        name: state.user.name
+        name: state.user.name,
+        date: state.date.date
     })
 )(EventsList)

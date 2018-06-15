@@ -4,7 +4,7 @@ import DefaultHomePage from './DefaultHomePage';
 
 class HomePage extends Component {
     render() {
-        if (!this.props.name) return <DefaultHomePage />;
+        if (!this.props.isAuthorized) return <DefaultHomePage />;
 
         return <h2>Home page</h2>
     }
@@ -12,6 +12,6 @@ class HomePage extends Component {
 
 export default connect(
     state => ({
-        name: state.user.name
+        isAuthorized: state.user.isAuthorized
     })
 )(HomePage)

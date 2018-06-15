@@ -236,14 +236,20 @@ input[type="submit"] {
     .main-nav ul a {
       display: block; }
 
+.datepicker-holder {
+  position: relative; }
+
 .datepicker {
-  padding: 3px 0; }
+  width: 280px;
+  background: #fff; }
+  .datepicker .head {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    line-height: 30px; }
   .datepicker .days {
-    overflow: hidden;
     border: solid #000;
     border-width: 0 0 1px 1px;
-    width: 212px;
-    width: 400px;
     width: 100%;
     display: flex;
     flex-wrap: wrap; }
@@ -279,6 +285,10 @@ input[type="submit"] {
       background: #2e3e17;
       cursor: default; }
     .datepicker .day.off button {
+      background: #666;
+      cursor: default; }
+    .datepicker .day.weekday button {
+      color: #000;
       background: #fff;
       cursor: default; }
 

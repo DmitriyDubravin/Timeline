@@ -23,6 +23,7 @@ class Header extends Component {
     logout() {
         deleteCookie();
         this.props.setUserName(false);
+        this.props.setUserIsAuthorized(false);
     }
     componentDidUpdate(prevProps) {
         if (prevProps.name !== this.props.name && !!this.props.name) {
@@ -88,6 +89,9 @@ export default connect(
     dispatch => ({
         setUserName: function(name) {
             dispatch(action.setUserName(name))
+        },
+        setUserIsAuthorized: function(name) {
+            dispatch(action.setUserIsAuthorized(name))
         }
     })
 )(Header)

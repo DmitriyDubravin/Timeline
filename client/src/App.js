@@ -20,22 +20,22 @@ class App extends Component {
     serverResponse(response) {
 
         const {status} = response;
-        const message = status === "success"
-            ? m.tokenAcknowledgeSuccess()
-            : m.tokenAcknowledgeFailure()
-        console.log(message);
+        if (status === "success") {
 
-        let name = status === "success" ? response.name : false;
-        this.props.setUserName(name);
+            this.props.setUserName(response.name);
+            this.props.setUserIsAuthorized(true);
+            console.log(m.tokenAcknowledgeSuccess());
+        }
+        if (status === "error") {
 
-        status === "error" && deleteCookie();
+            this.props.setUserName(false);
+            this.props.setUserIsAuthorized(false);
+            deleteCookie();
+            console.log(m.tokenAcknowledgeFailure());
+        }
 
     }
     componentDidMount() {
-
-        // axios.get(`${server}/email-confirmation/testcode`).then(response => {
-        //     console.log(response.data);
-        // });
 
         const cookie = getCookie('token');
 
@@ -46,6 +46,7 @@ class App extends Component {
                 data: {token: cookie.token},
                 callback: this.serverResponse
             });
+            this.props.setUserToken(cookie.token);
 
         } else {
 
@@ -74,6 +75,12 @@ export default connect(
     dispatch => ({
         setUserName: function(name) {
             dispatch(action.setUserName(name))
+        },
+        setUserToken: function(token) {
+            dispatch(action.setUserToken(token))
+        },
+        setUserIsAuthorized: function(boolean) {
+            dispatch(action.setUserIsAuthorized(boolean))
         }
     })
 )(App)

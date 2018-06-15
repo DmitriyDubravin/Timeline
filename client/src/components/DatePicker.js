@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import * as action from './../store/actions';
 
-export default class DatePicker extends Component {
+class DatePicker extends Component {
 
     constructor(props) {
         super(props);
         const [day, month, year] = props.date.split(".");
 
         this.state = {
-            showPopup: true,
+            showPopup: false,
             chosenYear: +year,
             chosenMonth: +month,
             chosenDay: +day,
             showingYear: +year,
-            showingMonth: +month
+            showingMonth: +month,
+            weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
         }
 
         this.togglePopup = this.togglePopup.bind(this);
@@ -41,36 +44,46 @@ export default class DatePicker extends Component {
             chosenYear: showingYear
         });
         let newDate = `${newDay}.${showingMonth}.${showingYear}`;
-        this.props.callback(newDate);
+        this.props.setDate(newDate);
     }
 
     generateDays(year, month) {
         month -= 1;
         const firstDayNum = new Date(year, month).getDay();
+        const daysInPrevMonth = new Date(year, month, 0).getDate();
         const daysInCurrentMonth = this.getDaysInMonth(year, month);
-        return [...Array(42).keys()].map((day,i) => {
-            let d = i >= firstDayNum && i <= daysInCurrentMonth + firstDayNum - 1 ? i - firstDayNum + 1 : '';
-            if (d === '') {
-                return <div className="day off" key={i}><button>{d}</button></div>
-            } else {
-                if (
-                    this.state.showingYear === this.state.chosenYear &&
-                    this.state.showingMonth === this.state.chosenMonth &&
-                    d === this.state.chosenDay
-                ) {
-                    return (
-                        <div className="day chosen" key={i}><button>{d}</button></div>
-                    )
-                } else {
 
-                    return (
-                        <div className="day" key={i}>
-                            <button onClick={() => this.setDay(d)}>{d}</button>
-                        </div>
-                    )
-                }
-            }
+        const daysListPrevMonth = [...Array(firstDayNum).keys()].map(i => {
+            let d = daysInPrevMonth - firstDayNum + 1 + i;
+            let key = 'prev' + i;
+            return <div className="day off" key={key}><button>{d}</button></div>
         });
+        const daysListCurrentMonth = [...Array(daysInCurrentMonth).keys()].map(i => {
+            let d = i + 1;
+            let onClick = () => this.setDay(d);
+            let cls = "day";
+            if (
+                this.state.showingYear === this.state.chosenYear &&
+                this.state.showingMonth === this.state.chosenMonth &&
+                d === this.state.chosenDay
+            ) {
+                onClick = null;
+                cls = "day chosen"
+            }
+            return <div className={cls} key={i}><button onClick={onClick}>{d}</button></div>
+        });
+        const daysListNextMonth = [...Array(42 - (daysInCurrentMonth + firstDayNum)).keys()].map(i => {
+            let d = i + 1;
+            let key = 'next' + i;
+            return <div className="day off" key={key}><button>{d}</button></div>
+        });
+
+        return [
+            ...daysListPrevMonth,
+            ...daysListCurrentMonth,
+            ...daysListNextMonth
+        ];
+
     }
 
     switchMonth(modificator) {
@@ -92,22 +105,29 @@ export default class DatePicker extends Component {
 
     render() {
 
-        const {showingYear, showingMonth} = this.state;
+        const {showingYear, showingMonth, weekdays} = this.state;
 
         const days = this.generateDays(showingYear, showingMonth);
         const month = this.getMonthName(showingMonth);
         const year = showingYear;
+        const daysNames = weekdays.map((day, i) => {
+            let key = 'name' + i;
+            return <div className="day weekday" key={key}><button>{day}</button></div>
+        });
 
         return (
-            <div>
+            <div className="datepicker-holder">
                 <button onClick={this.togglePopup}>Datepicker toggler</button>
                 {
                     this.state.showPopup &&
                     <div className="datepicker">
-                        <button onClick={() => this.switchMonth(-1)}>Prev</button>
-                        <div>{month} {year}</div>
-                        <button onClick={() => this.switchMonth(1)}>Next</button>
+                        <div className="head">
+                            <button onClick={() => this.switchMonth(-1)}>Prev</button>
+                            <div>{month} {year}</div>
+                            <button onClick={() => this.switchMonth(1)}>Next</button>
+                        </div>
                         <div className="days">
+                            {daysNames}
                             {days}
                         </div>
                     </div>
@@ -116,3 +136,14 @@ export default class DatePicker extends Component {
         )
     }
 }
+
+export default connect(
+    state => ({
+        date: state.date.date
+    }),
+    dispatch => ({
+        setDate: function(date) {
+            dispatch(action.setDate(date))
+        }
+    })
+)(DatePicker)
