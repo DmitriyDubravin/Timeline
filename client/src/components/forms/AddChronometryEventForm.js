@@ -15,9 +15,12 @@ class AddChronometryEventForm extends Component {
             comment: '',
             types: [],
             categories: [],
-            subcategories: []
+            subcategories: [],
+            start: '',
+            finish: ''
         }
         this.inputHandler = this.inputHandler.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
     }
 
@@ -84,9 +87,23 @@ class AddChronometryEventForm extends Component {
 
     }
 
+    getSeconds(time) {
+        let [hour, minute] = time.split(':');
+        let [day, month, year] = this.props.date.split('.');
+        return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
+    }
+
     inputHandler(event) {
         const {name, value} = event.target;
         this.setState({[name]: value});
+        if (name === "start") {
+            let start = this.getSeconds(value);
+            this.setState({start: start});
+        }
+        if (name === "finish") {
+            let finish = this.getSeconds(value);
+            this.setState({finish: finish});
+        }
         if (name === 'type') {
             if (value !== 'Type') {
                 this.setState({
@@ -170,8 +187,26 @@ class AddChronometryEventForm extends Component {
             });
         }
     }
+    eventAdded(data) {
+        console.log('event added', data);
+    }
     submitHandler(event) {
         event.preventDefault();
+        const {start, finish, type, category, subcategory, comment} = this.state;
+        
+        apiQuery({
+            path: '/add-event',
+            data: {
+                name: 'admin',
+                start: start,
+                finish: finish,
+                type: type,
+                category: category,
+                subcategory: subcategory,
+                comment: comment
+            },
+            callback: this.eventAdded.bind(this)
+        });
     }
 
 
@@ -289,13 +324,8 @@ class AddChronometryEventForm extends Component {
 
 
 export default connect(
-    null,
-    // state => ({
-    //     name: state.user.name
-    // }),
-    // dispatch => ({
-    //     setUserName: function(name) {
-    //         dispatch(action.setUserName(name))
-    //     }
-    // })
+    state => ({
+        name: state.user.name,
+        date: state.date.date
+    })
 )(AddChronometryEventForm)

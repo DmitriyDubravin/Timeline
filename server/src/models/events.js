@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 module.exports = mongoose.model(
     'Events',
     mongoose.Schema({
-        id: String,
+        // id: String,
         user: String,
-        start: String,
-        finish: String,
-        duration: String,
+        start: Number,
+        finish: Number,
+        // duration: String,
         type: String,
-        typecolor: String,
+        // typecolor: String,
         category: String,
         subcategory: String,
-        status: String,
+        // status: String,
         comment: String
     })
 );

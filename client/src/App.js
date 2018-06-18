@@ -21,13 +21,11 @@ class App extends Component {
 
         const {status} = response;
         if (status === "success") {
-
             this.props.setUserName(response.name);
             this.props.setUserIsAuthorized(true);
             console.log(m.tokenAcknowledgeSuccess());
         }
         if (status === "error") {
-
             this.props.setUserName(false);
             this.props.setUserIsAuthorized(false);
             deleteCookie();
@@ -53,6 +51,12 @@ class App extends Component {
             this.props.setUserName(false);
 
         }
+
+        let date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        this.props.setDate(`${year}.${month}.${day}`);
 
     }
     render() {
@@ -81,6 +85,9 @@ export default connect(
         },
         setUserIsAuthorized: function(boolean) {
             dispatch(action.setUserIsAuthorized(boolean))
+        },
+        setDate: function(date) {
+            dispatch(action.setDate(date))
         }
     })
 )(App)

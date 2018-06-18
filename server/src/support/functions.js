@@ -22,6 +22,8 @@ module.exports = {
     getTypes: options => Events.distinct("type", options),
     getCategories: options => Events.distinct("category", options),
     getSubcategories: options => Events.distinct("subcategory", options),
+
+    addEvent: eventData => new Events(eventData).save(),
     success: (res, data = {}) => res.send({...data, status: 'success'}),
     failure: (res, data = {}) => res.send({...data, status: 'error'})
 

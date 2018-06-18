@@ -23,9 +23,7 @@ module.exports = async function(req, res) {
             role: verificationHash
         };
 
-        console.log(addUserOptions);
         const addedUser = await f.tryCatch(f.addUser(addUserOptions));
-        console.log(addedUser);
         addedUser.err && e.addUserError(res);
 
         // SEND EMAIL

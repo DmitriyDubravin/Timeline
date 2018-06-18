@@ -40,4 +40,7 @@ module.exports = {
     findEventsError: res => res.status(500).send({
         message: '\nServer error while searching for events\n\n'
     }),
+    addEventError: res => res.status(500).send({
+        message: '\nServer error while adding new event\n\n'
+    }),
 }
