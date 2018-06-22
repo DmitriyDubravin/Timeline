@@ -5,8 +5,8 @@ module.exports = mongoose.model(
     mongoose.Schema({
         // id: String,
         user: String,
-        start: Number,
-        finish: Number,
+        start: String || Number,
+        finish: String || Number,
         // duration: String,
         type: String,
         // typecolor: String,

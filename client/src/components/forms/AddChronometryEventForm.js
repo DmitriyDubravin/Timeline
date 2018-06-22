@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
 import apiQuery from './../../Api';
 
@@ -17,7 +18,8 @@ class AddChronometryEventForm extends Component {
             categories: [],
             subcategories: [],
             start: '',
-            finish: ''
+            finish: '',
+            redirect: false
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
@@ -90,7 +92,7 @@ class AddChronometryEventForm extends Component {
     getSeconds(time) {
         let [hour, minute] = time.split(':');
         let [day, month, year] = this.props.date.split('.');
-        return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
+        return Math.floor(+new Date(Date.UTC(year, month - 1, day, hour, minute)) / 1000)
     }
 
     inputHandler(event) {
@@ -188,7 +190,7 @@ class AddChronometryEventForm extends Component {
         }
     }
     eventAdded(data) {
-        console.log('event added', data);
+        if (data.status === "success") this.setState({redirect: true});
     }
     submitHandler(event) {
         event.preventDefault();
@@ -211,6 +213,8 @@ class AddChronometryEventForm extends Component {
 
 
     render() {
+
+        if (this.state.redirect) return <Redirect to="/chronometry" push={true} />
 
         // console.log(this.state);
 

@@ -14,8 +14,6 @@ module.exports = async function(req, res) {
         comment: comment
     }
 
-    // console.log('\n\n\neventData', eventData, '\n\n\n');
-
     const addedEvent = await f.tryCatch(f.addEvent(eventData));
     addedEvent.err && e.addEventError(res);
 

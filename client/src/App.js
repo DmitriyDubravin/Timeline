@@ -36,27 +36,22 @@ class App extends Component {
     componentDidMount() {
 
         const cookie = getCookie('token');
-
         if (cookie) {
-
             apiQuery({
                 path: '/token-acknowledge',
                 data: {token: cookie.token},
                 callback: this.serverResponse
             });
             this.props.setUserToken(cookie.token);
-
         } else {
-
             this.props.setUserName(false);
-
         }
 
-        let date = new Date();
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-        this.props.setDate(`${year}.${month}.${day}`);
+        const date = new Date();
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        this.props.setDate(`${day}.${month}.${year}`);
 
     }
     render() {

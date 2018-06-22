@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import apiQuery from './../Api';
+import {timestampToTimeObj} from './../support/functions';
 
 class EventsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            eventsList: null
+            eventsList: []
         }
 
         this.serverResponse = this.serverResponse.bind(this);
@@ -46,13 +47,18 @@ class EventsList extends Component {
         }
     }
     render() {
-        if (!this.state.eventsList) return null;
 
         const eventsList = this.state.eventsList.map((event, i) => {
+
+            const {hours: startHours, minutes: startMinutes} = timestampToTimeObj(event.start);
+            const {hours: finishHours, minutes: finishMinutes} = timestampToTimeObj(event.finish);
+
             return (
                 <div key={i}>
+                    {startHours}:{startMinutes} | {finishHours}:{finishMinutes} |
                     {event.type} | 
                     {event.category} | 
+                    {/* {event.comment} |  */}
                 </div>
             )
         });
