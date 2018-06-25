@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 
-import apiQuery from './Api';
+import queryServer from './queryServer';
 import Header from './components/Header';
 import * as action from './store/actions';
 import { getCookie, deleteCookie } from './support/cookies';
@@ -15,9 +15,27 @@ import m from "./support/messages";
 class App extends Component {
     constructor(props) {
         super(props);
-        this.serverResponse = this.serverResponse.bind(this)
+        this.handleServerResponse = this.handleServerResponse.bind(this)
     }
-    serverResponse(response) {
+
+    componentDidMount() {
+
+        const cookie = getCookie('token');
+        if (cookie) {
+            queryServer({
+                path: '/token-acknowledge',
+                data: {token: cookie.token},
+                callback: this.handleServerResponse
+            });
+            this.props.setUserToken(cookie.token);
+        } else {
+            this.props.setUserName(false);
+        }
+        this.setDate();
+
+    }
+
+    handleServerResponse(response) {
 
         const {status} = response;
         if (status === "success") {
@@ -33,19 +51,8 @@ class App extends Component {
         }
 
     }
-    componentDidMount() {
 
-        const cookie = getCookie('token');
-        if (cookie) {
-            apiQuery({
-                path: '/token-acknowledge',
-                data: {token: cookie.token},
-                callback: this.serverResponse
-            });
-            this.props.setUserToken(cookie.token);
-        } else {
-            this.props.setUserName(false);
-        }
+    setDate() {
 
         const date = new Date();
         const day = date.getDate();
@@ -54,7 +61,9 @@ class App extends Component {
         this.props.setDate(`${day}.${month}.${year}`);
 
     }
+
     render() {
+
         if (this.props.name === undefined) return null;
         return (
             <div className="App">
@@ -62,6 +71,7 @@ class App extends Component {
                 {renderRoutes(this.props.route.routes)}
             </div>
         );
+
     }
 }
 

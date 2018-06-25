@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import apiQuery from './../Api';
+import queryServer from './../queryServer';
 import m from './../support/messages';
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
 
-        this.serverResponse = this.serverResponse.bind(this);
+        this.handleServerResponse = this.handleServerResponse.bind(this);
     }
 
-    serverResponse(response) {
+    handleServerResponse(response) {
         const message = response.status === "success"
             ? m.emailConfirmationSuccess()
             : m.emailConfirmationFailure();
@@ -18,10 +18,10 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        apiQuery({
+        queryServer({
             path: '/email-confirmation',
             data: {hash: this.props.match.params.hash},
-            callback: this.serverResponse
+            callback: this.handleServerResponse
         });
 
     }

@@ -1,8 +1,8 @@
 import axios from "axios";
 import {server} from "./support/constants";
 
-export default ({path, data, callback}) => {
-    return axios.post(`${server}${path}`, data)
+export default ({path, data, callback, method = 'post'}) => {
+    return axios[method](`${server}${path}`, data)
         .then(response => {
             callback(response.data);
         })

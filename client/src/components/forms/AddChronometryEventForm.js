@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
-import apiQuery from './../../Api';
+import queryServer from './../../queryServer';
 
 class AddChronometryEventForm extends Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class AddChronometryEventForm extends Component {
 
     getTypes() {
 
-        apiQuery({
+        queryServer({
             path: '/get-types',
             data: {
                 name: 'admin'
@@ -51,7 +51,7 @@ class AddChronometryEventForm extends Component {
 
     getCategories(type) {
 
-        apiQuery({
+        queryServer({
             path: '/get-categories',
             data: {
                 name: 'admin',
@@ -71,7 +71,7 @@ class AddChronometryEventForm extends Component {
 
     getSubcategories(category) {
 
-        apiQuery({
+        queryServer({
             path: '/get-subcategories',
             data: {
                 name: 'admin',
@@ -196,7 +196,7 @@ class AddChronometryEventForm extends Component {
         event.preventDefault();
         const {start, finish, type, category, subcategory, comment} = this.state;
         
-        apiQuery({
+        queryServer({
             path: '/add-event',
             data: {
                 name: 'admin',

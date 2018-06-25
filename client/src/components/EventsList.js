@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import apiQuery from './../Api';
+import queryServer from './../queryServer';
 import {timestampToTimeObj} from './../support/functions';
+import paths from './../paths';
 
 class EventsList extends Component {
     constructor(props) {
@@ -10,13 +11,13 @@ class EventsList extends Component {
             eventsList: []
         }
 
-        this.serverResponse = this.serverResponse.bind(this);
+        this.handleServerResponse = this.handleServerResponse.bind(this);
     }
-    serverResponse(response) {
+    handleServerResponse(response) {
 
         let eventsList = response.eventsList.length > 0 
             ? response.eventsList
-            : null;
+            : [];
         this.setState({eventsList: eventsList})
     }
     componentDidMount() {
@@ -29,13 +30,13 @@ class EventsList extends Component {
     }
     getList() {
         let range = this.getRange(this.props.date, this.props.date);
-        apiQuery({
-            path: '/events-list',
+        queryServer({
+            path: paths.getEventsList,
             data: {
                 name: this.props.name,
                 ...range
             },
-            callback: this.serverResponse
+            callback: this.handleServerResponse
         });
     }
     getRange(start, finish) {

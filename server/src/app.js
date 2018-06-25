@@ -12,7 +12,7 @@ const userRemove = require('./user-remove');
 const userChangePassword = require('./user-change-password');
 const tokenAcknowledge = require('./token-acknowledge');
 const usersList = require('./users-list');
-const eventsList = require('./events-list');
+const getEventsList = require('./get-events-list');
 const emailConfirmation = require('./email-confirmation');
 const userData = require('./user-data');
 const getTypes = require('./get-types');
@@ -53,7 +53,7 @@ app.post('/email-confirmation', emailConfirmation);
 
 app.post('/user-get-data', userData);
 
-app.post('/events-list', eventsList);
+app.post('/get-events-list', getEventsList);
 
 app.post('/get-types', getTypes);
 app.post('/get-categories', getCategories);

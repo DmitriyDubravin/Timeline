@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import apiQuery from './../../Api';
+import queryServer from './../../queryServer';
 import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { changePasswordFormData } from './../../data/formsData';
@@ -23,14 +23,14 @@ class ChangePasswordForm extends Component {
         }
 
         this.submitHandler = this.submitHandler.bind(this);
-        this.serverResponse = this.serverResponse.bind(this);
+        this.handleServerResponse = this.handleServerResponse.bind(this);
         this.getField = this.getField.bind(this);
     }
 
     getField(fieldName) {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
-    serverResponse(response) {
+    handleServerResponse(response) {
 
         const {status} = response;
         let message = status === "success"
@@ -41,14 +41,14 @@ class ChangePasswordForm extends Component {
     }
     submitHandler(event) {
         event.preventDefault();
-        apiQuery({
+        queryServer({
             path: '/user-change-password',
             data: {
                 login: this.props.name,
                 currentPassword: this.state.form[0].value,
                 newPassword: this.state.form[1].value
             },
-            callback: this.serverResponse
+            callback: this.handleServerResponse
         });
     }
 

@@ -1,35 +1,37 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import apiQuery from './../Api';
+import queryServer from './../queryServer';
 
 class UsersList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            usersList: null
+            usersList: [],
+            isUsersListHasItems: false
         }
-
-        this.serverResponse = this.serverResponse.bind(this);
+        this.handleServerResponse = this.handleServerResponse.bind(this);
     }
-    serverResponse(response) {
 
-        let usersList = response.usersList.length > 0 
-            ? response.usersList
-            : null;
-        this.setState({usersList: usersList})
-
-    }
     componentDidMount() {
-        apiQuery({
+        queryServer({
             path: '/users-list',
-            callback: this.serverResponse
+            callback: this.handleServerResponse
         });
     }
-    render() {
-        if (!this.state.usersList) return null;
 
-        let usersList = this.state.usersList.map(user => {
+    handleServerResponse(response) {
+        this.setState({
+            usersList: response.usersList,
+            isUsersListHasItems: response.usersList.length > 0
+        })
+    }
+
+    render() {
+
+        const {usersList, isUsersListHasItems} = this.state;
+
+        let usersDOMList = isUsersListHasItems && usersList.map(user => {
             let url = `/users/${user}`;
             return <li key={user}><Link to={url}>{user}</Link></li>
         })
@@ -37,9 +39,9 @@ class UsersList extends Component {
         return (
             <div>
                 {
-                    this.state.usersList &&
+                    isUsersListHasItems &&
                     <ul>
-                        {usersList}
+                        {usersDOMList}
                     </ul>
                 }
             </div>

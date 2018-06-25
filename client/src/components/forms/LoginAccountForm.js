@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import apiQuery from './../../Api';
+import queryServer from './../../queryServer';
 import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { loginFormData } from './../../data/formsData';
@@ -20,7 +20,7 @@ class LoginAccountForm extends Component {
             form: this.form.getFormData()
         }
         this.submitHandler = this.submitHandler.bind(this);
-        this.serverResponse = this.serverResponse.bind(this);
+        this.handleServerResponse = this.handleServerResponse.bind(this);
         this.getField = this.getField.bind(this);
     }
 
@@ -28,7 +28,7 @@ class LoginAccountForm extends Component {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
 
-    serverResponse(response) {
+    handleServerResponse(response) {
 
         const {status} = response;
 
@@ -54,13 +54,13 @@ class LoginAccountForm extends Component {
 
     submitHandler(event) {
         event.preventDefault();
-        apiQuery({
+        queryServer({
             path: '/user-login',
             data: {
                 login: this.getField('name'),
                 password: this.getField('password')
             },
-            callback: this.serverResponse
+            callback: this.handleServerResponse
         });
     }
 
