@@ -5,6 +5,7 @@ import LoginAccountForm from './forms/LoginAccountForm';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
 import { deleteCookie } from './../support/cookies';
+import Date from './Date';
 
 class Header extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class Header extends Component {
 
         return (
             <div className="header">
+                <Date />
                 <div className="user-box">
                     {
                         !name &&

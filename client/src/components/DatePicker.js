@@ -6,49 +6,46 @@ class DatePicker extends Component {
 
     constructor(props) {
         super(props);
-        const [day, month, year] = props.date.split(".");
 
         this.state = {
             showPopup: false,
-            chosenYear: +year,
-            chosenMonth: +month,
-            chosenDay: +day,
-            showingYear: +year,
-            showingMonth: +month,
+            showingYear: props.date.year,
+            showingMonth: props.date.month,
             weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
         }
 
         this.togglePopup = this.togglePopup.bind(this);
-        // this.getDaysInMonth = this.getDaysInMonth.bind(this);
         this.setDay = this.setDay.bind(this);
         this.switchMonth = this.switchMonth.bind(this);
 
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.date !== this.props.date) {
+            this.setState({
+                showingYear: this.props.date.year,
+                showingMonth: this.props.date.month
+            })
+        }
+    }
+
     togglePopup() {
         this.setState({showPopup: !this.state.showPopup})
     }
-
     getDaysInMonth(year, month) {
         return [31, (year % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
     }
     getMonthName(monthIndex) {
-        return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][--monthIndex]
+        return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][monthIndex]
     }
 
     setDay(newDay) {
         const {showingMonth, showingYear} = this.state;
-        this.setState({
-            chosenDay: newDay,
-            chosenMonth: showingMonth,
-            chosenYear: showingYear
-        });
-        let newDate = `${newDay}.${showingMonth}.${showingYear}`;
+        let newDate = {day: newDay, month: showingMonth, year: showingYear};
         this.props.setDate(newDate);
     }
 
     generateDays(year, month) {
-        month -= 1;
         const firstDayNum = new Date(year, month).getDay();
         const daysInPrevMonth = new Date(year, month, 0).getDate();
         const daysInCurrentMonth = this.getDaysInMonth(year, month);
@@ -63,9 +60,9 @@ class DatePicker extends Component {
             let onClick = () => this.setDay(d);
             let cls = "day";
             if (
-                this.state.showingYear === this.state.chosenYear &&
-                this.state.showingMonth === this.state.chosenMonth &&
-                d === this.state.chosenDay
+                this.state.showingYear === this.props.date.year &&
+                this.state.showingMonth === this.props.date.month &&
+                d === this.props.date.day
             ) {
                 onClick = null;
                 cls = "day chosen"
@@ -89,11 +86,11 @@ class DatePicker extends Component {
     switchMonth(modificator) {
         let newMonth = +this.state.showingMonth + modificator;
         let newYear = +this.state.showingYear;
-        if (newMonth === 0) {
+        if (newMonth === -1) {
             newMonth = 12;
             newYear -= 1;
         }
-        if (newMonth === 13) {
+        if (newMonth === 12) {
             newMonth = 1;
             newYear += 1;
         }
@@ -139,7 +136,7 @@ class DatePicker extends Component {
 
 export default connect(
     state => ({
-        date: state.date.date
+        date: state.date
     }),
     dispatch => ({
         setDate: function(date) {

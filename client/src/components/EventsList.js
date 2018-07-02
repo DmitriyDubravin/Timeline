@@ -40,11 +40,11 @@ class EventsList extends Component {
         });
     }
     getRange(start, finish) {
-        let [sDay, sMonth, sYear] = start.split('.');
-        let [fDay, fMonth, fYear] = finish.split('.');
+        let {day: sDay, month: sMonth, year: sYear} = start;
+        let {day: fDay, month: fMonth, year: fYear} = finish;
         return {
-            start: Math.floor(+new Date(Date.UTC(sYear, --sMonth, sDay)) / 1000),
-            finish: Math.floor(+new Date(Date.UTC(fYear, --fMonth, fDay, 23, 59, 59)) / 1000)
+            start: Math.floor(+new Date(Date.UTC(sYear, sMonth, sDay)) / 1000),
+            finish: Math.floor(+new Date(Date.UTC(fYear, fMonth, fDay, 23, 59, 59)) / 1000)
         }
     }
     render() {
@@ -77,6 +77,6 @@ class EventsList extends Component {
 export default connect(
     state => ({
         name: state.user.name,
-        date: state.date.date
+        date: state.date
     })
 )(EventsList)

@@ -91,7 +91,7 @@ class AddChronometryEventForm extends Component {
 
     getSeconds(time) {
         let [hour, minute] = time.split(':');
-        let [day, month, year] = this.props.date.split('.');
+        let {day, month, year} = this.props.date;
         return Math.floor(+new Date(Date.UTC(year, month - 1, day, hour, minute)) / 1000)
     }
 
@@ -330,6 +330,6 @@ class AddChronometryEventForm extends Component {
 export default connect(
     state => ({
         name: state.user.name,
-        date: state.date.date
+        date: state.date
     })
 )(AddChronometryEventForm)

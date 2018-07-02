@@ -22,7 +22,9 @@ const preloadedState = {
         name: undefined
     },
     date: {
-        date: "01.05.2018"
+        year: null,
+        month: null,
+        day: null,
     }
 }
 

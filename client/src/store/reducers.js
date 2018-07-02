@@ -15,7 +15,7 @@ export const user = (state = {}, {type, data}) => {
 export const date = (state = {}, {type, data}) => {
     switch (type) {
         case "SET_DATE":
-            return {...state, date: data}
+            return {...state, ...data}
         default:
             return state;
     }

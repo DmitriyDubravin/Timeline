@@ -56,9 +56,9 @@ class App extends Component {
 
         const date = new Date();
         const day = date.getDate();
-        const month = date.getMonth() + 1;
+        const month = date.getMonth();
         const year = date.getFullYear();
-        this.props.setDate(`${day}.${month}.${year}`);
+        this.props.setDate({day, month, year});
 
     }
 
