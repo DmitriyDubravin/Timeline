@@ -1,82 +1,54 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import LoginAccountForm from './forms/LoginAccountForm';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
 import { deleteCookie } from './../support/cookies';
 import Date from './Date';
+import MainNav from './MainNav';
+import LoginPopup from './LoginPopup';
 
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            showLogin: false
-        }
 
-        this.login = this.login.bind(this);
+        this.togglePopup = this.togglePopup.bind(this);
         this.logout = this.logout.bind(this);
     }
-    login(e) {
+    togglePopup(e) {
         e.preventDefault();
-        this.setState({showLogin: !this.state.showLogin});
+        this.props.toggleLoginPopup(!this.props.isLoginShown);
     }
     logout() {
         deleteCookie();
         this.props.setUserName(false);
-        this.props.setUserIsAuthorized(false);
-    }
-    componentDidUpdate(prevProps) {
-        if (prevProps.name !== this.props.name && !!this.props.name) {
-            this.setState({showLogin: false});
-        }
+        this.props.setUserToken(false);
+        this.props.setUserAuthorization(false);
     }
     render() {
-        const {name} = this.props;
+
+        const {user, isLoginShown} = this.props;
+        const {name, isAuthorized} = user;
 
         return (
             <div className="header">
                 <Date />
                 <div className="user-box">
                     {
-                        !name &&
-                        <div>
-                            <a href="/" onClick={this.login}>Login</a> | <Link to="/register">Register</Link>
-                        </div>
-                    }
-                    {
-                        !!name &&
+                        isAuthorized &&
                         <div>
                             <Link to={`/users/${name}`}>{name}</Link> <button onClick={this.logout}>Logout</button>
                         </div>
                     }
-                </div>
-                {
-                    this.state.showLogin &&
-                    !name &&
-                    (
-                        <div className="popup">
-                            <LoginAccountForm />
-                            <button onClick={this.login} className="close">X</button>
+                    {
+                        !isAuthorized &&
+                        <div>
+                            <a href="/" onClick={this.togglePopup}>Login</a> | <Link to="/register">Register</Link>
                         </div>
-                    )
-                }
-                <ul className="main-nav">
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/chronometry">Chronometry</Link>
-                        <ul>
-                            <li>
-                                <Link to="/chronometry/add">Add</Link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <Link to="/users">Users</Link>
-                    </li>
-                </ul>
+                    }
+                </div>
+                {isLoginShown && <LoginPopup />}
+                <MainNav />
             </div>
         )
     }
@@ -86,14 +58,21 @@ class Header extends Component {
 
 export default connect(
     state => ({
-        name: state.user.name
+        user: state.user,
+        isLoginShown: state.popup.isLoginShown
     }),
     dispatch => ({
         setUserName: function(name) {
             dispatch(action.setUserName(name))
         },
-        setUserIsAuthorized: function(name) {
-            dispatch(action.setUserIsAuthorized(name))
+        setUserToken: function(token) {
+            dispatch(action.setUserToken(token))
+        },
+        setUserAuthorization: function(name) {
+            dispatch(action.setUserAuthorization(name))
+        },
+        toggleLoginPopup: function(boolean) {
+            dispatch(action.toggleLoginPopup(boolean))
         }
     })
 )(Header)

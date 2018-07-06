@@ -7,7 +7,7 @@ import DatePicker from './../components/DatePicker';
 
 class ChronometryPage extends Component {
     render() {
-        if (!this.props.name) return <DefaultChronometryPage />;
+        if (!this.props.user.isAuthorized) return <DefaultChronometryPage />;
 
         return (
             <div>
@@ -22,6 +22,6 @@ class ChronometryPage extends Component {
 
 export default connect(
     state => ({
-        name: state.user.name
+        user: state.user
     })
 )(ChronometryPage)

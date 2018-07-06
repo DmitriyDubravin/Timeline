@@ -48,6 +48,8 @@ class LoginAccountForm extends Component {
         if (status === 'success') {
             this.props.setUserName(response.name);
             this.props.setUserToken(response.token);
+            this.props.setUserAuthorization(true);
+            this.props.toggleLoginPopup(false);
             setCookie(response.token);
         }
     }
@@ -91,6 +93,12 @@ export default connect(
         },
         setUserToken: function(token) {
             dispatch(action.setUserToken(token))
+        },
+        setUserAuthorization: function(boolean) {
+            dispatch(action.setUserAuthorization(boolean))
+        },
+        toggleLoginPopup: function(boolean) {
+            dispatch(action.toggleLoginPopup(boolean))
         }
     })
 )(LoginAccountForm)

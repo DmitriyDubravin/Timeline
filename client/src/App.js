@@ -18,6 +18,8 @@ class App extends Component {
 
     componentDidMount() {
 
+        this.setDate();
+
         const cookie = getCookie('token');
         if (cookie) {
             queryServer({
@@ -26,10 +28,7 @@ class App extends Component {
                 callback: this.handleServerResponse
             });
             this.props.setUserToken(cookie.token);
-        } else {
-            this.props.setUserName(false);
         }
-        this.setDate();
 
     }
 
@@ -38,12 +37,11 @@ class App extends Component {
         const {status} = response;
         if (status === "success") {
             this.props.setUserName(response.name);
-            this.props.setUserIsAuthorized(true);
+            this.props.setUserAuthorization(true);
             console.log(m.tokenAcknowledgeSuccess());
         }
         if (status === "error") {
-            this.props.setUserName(false);
-            this.props.setUserIsAuthorized(false);
+            this.props.setUserToken(undefined);
             deleteCookie();
             console.log(m.tokenAcknowledgeFailure());
         }
@@ -86,8 +84,8 @@ export default connect(
         setUserToken: function(token) {
             dispatch(action.setUserToken(token))
         },
-        setUserIsAuthorized: function(boolean) {
-            dispatch(action.setUserIsAuthorized(boolean))
+        setUserAuthorization: function(boolean) {
+            dispatch(action.setUserAuthorization(boolean))
         },
         setDate: function(date) {
             dispatch(action.setDate(date))
