@@ -7,9 +7,7 @@ import Header from './components/Header';
 import * as action from './store/actions';
 import { getCookie, deleteCookie } from './support/cookies';
 import m from "./support/messages";
-// import {server} from "./support/constants";
 
-// import axios from 'axios';
 
 
 class App extends Component {
@@ -64,7 +62,7 @@ class App extends Component {
 
     render() {
 
-        if (this.props.name === undefined) return null;
+        // if (this.props.name === undefined) return null;
         return (
             <div className="App">
                 <Header />
