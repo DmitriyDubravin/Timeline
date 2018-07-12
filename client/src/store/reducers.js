@@ -29,3 +29,12 @@ export const popup = (state = {}, {type, data}) => {
             return state;
     }
 }
+
+export const eventsListings = (state = {}, {type, data}) => {
+    switch (type) {
+        case "ADD_EVENTS_LIST":
+            return {...state, [data.date]: data.eventsList}
+        default:
+            return state;
+    }
+}

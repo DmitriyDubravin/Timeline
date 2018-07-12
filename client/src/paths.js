@@ -1,4 +1,5 @@
 
 export default {
-    getEventsList: "/get-events-list"
+    getEventsList: "/get-events-list",
+    getEvent: "/get-event"
 }

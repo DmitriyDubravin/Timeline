@@ -3,29 +3,30 @@ import {connect} from 'react-redux';
 import queryServer from './../queryServer';
 import {timestampToTimeObj} from './../support/functions';
 import paths from './../paths';
+import {Link} from 'react-router-dom';
+import * as action from './../store/actions';
 
 class EventsList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            eventsList: []
-        }
 
         this.handleServerResponse = this.handleServerResponse.bind(this);
     }
     handleServerResponse(response) {
-
-        let eventsList = response.eventsList.length > 0 
-            ? response.eventsList
-            : [];
-        this.setState({eventsList: eventsList})
+        if (response.eventsList.length > 0) {
+            
+            this.props.addEventsList(this.convertDate(), response.eventsList);
+        }
+    }
+    isHasList() {
+        return !!this.props.eventsListings[this.convertDate()];
     }
     componentDidMount() {
-        this.getList();
+        !this.isHasList() && this.getList();
     }
     componentDidUpdate(prevProps) {
         if (prevProps.date !== this.props.date) {
-            this.getList();
+            !this.isHasList() && this.getList();
         }
     }
     getList() {
@@ -47,25 +48,32 @@ class EventsList extends Component {
             finish: Math.floor(+new Date(Date.UTC(fYear, fMonth, fDay, 23, 59, 59)) / 1000)
         }
     }
+    convertDate() {
+        const {day, month, year} = this.props.date;
+        return `${day}.${month}.${year}`;
+    }
     render() {
 
-        const eventsList = this.state.eventsList.map((event, i) => {
+        const eventsList = this.isHasList()
+            ? this.props.eventsListings[this.convertDate()].map((event, i) => {
 
-            const {hours: startHours, minutes: startMinutes} = timestampToTimeObj(event.start);
-            const {hours: finishHours, minutes: finishMinutes} = timestampToTimeObj(event.finish);
+                const {hours: startHours, minutes: startMinutes} = timestampToTimeObj(event.start);
+                const {hours: finishHours, minutes: finishMinutes} = timestampToTimeObj(event.finish);
 
-            return (
-                <div key={i}>
-                    {startHours}:{startMinutes} | {finishHours}:{finishMinutes} |
-                    {event.type} | 
-                    {event.category} | 
-                    {/* {event.comment} |  */}
-                </div>
-            )
-        });
+                return (
+                    <div key={i}>
+                        {startHours}:{startMinutes} | {finishHours}:{finishMinutes} | 
+                        {event.type} | 
+                        {event.category} | 
+                        {/* {event.comment} |  */}
+                        <Link to={`/chronometry/event/${event._id}`}>edit</Link>
+                    </div>
+                )
+            })
+            : [];
 
         return (
-            this.state.eventsList &&
+            this.isHasList() &&
             <div>
                 {eventsList}
             </div>
@@ -77,6 +85,12 @@ class EventsList extends Component {
 export default connect(
     state => ({
         name: state.user.name,
-        date: state.date
+        date: state.date,
+        eventsListings: state.eventsListings
+    }),
+    dispatch => ({
+        addEventsList: function(date, eventsList) {
+            dispatch(action.addEventsList(date, eventsList))
+        }
     })
 )(EventsList)

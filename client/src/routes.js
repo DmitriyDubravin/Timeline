@@ -3,6 +3,7 @@ import App from './App';
 import HomePage from './pages/HomePage';
 import ChronometryPage from './pages/ChronometryPage';
 import ChronometryAddPage from './pages/ChronometryAddPage';
+import ChronometryEditPage from './pages/ChronometryEditPage';
 import RegisterPage from './pages/RegisterPage';
 import NoMatchPage from './pages/NoMatchPage';
 import UsersPage from './pages/UsersPage';
@@ -32,6 +33,11 @@ export default [
                 path: '/chronometry/add',
                 exact: true,
                 component: ChronometryAddPage
+            },
+            {
+                path: '/chronometry/event/:id',
+                exact: true,
+                component: ChronometryEditPage
             },
             {
                 path: '/users',
