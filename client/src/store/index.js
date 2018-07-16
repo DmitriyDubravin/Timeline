@@ -23,7 +23,7 @@ const preloadedState = {
     user: {
         name: undefined,
         token: undefined,
-        isAuthorized: false
+        isAuthorized: undefined
     },
     date: {
         year: null,

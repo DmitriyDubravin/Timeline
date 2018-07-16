@@ -3,10 +3,12 @@ import {connect} from 'react-redux';
 import queryServer from './../queryServer';
 import paths from './../paths';
 import Loader from './../components/Loader';
+import ConditionalRender from './ConditionalRender';
 
 class ChronometryEditPage extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        console.log('props', this.props);
         this.state = {
             isLoading: true,
             event: null
@@ -26,13 +28,11 @@ class ChronometryEditPage extends Component {
         }
     }
     componentDidUpdate(prevProps) {
-        if (
-            prevProps.name !== this.props.name
-            && this.props.name !== undefined
-            && !this.isHasList()
-        ) {
-            this.getEvent();
-        }
+
+        // if (!this.isHasList()) {
+        //     this.getEvent();
+        // }
+
     }
 
     convertDate() {
@@ -77,10 +77,21 @@ class ChronometryEditPage extends Component {
     }
 }
 
-export default connect(
+
+
+const CEP = connect(
     state => ({
         name: state.user.name,
         date: state.date,
         eventsListings: state.eventsListings
     })
 )(ChronometryEditPage)
+
+
+
+export default ConditionalRender(
+    CEP,
+    state => state.user.isAuthorized
+);
+
+

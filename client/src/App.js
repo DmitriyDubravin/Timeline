@@ -28,6 +28,10 @@ class App extends Component {
                 callback: this.handleServerResponse
             });
             this.props.setUserToken(cookie.token);
+        } else {
+            this.props.setUserName(false);
+            this.props.setUserToken(false);
+            this.props.setUserAuthorization(false);
         }
 
     }
@@ -41,7 +45,9 @@ class App extends Component {
             console.log(m.tokenAcknowledgeSuccess());
         }
         if (status === "error") {
-            this.props.setUserToken(undefined);
+            this.props.setUserName(false);
+            this.props.setUserToken(false);
+            this.props.setUserAuthorization(false);
             deleteCookie();
             console.log(m.tokenAcknowledgeFailure());
         }
