@@ -4,11 +4,11 @@ import queryServer from './../queryServer';
 import paths from './../paths';
 import Loader from './../components/Loader';
 import ConditionalRender from './ConditionalRender';
+import EditChronometryEventForm from './../components/forms/EditChronometryEventForm';
 
 class ChronometryEditPage extends Component {
     constructor(props) {
         super(props);
-        console.log('props', this.props);
         this.state = {
             isLoading: true,
             event: null
@@ -71,7 +71,7 @@ class ChronometryEditPage extends Component {
         return (
             <div>
                 <h2>Chronometry edit page</h2>
-                {this.state.event && this.state.event.type}
+                {this.state.event && <EditChronometryEventForm event={this.state.event} />}
             </div>
         )
     }
@@ -90,8 +90,8 @@ const CEP = connect(
 
 
 export default ConditionalRender(
-    CEP,
-    state => state.user.isAuthorized
+    state => state.user.isAuthorized,
+    CEP
 );
 
 

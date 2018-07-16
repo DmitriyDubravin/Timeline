@@ -2,23 +2,26 @@ import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
 import queryServer from './../../queryServer';
+import {timestampToTimeObj} from './../../support/functions';
 
-class AddChronometryEventForm extends Component {
+class EditChronometryEventForm extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props.event);
+        const {type, category, subcategory, comment, start, finish} = props.event;
         this.state = {
             newType: false,
             newCategory: false,
             newSubcategory: false,
-            type: '',
-            category: '',
-            subcategory: '',
-            comment: '',
+            type: type,
+            category: category,
+            subcategory: subcategory,
+            comment: comment,
             types: [],
             categories: [],
             subcategories: [],
-            start: '',
-            finish: '',
+            start: start,
+            finish: finish,
             redirect: false
         }
         this.inputHandler = this.inputHandler.bind(this);
@@ -28,6 +31,14 @@ class AddChronometryEventForm extends Component {
 
     componentDidMount() {
         this.getTypes();
+        if(this.props.event.category.length > 0) {
+            console.log(2);
+            this.getCategories(this.props.event.type);
+        }
+        if(this.props.event.category.length > 0) {
+            console.log(3);
+            this.getSubcategories(this.props.event.category);
+        }
     }
 
     getTypes() {
@@ -93,6 +104,10 @@ class AddChronometryEventForm extends Component {
         let [hour, minute] = time.split(':');
         let {day, month, year} = this.props.date;
         return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
+    }
+    getTime(timestamp) {
+        let date = timestampToTimeObj(timestamp);
+        return `${date.hours}:${date.minutes}`;
     }
 
     inputHandler(event) {
@@ -197,9 +212,10 @@ class AddChronometryEventForm extends Component {
         const {start, finish, type, category, subcategory, comment} = this.state;
         
         queryServer({
-            path: '/add-event',
+            path: '/edit-event',
             data: {
                 name: 'admin',
+                _id: this.props.event._id,
                 start: start,
                 finish: finish,
                 type: type,
@@ -213,6 +229,7 @@ class AddChronometryEventForm extends Component {
 
 
     render() {
+        console.log(this.state);
 
         if (this.state.redirect) return <Redirect to="/chronometry" push={true} />
 
@@ -255,11 +272,11 @@ class AddChronometryEventForm extends Component {
             <form className="add-chronometry-event-form" onSubmit={this.submitHandler}>
 
                 <div className="line">
-                    <select name="start" onChange={this.inputHandler}>
+                    <select name="start" value={this.getTime(this.state.start)} onChange={this.inputHandler}>
                         <option>Start</option>
                         {startOptions}
                     </select>
-                    <select name="finish" onChange={this.inputHandler}>
+                    <select name="finish" value={this.getTime(this.state.finish)} onChange={this.inputHandler}>
                         <option>Finish</option>
                         {finishOptions}
                     </select>
@@ -267,7 +284,7 @@ class AddChronometryEventForm extends Component {
                 {
                     showType &&
                     <div className="line">
-                        <select name="type" onChange={this.inputHandler}>
+                        <select name="type" value={this.state.type} onChange={this.inputHandler}>
                             <option>Type</option>
                             {typesList}
                         </select>
@@ -285,7 +302,7 @@ class AddChronometryEventForm extends Component {
                 {
                     showCategory &&
                     <div className="line">
-                        <select name="category" onChange={this.inputHandler}>
+                        <select name="category" value={this.state.category} onChange={this.inputHandler}>
                             <option>Category</option>
                             {categoriesList}
                         </select>
@@ -303,7 +320,7 @@ class AddChronometryEventForm extends Component {
                 {
                     showSubcategory &&
                     <div className="line">
-                        <select name="subcategory" onChange={this.inputHandler}>
+                        <select name="subcategory" value={this.state.subcategory} onChange={this.inputHandler}>
                             <option>Subcategory</option>
                             {subCategoriesList}
                         </select>
@@ -317,9 +334,9 @@ class AddChronometryEventForm extends Component {
                         {!newCategory && <button name="subcategory" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>}
                     </div>
                 }
-                <textarea name="comment" onChange={this.inputHandler} ></textarea>
+                <textarea name="comment" value={this.state.comment} onChange={this.inputHandler} ></textarea>
 
-                <input type="submit" value="Add event" />
+                <input type="submit" value="Edit event" />
             </form>
         )
     }
@@ -332,4 +349,4 @@ export default connect(
         name: state.user.name,
         date: state.date
     })
-)(AddChronometryEventForm)
+)(EditChronometryEventForm)

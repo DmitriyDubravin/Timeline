@@ -20,6 +20,7 @@ const getTypes = require('./get-types');
 const getCategories = require('./get-categories');
 const getSubcategories = require('./get-subcategories');
 const addEvent = require('./add-event');
+const editEvent = require('./edit-event');
 
 
 // check connection
@@ -62,5 +63,6 @@ app.post('/get-categories', getCategories);
 app.post('/get-subcategories', getSubcategories);
 
 app.post('/add-event', addEvent);
+app.post('/edit-event', editEvent);
 
 app.listen(process.env.PORT || 8081);

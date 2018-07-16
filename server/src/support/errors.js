@@ -43,4 +43,7 @@ module.exports = {
     addEventError: res => res.status(500).send({
         message: '\nServer error while adding new event\n\n'
     }),
+    updateEventError: res => res.status(500).send({
+        message: '\nServer error while updating event\n\n'
+    }),
 }

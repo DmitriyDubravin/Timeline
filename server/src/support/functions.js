@@ -13,6 +13,7 @@ module.exports = {
     findEvents: events => Events.find(events).sort({start: 1}).exec(),
 
     isUserFound: response => response.length > 0,
+    isEventFound: response => response.length > 0,
     isUserEmailConfirmed: user => user.role.length < 10,
     isPasswordMatches: (password, response) => bcrypt.compareSync(password, response[0].password),
     hashPassword: password => bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
@@ -24,6 +25,8 @@ module.exports = {
     getSubcategories: options => Events.distinct("subcategory", options),
 
     addEvent: eventData => new Events(eventData).save(),
+    editEvent: (event, data) => Events.update(event, data),
+
     success: (res, data = {}) => res.send({...data, status: 'success'}),
     failure: (res, data = {}) => res.send({...data, status: 'error'})
 
