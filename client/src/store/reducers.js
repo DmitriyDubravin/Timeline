@@ -34,6 +34,8 @@ export const eventsListings = (state = {}, {type, data}) => {
     switch (type) {
         case "ADD_EVENTS_LIST":
             return {...state, [data.date]: data.eventsList}
+        case "REMOVE_EVENTS_LIST":
+            return {...state, [data.date]: null}
         default:
             return state;
     }

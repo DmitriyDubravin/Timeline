@@ -3,6 +3,7 @@ import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
 import queryServer from './../../queryServer';
 import {timestampToTimeObj} from './../../support/functions';
+import * as action from './../../store/actions';
 
 class EditChronometryEventForm extends Component {
     constructor(props) {
@@ -204,8 +205,9 @@ class EditChronometryEventForm extends Component {
             });
         }
     }
-    eventAdded(data) {
-        if (data.status === "success") this.setState({redirect: true});
+    eventEdited(data) {
+        console.log(data);
+        // if (data.status === "success") this.setState({redirect: true});
     }
     submitHandler(event) {
         event.preventDefault();
@@ -223,15 +225,20 @@ class EditChronometryEventForm extends Component {
                 subcategory: subcategory,
                 comment: comment
             },
-            callback: this.eventAdded.bind(this)
+            callback: this.eventEdited.bind(this)
         });
     }
 
 
     render() {
-        console.log(this.state);
+        console.log(this.props);
 
-        if (this.state.redirect) return <Redirect to="/chronometry" push={true} />
+        if (this.state.redirect) {
+            const {day, month, year} = this.props.date;
+            const date = `${day}:${month}:${year}`;
+            this.props.removeEventsList(date);
+            return <Redirect to="/chronometry" push={true} />
+        }
 
         // console.log(this.state);
 
@@ -348,5 +355,10 @@ export default connect(
     state => ({
         name: state.user.name,
         date: state.date
+    }),
+    dispatch => ({
+        removeEventsList: function(date) {
+            dispatch(action.removeEventsList(date))
+        }
     })
 )(EditChronometryEventForm)

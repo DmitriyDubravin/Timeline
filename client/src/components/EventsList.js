@@ -14,7 +14,6 @@ class EventsList extends Component {
     }
     handleServerResponse(response) {
         if (response.eventsList.length > 0) {
-            
             this.props.addEventsList(this.convertDate(), response.eventsList);
         }
     }
@@ -65,7 +64,7 @@ class EventsList extends Component {
                         {startHours}:{startMinutes} | {finishHours}:{finishMinutes} | 
                         {event.type} | 
                         {event.category} | 
-                        {/* {event.comment} |  */}
+                        {event.comment} | 
                         <Link to={`/chronometry/event/${event._id}`}>edit</Link>
                     </div>
                 )

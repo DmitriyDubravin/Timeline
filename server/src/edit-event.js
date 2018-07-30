@@ -3,8 +3,11 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
+    console.log('\n\n\n000');
+
     const {name, _id, start, finish, type, category, subcategory, comment} = req.body;
     const updateEventOptions = {
+        user: name,
         start: start,
         finish: finish,
         type: type,
@@ -15,20 +18,20 @@ module.exports = async function(req, res) {
 
     const findEventOptions = {
         user: name,
-        _id: id
+        _id: _id
     }
 
-    const foundEvent = await f.tryCatch(f.findEvents(findEventsOptions));
+    const foundEvent = await f.tryCatch(f.findEvents(findEventOptions));
     foundEvent.err && e.findEventsError(res);
 
     if(f.isEventFound(foundEvent.data)) {
-        console.log('\n\n\n111');
-        // const updatedEvent = await f.tryCatch(f.editEvent(findEventOptions, updateEventOptions))
-        // updatedEvent && e.updateEventError(res);
+        const updatedEvent = await f.tryCatch(f.editEvent(findEventOptions, updateEventOptions))
+        updatedEvent.err && e.updateEventError(res);
+
+        //findAndModify() to get updated event back
 
         f.success(res);
     } else {
-        console.log('\n\n\n222');
         f.failure(res);
     }
 
