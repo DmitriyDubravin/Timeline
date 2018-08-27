@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
 import queryServer from './../../queryServer';
+import * as action from './../../store/actions';
+// import { clearScreenDown } from 'readline';
 
 class AddChronometryEventForm extends Component {
     constructor(props) {
@@ -190,7 +192,14 @@ class AddChronometryEventForm extends Component {
         }
     }
     eventAdded(data) {
-        if (data.status === "success") this.setState({redirect: true});
+
+        if (Object.keys(this.props.eventsListings).length !== 0) {
+            const {day, month, year} = this.props.date;
+            const date = `${day}.${month}.${year}`;
+            this.props.addEvent(date, data.addedEvent);
+        }
+
+        // if (data.status === "success") this.setState({redirect: true});
     }
     submitHandler(event) {
         event.preventDefault();
@@ -330,6 +339,12 @@ class AddChronometryEventForm extends Component {
 export default connect(
     state => ({
         name: state.user.name,
-        date: state.date
+        date: state.date,
+        eventsListings: state.eventsListings
+    }),
+    dispatch => ({
+        addEvent: function(date, event) {
+            dispatch(action.addEvent(date, event))
+        }
     })
 )(AddChronometryEventForm)

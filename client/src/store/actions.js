@@ -13,3 +13,6 @@ export const toggleLoginPopup = boolean => ({type: "TOGGLE_LOGIN_POPUP", data: b
 // eventsListings
 export const addEventsList = (date, eventsList) => ({type: "ADD_EVENTS_LIST", data: {date, eventsList}});
 export const removeEventsList = date => ({type: "REMOVE_EVENTS_LIST", data: date});
+export const updateEventsList = (date, updatedEvent) => ({type: "UPDATE_EVENTS_LIST", data: {date, updatedEvent}});
+
+export const addEvent = (date, event) => ({type: "ADD_EVENT", data: {date, event}});

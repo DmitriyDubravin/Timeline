@@ -8,7 +8,6 @@ import * as action from './../../store/actions';
 class EditChronometryEventForm extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.event);
         const {type, category, subcategory, comment, start, finish} = props.event;
         this.state = {
             newType: false,
@@ -33,11 +32,9 @@ class EditChronometryEventForm extends Component {
     componentDidMount() {
         this.getTypes();
         if(this.props.event.category.length > 0) {
-            console.log(2);
             this.getCategories(this.props.event.type);
         }
         if(this.props.event.category.length > 0) {
-            console.log(3);
             this.getSubcategories(this.props.event.category);
         }
     }
@@ -206,8 +203,14 @@ class EditChronometryEventForm extends Component {
         }
     }
     eventEdited(data) {
-        console.log(data);
-        // if (data.status === "success") this.setState({redirect: true});
+
+        if (Object.keys(this.props.eventsListings).length !== 0) {
+            const {day, month, year} = this.props.date;
+            const date = `${day}.${month}.${year}`;
+            this.props.updateEventsList(date, data.updatedEvent);
+        }
+
+        if (data.status === "success") this.setState({redirect: true});
     }
     submitHandler(event) {
         event.preventDefault();
@@ -231,16 +234,11 @@ class EditChronometryEventForm extends Component {
 
 
     render() {
-        console.log(this.props);
 
         if (this.state.redirect) {
-            const {day, month, year} = this.props.date;
-            const date = `${day}:${month}:${year}`;
-            this.props.removeEventsList(date);
             return <Redirect to="/chronometry" push={true} />
         }
 
-        // console.log(this.state);
 
         const {types, categories, subcategories, type, newType, category, newCategory, newSubcategory} = this.state;
 
@@ -354,11 +352,12 @@ class EditChronometryEventForm extends Component {
 export default connect(
     state => ({
         name: state.user.name,
-        date: state.date
+        date: state.date,
+        eventsListings: state.eventsListings
     }),
     dispatch => ({
-        removeEventsList: function(date) {
-            dispatch(action.removeEventsList(date))
+        updateEventsList: function(date, updatedEvent) {
+            dispatch(action.updateEventsList(date, updatedEvent))
         }
     })
 )(EditChronometryEventForm)

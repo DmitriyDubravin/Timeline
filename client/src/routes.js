@@ -9,6 +9,8 @@ import NoMatchPage from './pages/NoMatchPage';
 import UsersPage from './pages/UsersPage';
 import UserPage from './pages/UserPage';
 import EmailConfirmedPage from './pages/EmailConfirmedPage';
+import ChronometryRemovePage from './pages/ChronometryRemovePage';
+
 
 export default [
     {
@@ -38,6 +40,11 @@ export default [
                 path: '/chronometry/event/:id',
                 exact: true,
                 component: ChronometryEditPage
+            },
+            {
+                path: '/chronometry/event/:id/delete',
+                exact: true,
+                component: ChronometryRemovePage
             },
             {
                 path: '/users',

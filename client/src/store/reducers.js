@@ -35,7 +35,21 @@ export const eventsListings = (state = {}, {type, data}) => {
         case "ADD_EVENTS_LIST":
             return {...state, [data.date]: data.eventsList}
         case "REMOVE_EVENTS_LIST":
-            return {...state, [data.date]: null}
+            return {...state, [data]: null}
+        case "UPDATE_EVENTS_LIST":
+            return {
+                ...state,
+                [data.date]: state[data.date].map(event => {
+                    return event._id === data.updatedEvent._id
+                    ? data.updatedEvent
+                    : event;
+                })
+            }
+        case "ADD_EVENT":
+            return {
+                ...state,
+                [data.date]: state[data.date].concat(data.event)
+            }
         default:
             return state;
     }

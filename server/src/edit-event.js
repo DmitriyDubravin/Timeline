@@ -3,7 +3,7 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    console.log('\n\n\n000');
+    console.log('\n\n\nNEW EDIT QUERY\n\n\n');
 
     const {name, _id, start, finish, type, category, subcategory, comment} = req.body;
     const updateEventOptions = {
@@ -28,9 +28,7 @@ module.exports = async function(req, res) {
         const updatedEvent = await f.tryCatch(f.editEvent(findEventOptions, updateEventOptions))
         updatedEvent.err && e.updateEventError(res);
 
-        //findAndModify() to get updated event back
-
-        f.success(res);
+        f.success(res, {updatedEvent: updatedEvent.data});
     } else {
         f.failure(res);
     }

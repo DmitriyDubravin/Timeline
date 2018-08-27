@@ -65,7 +65,8 @@ class EventsList extends Component {
                         {event.type} | 
                         {event.category} | 
                         {event.comment} | 
-                        <Link to={`/chronometry/event/${event._id}`}>edit</Link>
+                        <Link to={`/chronometry/event/${event._id}`}>edit</Link> | 
+                        <Link to={`/chronometry/event/${event._id}/delete`}>delete</Link>
                     </div>
                 )
             })

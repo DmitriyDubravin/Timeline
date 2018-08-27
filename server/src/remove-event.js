@@ -3,7 +3,7 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    console.log('\n\n\nNEW ADD QUERY\n\n\n');
+    console.log('\n\n\nNEW REMOVE QUERY\n\n\n');
 
     const {name, start, finish, type, category, subcategory, comment} = req.body;
     const eventData = {

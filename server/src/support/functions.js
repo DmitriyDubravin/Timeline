@@ -25,7 +25,7 @@ module.exports = {
     getSubcategories: options => Events.distinct("subcategory", options),
 
     addEvent: eventData => new Events(eventData).save(),
-    editEvent: (event, data) => Events.update(event, data),
+    editEvent: (event, data) => Events.findOneAndUpdate(event, data, {new: true}),
 
     success: (res, data = {}) => res.send({...data, status: 'success'}),
     failure: (res, data = {}) => res.send({...data, status: 'error'})
