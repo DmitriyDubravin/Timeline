@@ -26,6 +26,7 @@ module.exports = {
 
     addEvent: eventData => new Events(eventData).save(),
     editEvent: (event, data) => Events.findOneAndUpdate(event, data, {new: true}),
+    removeEvent: event => Events.remove(event),
 
     success: (res, data = {}) => res.send({...data, status: 'success'}),
     failure: (res, data = {}) => res.send({...data, status: 'error'})

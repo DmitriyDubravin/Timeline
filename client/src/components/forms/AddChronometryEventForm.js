@@ -197,6 +197,7 @@ class AddChronometryEventForm extends Component {
             const {day, month, year} = this.props.date;
             const date = `${day}.${month}.${year}`;
             this.props.addEvent(date, data.addedEvent);
+            this.setState({redirect: true});
         }
 
         // if (data.status === "success") this.setState({redirect: true});

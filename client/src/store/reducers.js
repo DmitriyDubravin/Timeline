@@ -50,6 +50,12 @@ export const eventsListings = (state = {}, {type, data}) => {
                 ...state,
                 [data.date]: state[data.date].concat(data.event)
             }
+        case "REMOVE_EVENT":
+            let newList = state[data.date].filter(event => event._id !== data.eventId);
+            return {
+                ...state,
+                [data.date]: newList
+            }
         default:
             return state;
     }

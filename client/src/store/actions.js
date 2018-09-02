@@ -16,3 +16,4 @@ export const removeEventsList = date => ({type: "REMOVE_EVENTS_LIST", data: date
 export const updateEventsList = (date, updatedEvent) => ({type: "UPDATE_EVENTS_LIST", data: {date, updatedEvent}});
 
 export const addEvent = (date, event) => ({type: "ADD_EVENT", data: {date, event}});
+export const removeEvent = (date, eventId) => ({type: "REMOVE_EVENT", data: {date, eventId}});

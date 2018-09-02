@@ -4,26 +4,30 @@ import queryServer from './../queryServer';
 import paths from './../paths';
 import Loader from './../components/Loader';
 import ConditionalRender from './ConditionalRender';
+import {Redirect} from "react-router-dom";
+import * as action from './../store/actions';
+
+
+
+
 
 class ChronometryRemovePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
+            redirect: false,
             event: null
         }
 
         this.handleServerResponse = this.handleServerResponse.bind(this);
+        this.removeEvent = this.removeEvent.bind(this);
     }
     componentDidMount() {
 
         const id = this.props.match.params.id;
-        if (Object.keys(this.props.eventsListings).length !== 0) {
-            const event = this.props.eventsListings[this.convertDate()].filter(event => event._id === id)[0];
-            this.setState({isLoading: false, event: event});
-        } else {
-            this.getEvent();
-        }
+        const event = this.props.eventsListings[this.convertDate()].filter(event => event._id === id)[0];
+        this.setState({isLoading: false, event: event});
 
     }
 
@@ -33,25 +37,31 @@ class ChronometryRemovePage extends Component {
     }
 
     handleServerResponse(response) {
+
+        console.log(response);
+
         if (response.status === 'success') {
-            this.setState({isLoading: false});
-        }
-        if (response.event.length > 0) {
-            this.setState({event: response.event[0]});
+            this.props.removeEvent(this.convertDate(), this.props.match.params.id)
+            this.setState({redirect: true});
         }
     }
-    getEvent() {
+    removeEvent() {
         queryServer({
-            path: paths.getEvent,
+            path: paths.removeEvent,
             data: {
                 name: this.props.name,
-                id: this.props.match.params.id
+                _id: this.props.match.params.id
             },
             callback: this.handleServerResponse
         });
     }
 
     render() {
+
+
+        if (this.state.redirect) {
+            return <Redirect to="/chronometry" push={true} />
+        }
 
         if (this.state.isLoading) return <Loader />
 
@@ -66,6 +76,7 @@ class ChronometryRemovePage extends Component {
                 {category} | 
                 {subcategory} | 
                 {comment}
+                <button onClick={this.removeEvent}>Remove</button>
             </div>
         )
     }
@@ -78,6 +89,11 @@ const CEP = connect(
         name: state.user.name,
         date: state.date,
         eventsListings: state.eventsListings
+    }),
+    dispatch => ({
+        removeEvent: function(date, eventId) {
+            dispatch(action.removeEvent(date, eventId))
+        }
     })
 )(ChronometryRemovePage)
 

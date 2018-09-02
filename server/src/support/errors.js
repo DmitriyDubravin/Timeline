@@ -46,4 +46,7 @@ module.exports = {
     updateEventError: res => res.status(500).send({
         message: '\nServer error while updating event\n\n'
     }),
+    removeEventError: res => res.status(500).send({
+        message: '\nServer error while removing event\n\n'
+    }),
 }
