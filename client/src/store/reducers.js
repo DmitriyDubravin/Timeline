@@ -15,7 +15,12 @@ export const user = (state = {}, {type, data}) => {
 export const date = (state = {}, {type, data}) => {
     switch (type) {
         case "SET_DATE":
-            return {...state, ...data}
+
+            let date = `${data.day}.${data.month}.${data.year}`;
+            let rangeStart = Math.floor(+new Date(Date.UTC(data.year, data.month, data.day)) / 1000);
+            let rangeFinish = Math.floor(+new Date(Date.UTC(data.year, data.month, data.day, 23, 59, 59)) / 1000);
+
+            return {...state, ...data, date, rangeStart, rangeFinish}
         default:
             return state;
     }
@@ -46,9 +51,11 @@ export const eventsListings = (state = {}, {type, data}) => {
                 })
             }
         case "ADD_EVENT":
+            let eventsList = state[data.date] !== undefined ? state[data.date] : [];
+            console.log('oldEventsList', state[data.date], eventsList);
             return {
                 ...state,
-                [data.date]: state[data.date].concat(data.event)
+                [data.date]: eventsList.concat(data.event)
             }
         case "REMOVE_EVENT":
             let newList = state[data.date].filter(event => event._id !== data.eventId);

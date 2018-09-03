@@ -20,7 +20,7 @@ class ChronometryEditPage extends Component {
         let isHasList = this.isHasList();
         if (isHasList) {
             const id = this.props.match.params.id;
-            const event = this.props.eventsListings[this.convertDate()].filter(event => event._id === id)[0]
+            const event = this.props.eventsListings[this.props.date.date].filter(event => event._id === id)[0]
             this.setState({isLoading: false, event: event});
         }
         if (this.props.name !== undefined && !isHasList) {
@@ -35,12 +35,8 @@ class ChronometryEditPage extends Component {
 
     }
 
-    convertDate() {
-        const {day, month, year} = this.props.date;
-        return `${day}.${month}.${year}`;
-    }
     isHasList() {
-        return !!this.props.eventsListings[this.convertDate()];
+        return !!this.props.eventsListings[this.props.date.date];
     }
 
     handleServerResponse(response) {

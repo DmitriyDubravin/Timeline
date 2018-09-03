@@ -9,7 +9,15 @@ export const timestampToTimeObj = timestamp => {
     const year = date.getUTCFullYear();
     const month = date.getUTCMonth() + 1;
     const day = date.getUTCDate();
-    const hours = convertNumToTwoDigits(date.getUTCHours());
-    const minutes = convertNumToTwoDigits(date.getUTCMinutes());
-    return {year, month, day, hours, minutes}
+    const hour = convertNumToTwoDigits(date.getUTCHours());
+    const minute = convertNumToTwoDigits(date.getUTCMinutes());
+    return {year, month, day, hour, minute}
+}
+export const getRange = (start, finish) => {
+    let {day: sDay, month: sMonth, year: sYear} = start;
+    let {day: fDay, month: fMonth, year: fYear} = finish;
+    return {
+        start: Math.floor(+new Date(Date.UTC(sYear, sMonth, sDay)) / 1000),
+        finish: Math.floor(+new Date(Date.UTC(fYear, fMonth, fDay, 23, 59, 59)) / 1000)
+    }
 }

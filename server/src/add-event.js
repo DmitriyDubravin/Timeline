@@ -5,15 +5,10 @@ module.exports = async function(req, res) {
 
     console.log('\n\n\nNEW ADD QUERY\n\n\n');
 
-    const {name, start, finish, type, category, subcategory, comment} = req.body;
+    const {name, ...rest} = req.body;
     const eventData = {
         user: name,
-        start: start,
-        finish: finish,
-        type: type,
-        category: category,
-        subcategory: subcategory,
-        comment: comment
+        ...rest
     }
 
     const addedEvent = await f.tryCatch(f.addEvent(eventData));

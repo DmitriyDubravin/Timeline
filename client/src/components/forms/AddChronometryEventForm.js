@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import queryServer from './../../queryServer';
 import * as action from './../../store/actions';
 // import { clearScreenDown } from 'readline';
+import {timestampToTimeObj} from './../../support/functions';
 
 class AddChronometryEventForm extends Component {
     constructor(props) {
@@ -193,25 +194,30 @@ class AddChronometryEventForm extends Component {
     }
     eventAdded(data) {
 
-        if (Object.keys(this.props.eventsListings).length !== 0) {
-            const {day, month, year} = this.props.date;
-            const date = `${day}.${month}.${year}`;
-            this.props.addEvent(date, data.addedEvent);
-            this.setState({redirect: true});
-        }
+        const {day, month, year} = this.props.date;
+        const date = `${day}.${month}.${year}`;
+        this.props.addEvent(date, data.addedEvent);
+        this.setState({redirect: true});
 
-        // if (data.status === "success") this.setState({redirect: true});
     }
     submitHandler(event) {
         event.preventDefault();
         const {start, finish, type, category, subcategory, comment} = this.state;
+
+        const {hour: startHour, minute: startMinute} = timestampToTimeObj(start);
+        const {hour: finishHour, minute: finishMinute} = timestampToTimeObj(finish);
+
         
         queryServer({
             path: '/add-event',
             data: {
                 name: 'admin',
                 start: start,
+                startHour: startHour,
+                startMinute: startMinute,
                 finish: finish,
+                finishHour: finishHour,
+                finishMinute: finishMinute,
                 type: type,
                 category: category,
                 subcategory: subcategory,

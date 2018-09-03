@@ -25,15 +25,16 @@ class ChronometryRemovePage extends Component {
     }
     componentDidMount() {
 
-        const id = this.props.match.params.id;
-        const event = this.props.eventsListings[this.convertDate()].filter(event => event._id === id)[0];
-        this.setState({isLoading: false, event: event});
+        const listing = this.props.eventsListings[this.props.date.date];
 
-    }
+        if (listing !== undefined && listing.length > 0) {
+            const id = this.props.match.params.id;
+            const event = listing.filter(event => event._id === id)[0];
+            this.setState({isLoading: false, event: event});
+        } else {
+            this.setState({redirect: true});
+        }
 
-    convertDate() {
-        const {day, month, year} = this.props.date;
-        return `${day}.${month}.${year}`;
     }
 
     handleServerResponse(response) {
@@ -41,7 +42,7 @@ class ChronometryRemovePage extends Component {
         console.log(response);
 
         if (response.status === 'success') {
-            this.props.removeEvent(this.convertDate(), this.props.match.params.id)
+            this.props.removeEvent(this.props.date.date, this.props.match.params.id)
             this.setState({redirect: true});
         }
     }
