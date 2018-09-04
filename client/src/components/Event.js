@@ -12,13 +12,13 @@ export default ({
         subcategory,
         comment
     }) => (
-    <div className="event">
-        {startHour}:{startMinute} | {finishHour}:{finishMinute} | 
-        {type} | 
-        {category} | 
-        {subcategory} | 
-        {comment} | 
-        <Link className="link-edit" to={`/chronometry/event/${_id}`}>edit</Link> | 
-        <Link to={`/chronometry/event/${_id}/delete`}>delete</Link>
-    </div>
-);
+        <div className="event">
+            {startHour}:{startMinute} | {finishHour}:{finishMinute} | 
+            {type} | 
+            {category} | 
+            {subcategory} | 
+            {comment} | 
+            <Link className="link-edit" to={`/chronometry/event/${_id}`}>edit</Link> | 
+            <Link to={`/chronometry/event/${_id}/delete`}>delete</Link>
+        </div>
+    );
