@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import queryServer from './../queryServer';
 import paths from './../paths';
@@ -79,31 +79,62 @@ const con = connect(
     })
 );
 
-const withData = Component => props => {
-    let condition = props.eventsListings[props.date.date];
-    console.log(0, props);
-    // condition = true;
+const myCondition = (props) => !!props.eventsListings[props.date.date];
+// const myCondition = true;
+const withData = conditionFn => Component => props => {
+    if (conditionFn(props)) {
+        return <Component {...props} />
+    } else {
+        return null;
+    }
+}
 
-    // const query = {
-    //     path: paths.getEventsList,
-    //     name: props.name,
-    //     start: props.date.rangeStart,
-    //     finish: props.date.rangeFinish,
-    // }
-
-    return condition ? <Component {...props} /> : null;
+const withQuery = query => Component => props => {
+    return class extends React.Component {
+        constructor(props) {
+            super(props);
+            this.handleServerResponse = this.handleServerResponse.bind(this);
+        }
+        handleServerResponse(response) {
+            if (response.eventsList.length > 0) {
+                this.props.addEventsList(this.props.date.date, response.eventsList);
+            }
+        }
+        componentDidMount() {
+            const q = query(props);
+            queryServer({
+                path: q.path,
+                data: {
+                    name: q.name,
+                    start: q.start,
+                    finish: q.finish
+                },
+                callback: this.handleServerResponse
+            });
+        }
+        render() {
+            return <Component {...props} />
+        }
+    }
 }
 
 class EventsListWrapper extends Component {
     render() {
-        console.log(1, this.props);
-        const {eventsListings, date} = this.props;
-        const eventsList = eventsListings[date.date];
+        const eventsList = this.props.eventsListings[this.props.date.date];
         return <EventsList eventsList={eventsList} />
     }
 }
 
-export default con(withData(EventsListWrapper));
+
+
+const withMyQuery = withQuery((props) => ({
+    path: paths.getEventsList,
+    name: props.name,
+    start: props.date.rangeStart,
+    finish: props.date.rangeFinish,
+}));
+const withMyData = withData(myCondition);
+export default con(withMyQuery(withMyData(EventsListWrapper)));
 
 
 
