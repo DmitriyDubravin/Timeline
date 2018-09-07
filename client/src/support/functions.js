@@ -1,4 +1,5 @@
-
+import React from 'react';
+import queryServer from './../queryServer';
 
 export const convertNumToTwoDigits = n => ('0' + n).slice(-2);
 
@@ -19,5 +20,35 @@ export const getRange = (start, finish) => {
     return {
         start: Math.floor(+new Date(Date.UTC(sYear, sMonth, sDay)) / 1000),
         finish: Math.floor(+new Date(Date.UTC(fYear, fMonth, fDay, 23, 59, 59)) / 1000)
+    }
+}
+
+export const withData = conditionFn => Component => props => {
+    return conditionFn(props) ? <Component {...props} /> : null;
+}
+
+export const withQuery = queryFn => Component => class extends React.Component {
+    componentDidMount() {
+        queryServer({
+            ...queryFn(this.props),
+            callback: this.handleServerResponse
+        });
+    }
+    componentDidUpdate(prevProps) {
+        const {resendMarker} = queryFn(this.props);
+        if (prevProps[resendMarker] !== this.props[resendMarker]) {
+            queryServer({
+                ...queryFn(this.props),
+                callback: this.handleServerResponse
+            });
+        }
+    }
+    handleServerResponse = response => {
+        if (response.eventsList.length > 0) {
+            this.props.addEventsList(this.props.date.date, response.eventsList);
+        }
+    }
+    render() {
+        return <Component {...this.props} />
     }
 }
