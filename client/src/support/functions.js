@@ -29,24 +29,25 @@ export const withData = conditionFn => Component => props => {
 
 export const withQuery = queryFn => Component => class extends React.Component {
     componentDidMount() {
-        queryServer({
-            ...queryFn(this.props),
-            callback: this.handleServerResponse
-        });
+        const {path, data} = queryFn(this.props);
+        this.queryAPI(path, data);
     }
     componentDidUpdate(prevProps) {
-        const {resendMarker} = queryFn(this.props);
-        if (prevProps[resendMarker] !== this.props[resendMarker]) {
-            queryServer({
-                ...queryFn(this.props),
-                callback: this.handleServerResponse
-            });
+        const {path, data, resendMarkers} = queryFn(this.props);
+        if (resendMarkers.every(fn => fn(prevProps, this.props))) {
+            this.queryAPI(path, data);
         }
     }
     handleServerResponse = response => {
-        if (response.eventsList.length > 0) {
-            this.props.addEventsList(this.props.date.date, response.eventsList);
-        }
+        const {callback} = queryFn(this.props);
+        callback(this.props.date.date, response.eventsList);
+    }
+    queryAPI = (path, data) => {
+        queryServer({
+            path: path,
+            data: data,
+            callback: this.handleServerResponse
+        });
     }
     render() {
         return <Component {...this.props} />
