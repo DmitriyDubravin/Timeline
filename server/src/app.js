@@ -50,7 +50,7 @@ app.post('/user-login', userLogin);
 app.post('/user-change-password', userChangePassword);
 app.post('/user-remove', userRemove);
 app.post('/token-acknowledge', tokenAcknowledge);
-app.post('/users-list', usersList);
+app.post('/get-users-list', usersList);
 
 app.post('/email-confirmation', emailConfirmation);
 

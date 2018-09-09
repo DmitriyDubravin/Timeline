@@ -30,7 +30,10 @@ export const withData = conditionFn => Component => props => {
 export const withQuery = queryFn => Component => class extends React.Component {
     componentDidMount() {
         const {path, data} = queryFn(this.props);
-        this.queryAPI(path, data);
+        console.log(1);
+        // if (sendMarkers.some(fn => fn(this.props))) {
+            this.queryAPI(path, data);
+        // }
     }
     componentDidUpdate(prevProps) {
         const {path, data, resendMarkers} = queryFn(this.props);

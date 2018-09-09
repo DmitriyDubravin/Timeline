@@ -67,3 +67,12 @@ export const eventsListings = (state = {}, {type, data}) => {
             return state;
     }
 }
+
+export const usersList = (state = {}, {type, data}) => {
+    switch (type) {
+        case "ADD_USERS_LIST":
+            return {...state, usersList: data.usersList}
+        default:
+            return state;
+    }
+}

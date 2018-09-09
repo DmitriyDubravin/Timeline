@@ -28,6 +28,9 @@ const myQuery = props => ({
         start: props.date.rangeStart,
         finish: props.date.rangeFinish,
     },
+    sendMarkers: [
+        prop => prop['date'] === undefined
+    ],
     resendMarkers: [
         (prev, now) => ['date'].every(prop => prev[prop] !== now[prop]),
         (prev, now) => now.eventsListings[now.date.date] === undefined
@@ -37,11 +40,9 @@ const myQuery = props => ({
 const withMyData = withData(myCondition);
 const withMyQuery = withQuery(myQuery);
 
-const EventsListWrapper = ({eventsListings, date}) => {
+const EventsListContainer = ({eventsListings, date}) => {
     const eventsList = eventsListings[date.date];
-    return <EventsList eventsList={eventsList} />
+    return <EventsList eventsListData={eventsList} />
 }
 
-export default con(withMyQuery(withMyData(EventsListWrapper)));
-
-
+export default con(withMyQuery(withMyData(EventsListContainer)));
