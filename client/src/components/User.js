@@ -2,9 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 export default ({
-        user
+        name
     }) => (
         <div className="user">
-            <Link to={`/users/${user}`}>{user}</Link>
+            <Link to={`/users/${name}`}>{name}</Link>
         </div>
     );

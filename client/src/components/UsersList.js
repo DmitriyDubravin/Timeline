@@ -7,7 +7,7 @@ export default ({
         <div className="users-list">
             {
                 usersListData.map(userData => (
-                    <div className="user-item" key={userData}>
+                    <div className="user-item" key={userData._id}>
                         <User {...userData} />
                     </div>
                 ))

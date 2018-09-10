@@ -1,8 +1,7 @@
 import React from 'react';
-// import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
-import queryServer from './../queryServer';
+import paths from './../paths';
 import { withData, withQuery } from '../support/functions';
 import UsersList from './UsersList';
 
@@ -40,7 +39,12 @@ const withMyData = withData(myCondition);
 const withMyQuery = withQuery(myQuery);
 
 const UsersListContainer = ({usersList}) => {
-    return <UsersList usersListData={usersList} />
+    let s = [
+        {_id: 1, name: 'sss'},
+        {_id: 2, name: 'vvvv'},
+        {_id: 3, name: 'ttttt'}
+    ];
+    return <UsersList usersListData={s} />
 }
 
 export default con(withMyQuery(withMyData(UsersListContainer)));

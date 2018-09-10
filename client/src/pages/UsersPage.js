@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import UsersList from './../components/UsersList';
+import UsersListContainer from './../components/UsersListContainer';
 
 class UserPage extends Component {
     render() {
@@ -8,7 +8,7 @@ class UserPage extends Component {
         return (
             <div>
                 <h2>All users page</h2>
-                <UsersList />
+                <UsersListContainer />
             </div>
         )
     }
