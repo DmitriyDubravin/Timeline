@@ -20,11 +20,9 @@ const con = connect(
 );
 
 const myCondition = props => {
-    console.log(props);
     return !!props.usersList;
 }
 const myQuery = props => {
-    console.log(props);
     return {
         path: paths.getUsersList,
         data: {},
@@ -39,12 +37,8 @@ const withMyData = withData(myCondition);
 const withMyQuery = withQuery(myQuery);
 
 const UsersListContainer = ({usersList}) => {
-    let s = [
-        {_id: 1, name: 'sss'},
-        {_id: 2, name: 'vvvv'},
-        {_id: 3, name: 'ttttt'}
-    ];
-    return <UsersList usersListData={s} />
+    console.log(888, usersList);
+    return <UsersList usersListData={usersList} />
 }
 
 export default con(withMyQuery(withMyData(UsersListContainer)));

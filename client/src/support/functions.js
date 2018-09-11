@@ -30,6 +30,7 @@ export const withData = conditionFn => Component => props => {
 export const withQuery = queryFn => Component => class extends React.Component {
     componentDidMount() {
         const {path, data} = queryFn(this.props);
+        // console.log(0, path, data);
         // if (sendMarkers.some(fn => fn(this.props))) {
             this.queryAPI(path, data);
         // }
@@ -37,16 +38,18 @@ export const withQuery = queryFn => Component => class extends React.Component {
     componentDidUpdate(prevProps) {
         const {path, data, resendMarkers} = queryFn(this.props);
         if (resendMarkers.every(fn => fn(prevProps, this.props))) {
-            this.queryAPI(path, data);
+            // this.queryAPI(path, data);
         }
     }
     handleServerResponse = response => {
-        console.log(9, response);
+        // console.log(111, response);
         const {callback} = queryFn(this.props);
         // rebuild this too
-        callback(this.props.date.date, response.eventsList);
+        // callback(this.props.date.date, response.eventsList);
+        callback(response.usersList);
     }
     queryAPI = (path, data) => {
+        // console.log(0, path, data);
         queryServer({
             path: path,
             data: data,

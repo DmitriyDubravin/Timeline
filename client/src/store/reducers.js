@@ -71,7 +71,7 @@ export const eventsListings = (state = {}, {type, data}) => {
 export const usersList = (state = {}, {type, data}) => {
     switch (type) {
         case "ADD_USERS_LIST":
-            return {...state, usersList: data.usersList}
+            return {...state, usersList: data}
         default:
             return state;
     }
