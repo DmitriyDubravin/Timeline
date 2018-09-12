@@ -14,6 +14,6 @@ module.exports = async function(req, res) {
     foundEvents.err && e.findEventsError(res);
 
     let eventsList = foundEvents.data;
-    f.success(res, {eventsList: eventsList});
+    f.success(res, {data: eventsList});
 
 }

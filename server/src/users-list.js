@@ -14,6 +14,6 @@ module.exports = async function(req, res) {
             name: user.name
         }
     });
-    f.success(res, usersList);
+    f.success(res, {data: usersList});
 
 }

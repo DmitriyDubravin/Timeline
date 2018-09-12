@@ -1,5 +1,5 @@
 
-import App from './App';
+import App from './AppContainer';
 import HomePage from './pages/HomePage';
 import ChronometryPage from './pages/ChronometryPage';
 import ChronometryAddPage from './pages/ChronometryAddPage';

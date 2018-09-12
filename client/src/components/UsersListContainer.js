@@ -19,81 +19,23 @@ const con = connect(
     })
 );
 
-const myCondition = props => {
-    return !!props.usersList;
-}
+const myCondition = props => !!props.usersList;
 const myQuery = props => {
     return {
         path: paths.getUsersList,
         data: {},
-        resendMarkers: [
-
+        sendMarkers: [
+            props => !props.usersList
         ],
-        callback: props.addUsersList
+        callback: data => props.addUsersList(data)
     }
 };
 
 const withMyData = withData(myCondition);
 const withMyQuery = withQuery(myQuery);
 
-const UsersListContainer = ({usersList}) => {
-    console.log(888, usersList);
-    return <UsersList usersListData={usersList} />
-}
+const UsersListContainer = ({usersList}) => <UsersList usersListData={usersList} />
 
 export default con(withMyQuery(withMyData(UsersListContainer)));
 
 
-
-// class UsersList extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             usersList: [],
-//             isUsersListHasItems: false
-//         }
-//         this.handleServerResponse = this.handleServerResponse.bind(this);
-//     }
-
-//     componentDidMount() {
-//         queryServer({
-//             path: '/users-list',
-//             callback: this.handleServerResponse
-//         });
-//     }
-
-//     handleServerResponse(response) {
-//         this.setState({
-//             usersList: response.usersList,
-//             isUsersListHasItems: response.usersList.length > 0
-//         })
-//     }
-
-//     render() {
-
-//         const {usersList, isUsersListHasItems} = this.state;
-
-//         let usersDOMList = isUsersListHasItems && usersList.map(user => {
-//             let url = `/users/${user}`;
-//             return <li key={user}><Link to={url}>{user}</Link></li>
-//         })
-
-//         return (
-//             <div>
-//                 {
-//                     isUsersListHasItems &&
-//                     <ul>
-//                         {usersDOMList}
-//                     </ul>
-//                 }
-//             </div>
-//         )
-//     }
-// }
-
-
-// export default connect(
-//     state => ({
-//         name: state.user.name
-//     })
-// )(UsersList)

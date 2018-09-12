@@ -35,7 +35,7 @@ const myQuery = props => ({
         (prev, now) => ['date'].every(prop => prev[prop] !== now[prop]),
         (prev, now) => now.eventsListings[now.date.date] === undefined
     ],
-    callback: props.addEventsList
+    callback: cbData => props.addEventsList(props.date.date, cbData)
 });
 const withMyData = withData(myCondition);
 const withMyQuery = withQuery(myQuery);

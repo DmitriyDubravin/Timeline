@@ -11,6 +11,8 @@ module.exports = {
     userRemoveSuccess: () => "\nUser were deleted!\n\n",
     userRemoveFailure: () => "\nWrong password\n\n",
 
+    userIsGuest: () => "\nUser is guest\n\n",
+
     userPasswordChangeSuccess: () => "\nPassword were changed!\n\n",
     userPasswordChangeFailure: () => "\nWrong current password!\n\n",
 

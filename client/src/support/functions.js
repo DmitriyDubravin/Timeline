@@ -24,32 +24,28 @@ export const getRange = (start, finish) => {
 }
 
 export const withData = conditionFn => Component => props => {
+    // console.log('withData');
     return conditionFn(props) ? <Component {...props} /> : null;
 }
 
 export const withQuery = queryFn => Component => class extends React.Component {
     componentDidMount() {
-        const {path, data} = queryFn(this.props);
-        // console.log(0, path, data);
-        // if (sendMarkers.some(fn => fn(this.props))) {
+        const {path, data, sendMarkers} = queryFn(this.props);
+        if (sendMarkers && sendMarkers.some(fn => fn(this.props))) {
             this.queryAPI(path, data);
-        // }
+        }
     }
     componentDidUpdate(prevProps) {
         const {path, data, resendMarkers} = queryFn(this.props);
-        if (resendMarkers.every(fn => fn(prevProps, this.props))) {
-            // this.queryAPI(path, data);
+        if (resendMarkers && resendMarkers.every(fn => fn(prevProps, this.props))) {
+            this.queryAPI(path, data);
         }
     }
     handleServerResponse = response => {
-        // console.log(111, response);
         const {callback} = queryFn(this.props);
-        // rebuild this too
-        // callback(this.props.date.date, response.eventsList);
-        callback(response.usersList);
+        callback(response.data);
     }
     queryAPI = (path, data) => {
-        // console.log(0, path, data);
         queryServer({
             path: path,
             data: data,
@@ -57,6 +53,7 @@ export const withQuery = queryFn => Component => class extends React.Component {
         });
     }
     render() {
+        // console.log('withQuery');
         return <Component {...this.props} />
     }
 }
