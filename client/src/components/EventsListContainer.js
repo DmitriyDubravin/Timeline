@@ -28,10 +28,10 @@ const myQuery = props => ({
         start: props.date.rangeStart,
         finish: props.date.rangeFinish,
     },
-    sendMarkers: [
-        prop => prop['date'] === undefined
+    sendConditions: [
+        prop => true
     ],
-    resendMarkers: [
+    resendConditions: [
         (prev, now) => ['date'].every(prop => prev[prop] !== now[prop]),
         (prev, now) => now.eventsListings[now.date.date] === undefined
     ],

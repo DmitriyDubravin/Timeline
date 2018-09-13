@@ -4,15 +4,7 @@ import * as action from './../store/actions';
 
 class DatePicker extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.switchDay = this.switchDay.bind(this);
-        this.switchToToday = this.switchToToday.bind(this);
-
-    }
-
-    switchDay(modificator) {
+    switchDay = modificator => {
         let {day, month, year} = this.props.date;
         let date = new Date(year, month, day + modificator);
         let newDay = date.getDate();
@@ -20,12 +12,15 @@ class DatePicker extends Component {
         let newYear = date.getFullYear();
         this.props.setDate({day: newDay, month: newMonth, year: newYear});
     }
-    switchToToday() {
+    switchToToday = () => {
+        const {day, month, year} = this.props.date;
         let date = new Date();
-        let day = date.getDate();
-        let month = date.getMonth();
-        let year = date.getFullYear();
-        this.props.setDate({day, month, year});
+        let newDay = date.getDate();
+        let newMonth = date.getMonth();
+        let newYear = date.getFullYear();
+        if (day !== newDay || month !== newMonth || year !== newYear) {
+            this.props.setDate({day: newDay, month: newMonth, year: newYear});
+        }
     }
 
     render() {

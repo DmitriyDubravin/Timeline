@@ -24,20 +24,19 @@ export const getRange = (start, finish) => {
 }
 
 export const withData = conditionFn => Component => props => {
-    // console.log('withData');
     return conditionFn(props) ? <Component {...props} /> : null;
 }
 
 export const withQuery = queryFn => Component => class extends React.Component {
     componentDidMount() {
-        const {path, data, sendMarkers} = queryFn(this.props);
-        if (sendMarkers && sendMarkers.some(fn => fn(this.props))) {
+        const {path, data, sendConditions} = queryFn(this.props);
+        if (sendConditions && sendConditions.some(fn => fn(this.props))) {
             this.queryAPI(path, data);
         }
     }
     componentDidUpdate(prevProps) {
-        const {path, data, resendMarkers} = queryFn(this.props);
-        if (resendMarkers && resendMarkers.every(fn => fn(prevProps, this.props))) {
+        const {path, data, resendConditions} = queryFn(this.props);
+        if (resendConditions && resendConditions.every(fn => fn(prevProps, this.props))) {
             this.queryAPI(path, data);
         }
     }
@@ -53,7 +52,6 @@ export const withQuery = queryFn => Component => class extends React.Component {
         });
     }
     render() {
-        // console.log('withQuery');
         return <Component {...this.props} />
     }
 }

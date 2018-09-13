@@ -24,7 +24,7 @@ const myQuery = props => {
     return {
         path: paths.getUsersList,
         data: {},
-        sendMarkers: [
+        sendConditions: [
             props => !props.usersList
         ],
         callback: data => props.addUsersList(data)
