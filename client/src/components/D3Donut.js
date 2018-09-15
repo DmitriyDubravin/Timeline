@@ -5,7 +5,7 @@ console.log(d3);
 
 export default class Donut extends Component {
     componentDidMount() {
-        var width = 960;
+        var width = 500;
         var height = 500;
         var radius = Math.min(width, height) / 2;
         var color = d3
@@ -30,38 +30,49 @@ export default class Donut extends Component {
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+        // d3.json("./data/data.json", function(one, two, three, four) {
+        //     console.log(0, one, two, three);
+        //     console.log(one);
+        // });
+
+        d3.csv("./../data/dat.csv").then(function(data) {
+            console.log(data); // [{"Hello": "world"}, …]
+        });
+        // d3.csv("./../data/data.csv", function(data) {
+        //     console.log(data[0]);
+        // });
+
+        var parsed = d3.csvParse("age,population\n<5,2704659\n5-13,4499890\n14-17,2159981\n18-24,3853788\n25-44,14106543\n45-64,8819342\n≥65,612463");
+        // console.log(parsed);
+
         d3
             .csv("./../data/data.csv",
             function(d) {
-                console.log(d);
+                // console.log(d);
                 d.population = +d.population;
                 return d;
             },
-            function(error, data) {
+            function(data, index) {
                 // console.log(data);
-                if (error) throw error;
+                // if (error) throw error;
 
-                // var g = svg
-                //     .selectAll(".arc")
-                //     .data(pie(data))
-                //     .enter().append("g")
-                //     .attr("class", "arc");
+                var g = svg
+                    .selectAll(".arc")
+                    .data(pie(parsed))
+                    .enter().append("g")
+                    .attr("class", "arc");
+
+                g.append("path")
+                    .attr("d", arc)
+                    .style("fill", function(d) {
+                        return color(d.data.age);
+                    });
             
-            // g.append("path")
-            //     .attr("d", arc)
-            //     .style("fill", function(d) { return color(d.data.age); });
-            
-            // g.append("text")
-            //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-            //     .attr("dy", ".35em")
-            //     .text(function(d) { return d.data.age; });
+                g.append("text")
+                    .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+                    .attr("dy", ".35em")
+                    .text(function(d) { return d.data.age; });
         });
-    
-        function type(d) {
-            console.log(d);
-            d.population = +d.population;
-            return d;
-        }
 
     }
     render() {
