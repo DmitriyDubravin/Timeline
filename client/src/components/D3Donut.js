@@ -7,14 +7,18 @@ export default class Donut extends Component {
         var width = 500;
         var height = 500;
         var radius = Math.min(width, height) / 2;
+
         var color = d3
             .scaleOrdinal()
             .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         var arc = d3
             .arc()
-            .outerRadius(radius - 10)
-            .innerRadius(radius - 70);
+            .outerRadius(radius - 40)
+            .innerRadius(radius - 120)
+            .padAngle(.01)
+            .padRadius(100)
+            .cornerRadius(4);
 
         var pie = d3
             .pie()
@@ -47,8 +51,14 @@ export default class Donut extends Component {
                     });
                 g
                     .append("text")
-                    .attr("transform", function(d) {
-                        return "translate(" + arc.centroid(d) + ")";
+                    // .attr("transform", function(d) {
+                    //     return "translate(" + arc.centroid(d) + ")";
+                    // })
+                    .attr("x", function(d) {
+                        return arc.centroid(d)[0]
+                    })
+                    .attr("y", function(d) {
+                        return arc.centroid(d)[1]
                     })
                     .attr("dy", ".35em")
                     .text(function(d) {
