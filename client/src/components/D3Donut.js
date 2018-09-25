@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import * as d3 from "d3";
-import dataFile from './../data/data.csv';
+// import dataFile from './../data/data.csv';
 
 export default class Donut extends Component {
     componentDidMount() {

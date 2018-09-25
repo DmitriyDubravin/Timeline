@@ -10,6 +10,7 @@ import UsersPage from './pages/UsersPage';
 import UserPage from './pages/UserPage';
 import EmailConfirmedPage from './pages/EmailConfirmedPage';
 import ChronometryRemovePage from './pages/ChronometryRemovePage';
+import SearchPage from './pages/SearchPage';
 
 
 export default [
@@ -55,6 +56,11 @@ export default [
                 path: '/users/:user',
                 exact: true,
                 component: UserPage,
+            },
+            {
+                path: '/search',
+                exact: true,
+                component: SearchPage
             },
             {
                 path: '/email-confirmation/:hash',

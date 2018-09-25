@@ -20,6 +20,9 @@ export default class MainNav extends Component {
                     <li>
                         <Link to="/users">Users</Link>
                     </li>
+                    <li>
+                        <Link to="/search">Search</Link>
+                    </li>
                 </ul>
             </nav>
         )
