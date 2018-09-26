@@ -22,6 +22,7 @@ const getSubcategories = require('./get-subcategories');
 const addEvent = require('./add-event');
 const editEvent = require('./edit-event');
 const removeEvent = require('./remove-event');
+const search = require('./search');
 
 
 // check connection
@@ -66,5 +67,7 @@ app.post('/get-subcategories', getSubcategories);
 app.post('/add-event', addEvent);
 app.post('/edit-event', editEvent);
 app.post('/remove-event', removeEvent);
+
+app.post('/search', search);
 
 app.listen(process.env.PORT || 8081);
