@@ -28,7 +28,6 @@ class SearchPage extends Component {
         console.log(data);
     }
     render() {
-        console.log(this.state);
 
         return (
             <div>
