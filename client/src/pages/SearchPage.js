@@ -25,7 +25,7 @@ class SearchPage extends Component {
         });
     }
     gotSearchResults(data) {
-        console.log(data);
+        // console.log(data);
     }
     render() {
 
