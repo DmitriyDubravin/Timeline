@@ -4,16 +4,16 @@ const e = require('./support/errors');
 module.exports = async function(req, res) {
 
     const {name, query} = req.body;
-
-    const find = {
+    const searchOptions = {
         user: name,
-        comment: query
-    }
+        comment: {$regex: new RegExp(query)}
+    };
 
-    const foundEvent = await f.tryCatch(f.findEvents(findEventsOptions));
-    foundEvent.err && e.findEventsError(res);
+    const foundSearch = await f.tryCatch(f.search(searchOptions));
+    foundSearch.err && e.searchError(res);
 
-    let event = foundEvent.data;
-    f.success(res, {event: event});
+    f.success(res, {
+        events: foundSearch.data
+    });
 
 }

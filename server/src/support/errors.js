@@ -49,4 +49,7 @@ module.exports = {
     removeEventError: res => res.status(500).send({
         message: '\nServer error while removing event\n\n'
     }),
+    searchError: res => res.status(500).send({
+        message: '\nServer error while searching\n\n'
+    }),
 }

@@ -29,6 +29,9 @@ module.exports = {
     removeEvent: event => Events.remove(event),
 
     success: (res, data = {}) => res.send({...data, status: 'success'}),
-    failure: (res, data = {}) => res.send({...data, status: 'error'})
+    failure: (res, data = {}) => res.send({...data, status: 'error'}),
+
+    // search: query => Events.find({$text: {$search: query}}).exec()
+    search: query => Events.find(query)
 
 }

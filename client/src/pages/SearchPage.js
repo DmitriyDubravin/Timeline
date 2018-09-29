@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import queryServer from './../queryServer';
+import EventsList from '../components/EventsList';
 
 class SearchPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: ''
+            query: '',
+            resultList: []
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
@@ -14,7 +16,8 @@ class SearchPage extends Component {
     inputHandler(event) {
         this.setState({query: event.target.value});
     }
-    submitHandler() {
+    submitHandler(event) {
+        event.preventDefault();
         queryServer({
             path: '/search',
             data: {
@@ -25,9 +28,10 @@ class SearchPage extends Component {
         });
     }
     gotSearchResults(data) {
-        // console.log(data);
+        this.setState({resultList: data.events});
     }
     render() {
+
 
         return (
             <div>
@@ -38,6 +42,7 @@ class SearchPage extends Component {
                     </div>
                     <input type="submit" value="Search" />
                 </form>
+                <EventsList eventsListData={this.state.resultList} />
             </div>
         );
     }
