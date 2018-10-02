@@ -59,7 +59,7 @@ class Header extends Component {
 export default connect(
     state => ({
         user: state.user,
-        isLoginShown: state.popup.isLoginShown
+        isLoginShown: state.popups.isLoginShown
     }),
     dispatch => ({
         setUserName: function(name) {

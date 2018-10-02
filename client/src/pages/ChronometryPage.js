@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import DefaultChronometryPage from './DefaultChronometryPage';
 import EventsListContainer from './../components/EventsListContainer';
@@ -10,12 +10,12 @@ class ChronometryPage extends Component {
         if (!this.props.user.isAuthorized) return <DefaultChronometryPage />;
 
         return (
-            <div>
+            <Fragment>
                 <h2>Chronometry page</h2>
                 <DateSwitcher />
                 <DatePicker />
                 <EventsListContainer />
-            </div>
+            </Fragment>
         )
     }
 }

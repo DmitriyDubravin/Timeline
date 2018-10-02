@@ -9,6 +9,7 @@ export const setDate = date => ({type: "SET_DATE", data: date});
 
 // popup
 export const toggleLoginPopup = boolean => ({type: "TOGGLE_LOGIN_POPUP", data: boolean});
+export const toggleEventAddPopup = boolean => ({type: "TOGGLE_EVENT_ADD_POPUP", data: boolean});
 
 // eventsListings
 export const addEventsList = (date, eventsList) => ({type: "ADD_EVENTS_LIST", data: {date, eventsList}});

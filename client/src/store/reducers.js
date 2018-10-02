@@ -26,10 +26,12 @@ export const date = (state = {}, {type, data}) => {
     }
 }
 
-export const popup = (state = {}, {type, data}) => {
+export const popups = (state = {}, {type, data}) => {
     switch (type) {
         case "TOGGLE_LOGIN_POPUP":
             return {...state, isLoginShown: data}
+        case "TOGGLE_EVENT_ADD_POPUP":
+            return {...state, isEventAddShown: data}
         default:
             return state;
     }
