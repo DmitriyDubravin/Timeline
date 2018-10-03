@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
 import queryServer from './../../queryServer';
 import * as action from './../../store/actions';
@@ -22,7 +21,6 @@ class AddChronometryEventForm extends Component {
             subcategories: [],
             start: '',
             finish: '',
-            redirect: false
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
@@ -197,7 +195,6 @@ class AddChronometryEventForm extends Component {
         const {day, month, year} = this.props.date;
         const date = `${day}.${month}.${year}`;
         this.props.addEvent(date, data.addedEvent);
-        this.setState({redirect: true});
 
     }
     submitHandler(event) {
@@ -229,10 +226,6 @@ class AddChronometryEventForm extends Component {
 
 
     render() {
-
-        if (this.state.redirect) return <Redirect to="/chronometry" push={true} />
-
-        // console.log(this.state);
 
         const {types, categories, subcategories, type, newType, category, newCategory, newSubcategory} = this.state;
 

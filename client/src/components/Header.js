@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {Route} from 'react-router-dom';
+// import {matchRoutes} from 'react-router-config';
 
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
@@ -26,6 +28,8 @@ class Header extends Component {
         this.props.setUserAuthorization(false);
     }
     render() {
+
+        console.log(0, this.props);
 
         const {user, isLoginShown} = this.props;
         const {name, isAuthorized} = user;
