@@ -194,6 +194,7 @@ class AddChronometryEventForm extends Component {
 
         const {day, month, year} = this.props.date;
         const date = `${day}.${month}.${year}`;
+        this.props.toggleEventAddPopup(false);
         this.props.addEvent(date, data.addedEvent);
 
     }
@@ -345,6 +346,9 @@ export default connect(
     dispatch => ({
         addEvent: function(date, event) {
             dispatch(action.addEvent(date, event))
-        }
+        },
+        toggleEventAddPopup: function(boolean) {
+            dispatch(action.toggleEventAddPopup(boolean))
+        },
     })
 )(AddChronometryEventForm)

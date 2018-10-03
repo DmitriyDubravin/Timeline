@@ -52,13 +52,13 @@ export const eventsListings = (state = {}, {type, data}) => {
                     : event;
                 })
             }
-        case "ADD_EVENT":
-            let eventsList = state[data.date] !== undefined ? state[data.date] : [];
-            console.log('oldEventsList', state[data.date], eventsList);
-            return {
-                ...state,
-                [data.date]: eventsList.concat(data.event)
-            }
+        // case "ADD_EVENT":
+        //     let eventsList = state[data.date] !== undefined ? state[data.date] : [];
+        //     console.log('oldEventsList', state[data.date], eventsList);
+        //     return {
+        //         ...state,
+        //         [data.date]: eventsList.concat(data.event)
+        //     }
         case "REMOVE_EVENT":
             let newList = state[data.date].filter(event => event._id !== data.eventId);
             return {
@@ -74,6 +74,18 @@ export const usersList = (state = {}, {type, data}) => {
     switch (type) {
         case "ADD_USERS_LIST":
             return data;
+        default:
+            return state;
+    }
+}
+
+
+export const events = (state = [], {type, data}) => {
+    switch(type) {
+        case "ADD_EVENT":
+            return [...state, data];
+        case "ADD_EVENTS":
+            return [...state, ...data];
         default:
             return state;
     }
