@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
-// import paths from './../paths';
+import queryServer from './../queryServer';
+import paths from './../paths';
 // import {withData, withQuery} from './../support/functions';
 import EventsList from './EventsList';
 
@@ -49,34 +50,61 @@ import EventsList from './EventsList';
 
 
 
-function filterExistance(store, data) {
-    let newData = Array.isArray(data) ? data : [data];
-    store.forEach(storeEvent => {
-        newData = newData.filter(dataEvent => dataEvent._id !== storeEvent._id)
-    });
-    if (newData.length === 1) {
-        return newData[0];
-    }
-    return newData.length > 0 ? newData : null;
-}
-
 class EventsListContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            events: []
+        }
+        // this.getEventsList = this.getEventsList.bind(this);
+        this.handleServerResponse = this.handleServerResponse.bind(this);
+    }
     componentDidMount() {
-        // let data = [{_id: 1}, {_id: 2}];
-        let data = {_id: 2};
-        let newData = filterExistance(this.props.events, data);
-        console.log(newData);
-        newData && this.props.addEvent(newData);
+        this.getEventsList();
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.date !== this.props.date) {
+            this.getEventsList();
+        }
+    }
+    getEventsList() {
+        queryServer({
+            path: paths.getEventsList,
+            data: {
+                name: this.props.user.name,
+                start: this.props.date.rangeStart,
+                finish: this.props.date.rangeFinish,
+            },
+            callback: this.handleServerResponse
+        });
+    }
+    handleServerResponse(response) {
+        this.setState({events: response.data});
+
+        let d = {};
+        let dayContents = [];
+
+        response.data.forEach(event => {
+            d[event._id] = event;
+            dayContents.push(event._id);
+        });
+        console.log(this.props.date.date, dayContents);
+
+        this.props.addEvents(d);
+
+
+
+
     }
     render() {
-        const eventsListData = [];
-        return <EventsList eventsListData={eventsListData} />
+        return <EventsList eventsListData={this.state.events} />
     }
 }
 
 export default connect(
     state => ({
         user: state.user,
+        date: state.date,
         events: state.events
     }),
     dispatch => ({

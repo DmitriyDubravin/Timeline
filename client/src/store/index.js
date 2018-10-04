@@ -38,15 +38,13 @@ const preloadedState = {
     },
     eventsListings: {},
     usersList: null,
-    events: [
-        {_id: 1}
-    ]
+    events: {}
 }
 
 export default createStore(
     reducers,
     preloadedState,
-    applyMiddleware(logger, thunk)
+    applyMiddleware(thunk, logger)
 );
 
 

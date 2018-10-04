@@ -1,6 +1,8 @@
 
 export const user = (state = {}, {type, data}) => {
     switch (type) {
+        case "SET_USER":
+            return {...state, ...data}
         case "SET_USER_NAME":
             return {...state, name: data}
         case "SET_USER_TOKEN":
@@ -80,12 +82,12 @@ export const usersList = (state = {}, {type, data}) => {
 }
 
 
-export const events = (state = [], {type, data}) => {
+export const events = (state = {}, {type, data}) => {
     switch(type) {
         case "ADD_EVENT":
-            return [...state, data];
+            return {...state, data};
         case "ADD_EVENTS":
-            return [...state, ...data];
+            return {...state, ...data};
         default:
             return state;
     }
