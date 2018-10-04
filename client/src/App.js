@@ -4,6 +4,7 @@ import {renderRoutes} from 'react-router-config';
 import * as action from './store/actions';
 import Header from './components/Header';
 import PopupEventAdd from './components/popupEventAdd';
+import PopupEventEdit from './components/popupEventEdit';
 
 
 
@@ -11,13 +12,15 @@ const App = ({
         route,
         history,
         location,
-        isEventAddShown,
-        toggleEventAddPopup
+        addEvent,
+        isEventEditShown,
+        togglePopupAddEvent
     }) => (
         <div className="App">
             <Header />
-            <button onClick={() => toggleEventAddPopup(true)}>+</button>
-            {isEventAddShown && <PopupEventAdd />}
+            <button onClick={() => togglePopupAddEvent(true)}>+</button>
+            {addEvent.show && <PopupEventAdd />}
+            {isEventEditShown && <PopupEventEdit />}
             {renderRoutes(route.routes, {history, location})}
         </div>
     );
@@ -25,11 +28,12 @@ const App = ({
 export default connect(
     state => ({
         user: state.user,
-        isEventAddShown: state.popups.isEventAddShown
+        addEvent: state.popups.addEvent,
+        isEventEditShown: state.popups.isEventEditShown
     }),
     dispatch => ({
-        toggleEventAddPopup: function(boolean) {
-            dispatch(action.toggleEventAddPopup(boolean))
+        togglePopupAddEvent: function(boolean) {
+            dispatch(action.togglePopupAddEvent(boolean))
         },
     })
 )(App)

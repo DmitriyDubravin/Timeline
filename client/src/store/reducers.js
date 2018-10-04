@@ -30,10 +30,21 @@ export const date = (state = {}, {type, data}) => {
 
 export const popups = (state = {}, {type, data}) => {
     switch (type) {
-        case "TOGGLE_LOGIN_POPUP":
-            return {...state, isLoginShown: data}
-        case "TOGGLE_EVENT_ADD_POPUP":
-            return {...state, isEventAddShown: data}
+        case "TOGGLE_POPUP_LOGIN":
+            return {
+                ...state,
+                login: {...state.login, show: data}
+            };
+        case "TOGGLE_POPUP_ADD_EVENT":
+            return {
+                ...state,
+                addEvent: {...state.addEvent, show: data}
+            };
+        case "TOGGLE_POPUP_EDIT_EVENT":
+            return {
+                ...state,
+                editEvent: {...state.editEvent, show: data}
+            };
         default:
             return state;
     }
@@ -81,13 +92,36 @@ export const usersList = (state = {}, {type, data}) => {
     }
 }
 
-
-export const events = (state = {}, {type, data}) => {
+export const eventsData = (state = {}, {type, data}) => {
     switch(type) {
         case "ADD_EVENT":
-            return {...state, data};
+            return {
+                ...state,
+                events: {
+                    ...state.events, data
+                }
+            };
         case "ADD_EVENTS":
-            return {...state, ...data};
+            return {
+                ...state,
+                events: {
+                    ...state.events, ...data
+                }
+            };
+        case "ADD_DATE_EVENTS":
+            const {date, events} = data;
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    dates: {
+                        ...state.ranges.dates, [date]: Object.keys(events)
+                    }
+                },
+                events: {
+                    ...state.events, ...events
+                }
+            };
         default:
             return state;
     }

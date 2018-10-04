@@ -9,9 +9,10 @@ export const setUserAuthorization = boolean => ({type: "SET_USER_AUTHORIZATION",
 // date
 export const setDate = date => ({type: "SET_DATE", data: date});
 
-// popup
-export const toggleLoginPopup = boolean => ({type: "TOGGLE_LOGIN_POPUP", data: boolean});
-export const toggleEventAddPopup = boolean => ({type: "TOGGLE_EVENT_ADD_POPUP", data: boolean});
+// popups
+export const togglePopupLogin = boolean => ({type: "TOGGLE_POPUP_LOGIN", data: boolean});
+export const togglePopupAddEvent = boolean => ({type: "TOGGLE_POPUP_ADD_EVENT", data: boolean});
+export const togglePopupEditEvent = boolean => ({type: "TOGGLE_POPUP_EDIT_EVENT", data: boolean});
 
 // eventsListings
 export const addEventsList = (date, eventsList) => ({type: "ADD_EVENTS_LIST", data: {date, eventsList}});
@@ -29,3 +30,5 @@ export const addUsersList = usersList => ({type: "ADD_USERS_LIST", data: usersLi
 // events
 export const addEvent = event => ({type: 'ADD_EVENT', data: event});
 export const addEvents = events => ({type: 'ADD_EVENTS', data: events});
+
+export const addDateEvents = (date, events) => ({type: 'ADD_DATE_EVENTS', data: {date, events}});

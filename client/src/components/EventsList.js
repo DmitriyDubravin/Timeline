@@ -2,13 +2,15 @@ import React from 'react';
 import Event from './Event';
 
 export default ({
-    eventsListData
+        eventsListData,
+        editCb,
+        deleteCb
     }) => (
         <div className="events-list">
             {
                 eventsListData.map(eventData => (
                     <div className="event-item" key={eventData._id}>
-                        <Event {...eventData} />
+                        <Event {...eventData} editCb={editCb} deleteCb={deleteCb} />
                     </div>
                 ))
             }

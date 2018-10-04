@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 export default ({
         _id,
@@ -10,7 +9,9 @@ export default ({
         type,
         category,
         subcategory,
-        comment
+        comment,
+        editCb,
+        deleteCb
     }) => (
         <div className="event">
             {startHour}:{startMinute} | {finishHour}:{finishMinute} | 
@@ -18,7 +19,7 @@ export default ({
             {category} | 
             {subcategory} | 
             {comment} | 
-            <Link className="link-edit" to={`/chronometry/event/${_id}`}>edit</Link> | 
-            <Link to={`/chronometry/event/${_id}/delete`}>delete</Link>
+            <button onClick={() => editCb(_id)}>edit</button> | 
+            <button onClick={() => deleteCb(_id)}>delete</button>
         </div>
     );

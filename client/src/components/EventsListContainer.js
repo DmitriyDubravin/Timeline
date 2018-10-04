@@ -7,6 +7,89 @@ import paths from './../paths';
 import EventsList from './EventsList';
 
 
+class EventsListContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.handleServerResponse = this.handleServerResponse.bind(this);
+        this.editEvent = this.editEvent.bind(this);
+        this.deleteEvent = this.deleteEvent.bind(this);
+    }
+
+    componentDidMount() {
+        this.getEventsList();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.date !== this.props.date) {
+            const {date: {date}, dates} = this.props;
+            if (dates[date] === undefined) {
+                this.getEventsList();
+            }
+        }
+    }
+
+    getEventsList() {
+        const {user, date} = this.props;
+        queryServer({
+            path: paths.getEventsList,
+            data: {
+                name: user.name,
+                start: date.rangeStart,
+                finish: date.rangeFinish,
+            },
+            callback: this.handleServerResponse
+        });
+    }
+
+    handleServerResponse(response) {
+        const date = this.props.date.date;
+        const events = {};
+        response.data.forEach(event => {
+            events[event._id] = event;
+        });
+        this.props.addDateEvents(date, events);
+    }
+
+    editEvent(id) {
+        console.log(id);
+    }
+
+    deleteEvent(id) {
+        console.log(id);
+    }
+
+    render() {
+        const {date: {date}, dates, events} = this.props;
+        const dateIds = dates[date];
+        const dateEventsList = dateIds === undefined
+            ? []
+            : dateIds.map(id => events[id]);
+
+        return <EventsList eventsListData={dateEventsList} editCb={this.editEvent} deleteCb={this.deleteEvent} />
+    }
+}
+
+export default connect(
+    state => ({
+        user: state.user,
+        date: state.date,
+        events: state.eventsData.events,
+        dates: state.eventsData.ranges.dates
+    }),
+    dispatch => ({
+        addEvent(event) {
+            dispatch(action.addEvent(event));
+        },
+        addDateEvents(date, events) {
+            dispatch(action.addDateEvents(date, events));
+        },
+        togglePopupEditEvent: function(boolean) {
+            dispatch(action.togglePopupEditEvent(boolean))
+        },
+    })
+)(EventsListContainer);
+
+
 
 // const con = connect(
 //     state => ({
@@ -47,74 +130,4 @@ import EventsList from './EventsList';
 // }
 
 // export default con(withMyQuery(withMyData(EventsListContainer)));
-
-
-
-class EventsListContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            events: []
-        }
-        // this.getEventsList = this.getEventsList.bind(this);
-        this.handleServerResponse = this.handleServerResponse.bind(this);
-    }
-    componentDidMount() {
-        this.getEventsList();
-    }
-    componentDidUpdate(prevProps) {
-        if (prevProps.date !== this.props.date) {
-            this.getEventsList();
-        }
-    }
-    getEventsList() {
-        queryServer({
-            path: paths.getEventsList,
-            data: {
-                name: this.props.user.name,
-                start: this.props.date.rangeStart,
-                finish: this.props.date.rangeFinish,
-            },
-            callback: this.handleServerResponse
-        });
-    }
-    handleServerResponse(response) {
-        this.setState({events: response.data});
-
-        let d = {};
-        let dayContents = [];
-
-        response.data.forEach(event => {
-            d[event._id] = event;
-            dayContents.push(event._id);
-        });
-        console.log(this.props.date.date, dayContents);
-
-        this.props.addEvents(d);
-
-
-
-
-    }
-    render() {
-        return <EventsList eventsListData={this.state.events} />
-    }
-}
-
-export default connect(
-    state => ({
-        user: state.user,
-        date: state.date,
-        events: state.events
-    }),
-    dispatch => ({
-        addEvent(event) {
-            dispatch(action.addEvent(event));
-        },
-        addEvents(events) {
-            dispatch(action.addEvents(events));
-        }
-
-    })
-)(EventsListContainer);
 

@@ -21,8 +21,8 @@ class LoginPopup extends Component {
 export default connect(
     null,
     dispatch => ({
-        toggleLoginPopup: function(boolean) {
-            dispatch(action.toggleLoginPopup(boolean))
+        togglePopupLogin: function(boolean) {
+            dispatch(action.togglePopupLogin(boolean))
         }
     })
 )(LoginPopup)

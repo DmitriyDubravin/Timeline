@@ -2,9 +2,14 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import {user, date, popups, eventsListings, usersList, events} from './reducers';
-
-
+import {
+    user,
+    date,
+    popups,
+    eventsListings,
+    usersList,
+    eventsData
+} from './reducers';
 
 const reducers = combineReducers({
     user,
@@ -12,7 +17,7 @@ const reducers = combineReducers({
     popups,
     eventsListings,
     usersList,
-    events
+    eventsData
 });
 
 const logger = createLogger({
@@ -33,12 +38,30 @@ const preloadedState = {
         day: null,
     },
     popups: {
-        isLoginShown: false,
-        isEventAddShown: false
+        login: {
+            show: false
+        },
+        addEvent: {
+            show: false
+        },
+        editEvent: {
+            show: false,
+            id: null
+        },
+        removeEvent: {
+            show: false,
+            id: null
+        }
     },
     eventsListings: {},
     usersList: null,
-    events: {}
+    eventsData: {
+        ranges: {
+            dates: {},
+            queries: {}
+        },
+        events: {}
+    }
 }
 
 export default createStore(

@@ -17,7 +17,7 @@ class Header extends Component {
     }
     togglePopup(e) {
         e.preventDefault();
-        this.props.toggleLoginPopup(!this.props.isLoginShown);
+        this.props.togglePopupLogin(!this.props.isLoginShown);
     }
     logout() {
         deleteCookie();
@@ -27,7 +27,7 @@ class Header extends Component {
     }
     render() {
 
-        const {user, isLoginShown} = this.props;
+        const {user, login} = this.props;
         const {name, isAuthorized} = user;
 
         return (
@@ -47,7 +47,7 @@ class Header extends Component {
                         </div>
                     }
                 </div>
-                {isLoginShown && <LoginPopup />}
+                {login.show && <LoginPopup />}
                 <MainNav />
             </div>
         )
@@ -59,7 +59,7 @@ class Header extends Component {
 export default connect(
     state => ({
         user: state.user,
-        isLoginShown: state.popups.isLoginShown
+        login: state.popups.login
     }),
     dispatch => ({
         setUserName: function(name) {
@@ -71,8 +71,8 @@ export default connect(
         setUserAuthorization: function(name) {
             dispatch(action.setUserAuthorization(name))
         },
-        toggleLoginPopup: function(boolean) {
-            dispatch(action.toggleLoginPopup(boolean))
+        togglePopupLogin: function(boolean) {
+            dispatch(action.togglePopupLogin(boolean))
         }
     })
 )(Header)

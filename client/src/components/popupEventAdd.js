@@ -7,7 +7,7 @@ class PopupEventAdd extends Component {
     render() {
         return (
             <div className="popup">
-                <button className="link-close" onClick={() => this.props.toggleEventAddPopup(false)}>X</button>
+                <button className="link-close" onClick={() => this.props.togglePopupAddEvent(false)}>X</button>
                 <AddChronometryEventForm />
             </div>
         );
@@ -18,8 +18,8 @@ export default connect(
         user: state.user
     }),
     dispatch => ({
-        toggleEventAddPopup: function(boolean) {
-            dispatch(action.toggleEventAddPopup(boolean))
+        togglePopupAddEvent: function(boolean) {
+            dispatch(action.togglePopupAddEvent(boolean))
         },
     })
 )(PopupEventAdd)
