@@ -2,13 +2,11 @@
 import App from './AppContainer';
 import HomePage from './pages/HomePage';
 import ChronometryPage from './pages/ChronometryPage';
-import ChronometryEditPage from './pages/ChronometryEditPage';
 import RegisterPage from './pages/RegisterPage';
 import NoMatchPage from './pages/NoMatchPage';
 import UsersPage from './pages/UsersPage';
 import UserPage from './pages/UserPage';
 import EmailConfirmedPage from './pages/EmailConfirmedPage';
-import ChronometryRemovePage from './pages/ChronometryRemovePage';
 import SearchPage from './pages/SearchPage';
 
 
@@ -30,16 +28,6 @@ export default [
                 path: '/chronometry',
                 exact: true,
                 component: ChronometryPage
-            },
-            {
-                path: '/chronometry/event/:id',
-                exact: true,
-                component: ChronometryEditPage
-            },
-            {
-                path: '/chronometry/event/:id/delete',
-                exact: true,
-                component: ChronometryRemovePage
             },
             {
                 path: '/users',

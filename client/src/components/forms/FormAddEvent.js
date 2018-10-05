@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import queryServer from './../../queryServer';
-import * as action from './../../store/actions';
+import queryServer from '../../queryServer';
+import * as action from '../../store/actions';
 // import { clearScreenDown } from 'readline';
-import {timestampToTimeObj} from './../../support/functions';
+import {timestampToTimeObj} from '../../support/functions';
 
-class AddChronometryEventForm extends Component {
+class FormAddEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ class AddChronometryEventForm extends Component {
     }
 
     componentDidMount() {
-        this.getTypes();
+        this.getTypes(); // TEMP! need caching
     }
 
     getTypes() {
@@ -351,4 +351,4 @@ export default connect(
             dispatch(action.togglePopupAddEvent(boolean))
         },
     })
-)(AddChronometryEventForm)
+)(FormAddEvent)

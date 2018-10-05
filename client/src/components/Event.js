@@ -19,7 +19,7 @@ export default ({
             {category} | 
             {subcategory} | 
             {comment} | 
-            <button onClick={() => editCb(_id)}>edit</button> | 
-            <button onClick={() => deleteCb(_id)}>delete</button>
+            {editCb && <button onClick={() => editCb(_id)}>edit</button>} | 
+            {deleteCb && <button onClick={() => deleteCb(_id)}>delete</button>}
         </div>
     );

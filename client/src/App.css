@@ -156,6 +156,9 @@ input[type="submit"] {
   input[type="submit"]:hover,
   input[type="submit"]:focus {
     background: #4a6325; }
+  button.danger,
+  input[type="submit"].danger {
+    background: red; }
 
 .menu-switch {
   position: absolute;

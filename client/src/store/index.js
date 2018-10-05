@@ -48,7 +48,7 @@ const preloadedState = {
             show: false,
             id: null
         },
-        removeEvent: {
+        deleteEvent: {
             show: false,
             id: null
         }

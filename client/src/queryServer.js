@@ -7,6 +7,8 @@ export default ({path, data, callback, method = 'post'}) => {
             callback(response.data);
         })
         .catch(error => {
-            console.log(error.response.data.message);
+            console.log('%cError', 'color: red');
+            console.log(error);
+            // console.log(error.response.data.message);
         });
 }

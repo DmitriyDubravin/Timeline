@@ -12,12 +12,13 @@ export const setDate = date => ({type: "SET_DATE", data: date});
 // popups
 export const togglePopupLogin = boolean => ({type: "TOGGLE_POPUP_LOGIN", data: boolean});
 export const togglePopupAddEvent = boolean => ({type: "TOGGLE_POPUP_ADD_EVENT", data: boolean});
-export const togglePopupEditEvent = boolean => ({type: "TOGGLE_POPUP_EDIT_EVENT", data: boolean});
+export const togglePopupEditEvent = (boolean, id = null) => ({type: "TOGGLE_POPUP_EDIT_EVENT", data: {boolean, id}});
+export const togglePopupDeleteEvent = (boolean, id = null) => ({type: "TOGGLE_POPUP_DELETE_EVENT", data: {boolean, id}});
 
 // eventsListings
-export const addEventsList = (date, eventsList) => ({type: "ADD_EVENTS_LIST", data: {date, eventsList}});
-export const removeEventsList = date => ({type: "REMOVE_EVENTS_LIST", data: date});
-export const updateEventsList = (date, updatedEvent) => ({type: "UPDATE_EVENTS_LIST", data: {date, updatedEvent}});
+// export const addEventsList = (date, eventsList) => ({type: "ADD_EVENTS_LIST", data: {date, eventsList}});
+// export const removeEventsList = date => ({type: "REMOVE_EVENTS_LIST", data: date});
+// export const updateEventsList = (date, updatedEvent) => ({type: "UPDATE_EVENTS_LIST", data: {date, updatedEvent}});
 
 // export const addEvent = (date, event) => ({type: "ADD_EVENT", data: {date, event}});
 export const removeEvent = (date, eventId) => ({type: "REMOVE_EVENT", data: {date, eventId}});
@@ -32,3 +33,4 @@ export const addEvent = event => ({type: 'ADD_EVENT', data: event});
 export const addEvents = events => ({type: 'ADD_EVENTS', data: events});
 
 export const addDateEvents = (date, events) => ({type: 'ADD_DATE_EVENTS', data: {date, events}});
+export const editEvent = event => ({type: 'EDIT_EVENT', data: event});

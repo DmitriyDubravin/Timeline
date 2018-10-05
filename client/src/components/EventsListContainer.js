@@ -51,11 +51,11 @@ class EventsListContainer extends Component {
     }
 
     editEvent(id) {
-        console.log(id);
+        this.props.togglePopupEditEvent(true, id);
     }
 
     deleteEvent(id) {
-        console.log(id);
+        this.props.togglePopupDeleteEvent(true, id);
     }
 
     render() {
@@ -83,8 +83,11 @@ export default connect(
         addDateEvents(date, events) {
             dispatch(action.addDateEvents(date, events));
         },
-        togglePopupEditEvent: function(boolean) {
-            dispatch(action.togglePopupEditEvent(boolean))
+        togglePopupEditEvent: function(boolean, id) {
+            dispatch(action.togglePopupEditEvent(boolean, id))
+        },
+        togglePopupDeleteEvent: function(boolean, id) {
+            dispatch(action.togglePopupDeleteEvent(boolean, id))
         },
     })
 )(EventsListContainer);

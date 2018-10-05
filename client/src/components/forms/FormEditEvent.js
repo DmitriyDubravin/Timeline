@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
-import queryServer from './../../queryServer';
-import {timestampToTimeObj} from './../../support/functions';
-import * as action from './../../store/actions';
+import queryServer from '../../queryServer';
+import {timestampToTimeObj} from '../../support/functions';
+import * as action from '../../store/actions';
 
-class EditChronometryEventForm extends Component {
+class FormEditEvent extends Component {
     constructor(props) {
         super(props);
         const {type, category, subcategory, comment, start, finish} = props.event;
@@ -203,14 +203,12 @@ class EditChronometryEventForm extends Component {
         }
     }
     eventEdited(data) {
-
-        if (Object.keys(this.props.eventsListings).length !== 0) {
-            const {day, month, year} = this.props.date;
-            const date = `${day}.${month}.${year}`;
-            this.props.updateEventsList(date, data.updatedEvent);
+        this.props.togglePopupEditEvent(false);
+        if (data.status === "success") {
+            this.props.editEvent({[this.props.event._id]: data.updatedEvent})
+        } else {
+            console.log('c%Error', 'color: red');
         }
-
-        if (data.status === "success") this.setState({redirect: true});
     }
     submitHandler(event) {
         event.preventDefault();
@@ -353,11 +351,14 @@ export default connect(
     state => ({
         name: state.user.name,
         date: state.date,
-        eventsListings: state.eventsListings
+        event: state.eventsData.events[state.popups.editEvent.id]
     }),
     dispatch => ({
-        updateEventsList: function(date, updatedEvent) {
-            dispatch(action.updateEventsList(date, updatedEvent))
+        editEvent: function(event) {
+            dispatch(action.editEvent(event))
+        },
+        togglePopupEditEvent: function(boolean, id) {
+            dispatch(action.togglePopupEditEvent(boolean, id));
         }
     })
-)(EditChronometryEventForm)
+)(FormEditEvent)

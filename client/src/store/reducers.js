@@ -43,7 +43,12 @@ export const popups = (state = {}, {type, data}) => {
         case "TOGGLE_POPUP_EDIT_EVENT":
             return {
                 ...state,
-                editEvent: {...state.editEvent, show: data}
+                editEvent: {...state.editEvent, show: data.boolean, id: data.id}
+            };
+        case "TOGGLE_POPUP_DELETE_EVENT":
+            return {
+                ...state,
+                deleteEvent: {...state.deleteEvent, show: data.boolean, id: data.id}
             };
         default:
             return state;
@@ -99,6 +104,13 @@ export const eventsData = (state = {}, {type, data}) => {
                 ...state,
                 events: {
                     ...state.events, data
+                }
+            };
+        case "EDIT_EVENT":
+            return {
+                ...state,
+                events: {
+                    ...state.events, ...data
                 }
             };
         case "ADD_EVENTS":
