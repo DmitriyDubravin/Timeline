@@ -7,6 +7,7 @@ import PopupAddEvent from './components/PopupAddEvent';
 import PopupEditEvent from './components/PopupEditEvent';
 import PopupDeleteEvent from './components/PopupDeleteEvent';
 
+// TEMP! needs more protection agains unauthorized users
 
 
 const App = ({

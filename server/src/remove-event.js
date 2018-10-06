@@ -11,6 +11,7 @@ module.exports = async function(req, res) {
         _id: _id
     }
 
+    // TEMP! test again: still deletes when error before removing. so error not working properly
     const removedEvent = await f.tryCatch(f.removeEvent(eventData));
     removedEvent.err && e.removeEventError(res);
 

@@ -77,12 +77,12 @@ export const eventsListings = (state = {}, {type, data}) => {
         //         ...state,
         //         [data.date]: eventsList.concat(data.event)
         //     }
-        case "REMOVE_EVENT":
-            let newList = state[data.date].filter(event => event._id !== data.eventId);
-            return {
-                ...state,
-                [data.date]: newList
-            }
+        // case "REMOVE_EVENT":
+        //     let newList = state[data.date].filter(event => event._id !== data.eventId);
+        //     return {
+        //         ...state,
+        //         [data.date]: newList
+        //     }
         default:
             return state;
     }
@@ -99,13 +99,25 @@ export const usersList = (state = {}, {type, data}) => {
 
 export const eventsData = (state = {}, {type, data}) => {
     switch(type) {
-        case "ADD_EVENT":
+        case "ADD_EVENT": 
+        {
+            const oldEventsIds = state.ranges.dates[data.date];
+            const eventId = Object.keys(data.event);
+            const newEventsIds = oldEventsIds === undefined ? eventId : [...oldEventsIds, eventId];
+
             return {
                 ...state,
+                ranges: {
+                    ...state.ranges,
+                    dates: {
+                        ...state.ranges.dates, [data.date]: newEventsIds
+                    }
+                },
                 events: {
-                    ...state.events, data
+                    ...state.events, ...data.event
                 }
             };
+        }
         case "EDIT_EVENT":
             return {
                 ...state,
@@ -113,6 +125,21 @@ export const eventsData = (state = {}, {type, data}) => {
                     ...state.events, ...data
                 }
             };
+        case "REMOVE_EVENT":
+        {
+            const {eventId, ...rest} = state.events;
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    dates: {
+                        ...state.ranges.dates,
+                        [data.date]: state.ranges.dates[data.date].filter(id => id !== data.eventId)
+                    }
+                },
+                events: rest
+            };
+        }
         case "ADD_EVENTS":
             return {
                 ...state,

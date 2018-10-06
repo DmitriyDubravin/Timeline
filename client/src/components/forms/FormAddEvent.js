@@ -192,10 +192,11 @@ class FormAddEvent extends Component {
     }
     eventAdded(data) {
 
-        const {day, month, year} = this.props.date;
-        const date = `${day}.${month}.${year}`;
+        // TEMP! no errors check
+        const date = this.props.date.date;
+        const id = data.addedEvent._id;
         this.props.togglePopupAddEvent(false);
-        this.props.addEvent(date, data.addedEvent);
+        this.props.addEvent(date, {[id]: data.addedEvent});
 
     }
     submitHandler(event) {
