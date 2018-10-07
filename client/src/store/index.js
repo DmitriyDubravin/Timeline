@@ -6,7 +6,6 @@ import {
     user,
     date,
     popups,
-    eventsListings,
     usersList,
     eventsData
 } from './reducers';
@@ -15,7 +14,6 @@ const reducers = combineReducers({
     user,
     date,
     popups,
-    eventsListings,
     usersList,
     eventsData
 });
@@ -53,7 +51,6 @@ const preloadedState = {
             id: null
         }
     },
-    eventsListings: {},
     usersList: null,
     eventsData: {
         ranges: {
