@@ -2,8 +2,6 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import DefaultChronometryPage from './DefaultChronometryPage';
 import EventsListContainer from './../components/EventsListContainer';
-import DateSwitcher from './../components/DateSwitcher';
-import DatePicker from './../components/DatePicker';
 
 class ChronometryPage extends Component {
     render() {
@@ -12,8 +10,6 @@ class ChronometryPage extends Component {
         return (
             <Fragment>
                 <h2>Chronometry page</h2>
-                <DateSwitcher />
-                <DatePicker />
                 <EventsListContainer />
             </Fragment>
         )

@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
+import {
+    FaCalendarAlt,
+} from 'react-icons/fa';
 
 class DatePicker extends Component {
 
@@ -114,7 +117,7 @@ class DatePicker extends Component {
 
         return (
             <div className="datepicker-holder">
-                <button onClick={this.togglePopup}>Datepicker toggler</button>
+                <button className="icon" onClick={this.togglePopup}><FaCalendarAlt /></button>
                 {
                     this.state.showPopup &&
                     <div className="datepicker">

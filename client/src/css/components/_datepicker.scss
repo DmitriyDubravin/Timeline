@@ -8,11 +8,17 @@ $bg-chosen: darken($mbc, 20%);
 
 .datepicker-holder {
     position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 5px;
+    >button {
+        vertical-align: top;
+    }
 }
 .datepicker {
-    // position: absolute;
-    // top: 100%;
-    // left: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 280px;
     background: $white;
     .head {

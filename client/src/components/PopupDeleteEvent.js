@@ -4,6 +4,7 @@ import * as action from '../store/actions';
 import Event from './Event';
 import queryServer from './../queryServer';
 import paths from './../paths';
+import { FaTimes, FaTrashAlt } from 'react-icons/fa';
 
 class PopupEventEdit extends Component {
     constructor(props) {
@@ -33,9 +34,9 @@ class PopupEventEdit extends Component {
         const {event, togglePopupDeleteEvent} = this.props;
         return (
             <div className="popup">
-                <button className="link-close" onClick={() => togglePopupDeleteEvent(false)}>X</button>
+                <button className="link-close icon" onClick={() => togglePopupDeleteEvent(false)}><FaTimes /></button>
                 <Event {...event} />
-                <button className="danger" onClick={this.removeEvent}>Delete</button>
+                <button className="danger icon" onClick={this.removeEvent}><FaTrashAlt /></button>
             </div>
         )
     }

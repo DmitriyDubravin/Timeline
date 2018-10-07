@@ -2,10 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as action from '../store/actions';
 import FormAddEvent from './forms/FormAddEvent';
+import { FaTimes } from 'react-icons/fa';
 
 const PopupEventAdd = ({togglePopupAddEvent}) => (
     <div className="popup">
-        <button className="link-close" onClick={() => togglePopupAddEvent(false)}>X</button>
+        <button className="link-close icon" onClick={() => togglePopupAddEvent(false)}><FaTimes /></button>
         <FormAddEvent />
     </div>
 );

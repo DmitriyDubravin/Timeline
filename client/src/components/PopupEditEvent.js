@@ -2,10 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as action from '../store/actions';
 import FormEditEvent from './forms/FormEditEvent';
+import { FaTimes } from 'react-icons/fa';
 
 const PopupEventEdit = ({togglePopupEditEvent}) => (
     <div className="popup">
-        <button className="link-close" onClick={() => togglePopupEditEvent(false)}>X</button>
+        <button className="link-close icon" onClick={() => togglePopupEditEvent(false)}><FaTimes /></button>
         <FormEditEvent />
     </div>
 );

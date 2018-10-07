@@ -136,4 +136,14 @@ input[type="submit"] {
     &.danger {
         background: red;
     }
+    &.icon {
+        padding: 4px 0;
+        width: 30px;
+        svg {
+            display: block;
+            margin: 0 auto;
+            height: 16px;
+            width: 16px;
+        }
+    }
 }

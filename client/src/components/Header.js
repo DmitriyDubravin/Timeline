@@ -7,6 +7,10 @@ import { deleteCookie } from './../support/cookies';
 import Date from './Date';
 import MainNav from './MainNav';
 import LoginPopup from './LoginPopup';
+import Logo from './logo';
+import DateSwitcher from './DateSwitcher';
+import DatePicker from './DatePicker';
+import { FaPlus } from 'react-icons/fa';
 
 class Header extends Component {
     constructor(props) {
@@ -27,12 +31,17 @@ class Header extends Component {
     }
     render() {
 
-        const {user, login} = this.props;
+        const {user, login, togglePopupAddEvent} = this.props;
         const {name, isAuthorized} = user;
 
         return (
             <div className="header">
+                <Logo />
+                <MainNav />
+                <button onClick={() => togglePopupAddEvent(true)} className="add-popup-opener icon"><FaPlus /></button>
                 <Date />
+                <DateSwitcher />
+                <DatePicker />
                 <div className="user-box">
                     {
                         isAuthorized &&
@@ -48,7 +57,6 @@ class Header extends Component {
                     }
                 </div>
                 {login.show && <LoginPopup />}
-                <MainNav />
             </div>
         )
     }
@@ -73,6 +81,9 @@ export default connect(
         },
         togglePopupLogin: function(boolean) {
             dispatch(action.togglePopupLogin(boolean))
+        },
+        togglePopupAddEvent: function(boolean) {
+            dispatch(action.togglePopupAddEvent(boolean))
         }
     })
 )(Header)

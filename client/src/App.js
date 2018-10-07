@@ -21,7 +21,6 @@ const App = ({
     }) => (
         <div className="App">
             <Header />
-            <button onClick={() => togglePopupAddEvent(true)}>+</button>
             {addEvent.show && <PopupAddEvent />}
             {editEvent.show && <PopupEditEvent />}
             {deleteEvent.show && <PopupDeleteEvent />}

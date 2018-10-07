@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 
 export default ({
         _id,
@@ -19,7 +20,7 @@ export default ({
             {category} | 
             {subcategory} | 
             {comment} | 
-            {editCb && <button onClick={() => editCb(_id)}>edit</button>} | 
-            {deleteCb && <button onClick={() => deleteCb(_id)}>delete</button>}
+            {editCb && <button className="icon" onClick={() => editCb(_id)}><FaPencilAlt /></button>} |
+            {deleteCb && <button className="icon" onClick={() => deleteCb(_id)}><FaTrashAlt /></button>}
         </div>
     );

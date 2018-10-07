@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
+import {
+    FaArrowLeft,
+    FaArrowRight,
+    FaBullseye
+} from 'react-icons/fa';
 
 class DatePicker extends Component {
 
@@ -26,9 +31,9 @@ class DatePicker extends Component {
     render() {
         return (
             <div className="dateswitcher-box">
-                <button onClick={() => this.switchDay(-1)}>Prev</button>
-                <button onClick={() => this.switchToToday()}>Today</button>
-                <button onClick={() => this.switchDay(1)}>Next</button>
+                <button className="icon" onClick={() => this.switchDay(-1)}><FaArrowLeft /></button>
+                <button className="icon" onClick={() => this.switchToToday()}><FaBullseye /></button>
+                <button className="icon" onClick={() => this.switchDay(1)}><FaArrowRight /></button>
             </div>
         )
     }
