@@ -18,7 +18,6 @@ export default class MainNav extends Component {
         this.setState({isOpen: !this.state.isOpen});
     }
     render() {
-        console.log(this.state.isOpen);
         return (
             <nav>
                 <button className="main-nav-opener icon" onClick={this.toggleMenu}><FaBars /></button>

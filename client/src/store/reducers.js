@@ -108,17 +108,29 @@ export const eventsData = (state = {}, {type, data}) => {
                 events: {...state.events}
             };
         case "ADD_DATE_EVENTS":
-            const {date, events} = data;
             return {
                 ...state,
                 ranges: {
                     ...state.ranges,
                     dates: {
-                        ...state.ranges.dates, [date]: Object.keys(events)
+                        ...state.ranges.dates, [data.date]: Object.keys(data.events)
                     }
                 },
                 events: {
-                    ...state.events, ...events
+                    ...state.events, ...data.events
+                }
+            };
+        case "ADD_QUERY_EVENTS":
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    queries: {
+                        ...state.ranges.queries, [data.query]: Object.keys(data.events)
+                    }
+                },
+                events: {
+                    ...state.events, ...data.events
                 }
             };
         default:

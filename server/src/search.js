@@ -3,6 +3,8 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
+    console.log('\n\n\nNEW SEARCH QUERY\n\n\n');
+
     const {name, query} = req.body;
     const searchOptions = {
         user: name,
@@ -13,7 +15,7 @@ module.exports = async function(req, res) {
     foundSearch.err && e.searchError(res);
 
     f.success(res, {
-        events: foundSearch.data
+        data: foundSearch.data
     });
 
 }

@@ -207,7 +207,7 @@ class FormEditEvent extends Component {
         if (data.status === "success") {
             this.props.editEvent({[this.props.event._id]: data.updatedEvent})
         } else {
-            console.log('c%Error', 'color: red');
+            console.log('c%Editing Error', 'color: red');
         }
     }
     submitHandler(event) {

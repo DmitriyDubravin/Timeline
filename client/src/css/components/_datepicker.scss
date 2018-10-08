@@ -16,10 +16,11 @@ $bg-chosen: darken($mbc, 20%);
     }
 }
 .datepicker {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    bottom: 0%;
     left: 0;
     width: 280px;
+    width: 100%;
     background: $white;
     .head {
         display: flex;

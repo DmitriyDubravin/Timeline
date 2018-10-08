@@ -147,3 +147,25 @@ input[type="submit"] {
         }
     }
 }
+
+
+
+
+.add-event-form {
+    width: 300px;
+    select {
+        padding: 0;
+    }
+    .times {
+        >* {
+            margin-left: 2px;
+            margin-right: 2px;
+            &:first-child {
+                margin-left: 0;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

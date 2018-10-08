@@ -170,6 +170,18 @@ input[type="submit"] {
       height: 16px;
       width: 16px; }
 
+.add-event-form {
+  width: 300px; }
+  .add-event-form select {
+    padding: 0; }
+  .add-event-form .times > * {
+    margin-left: 2px;
+    margin-right: 2px; }
+    .add-event-form .times > *:first-child {
+      margin-left: 0; }
+    .add-event-form .times > *:last-child {
+      margin-right: 0; }
+
 .menu-switch {
   position: absolute;
   top: 30px;
@@ -236,7 +248,7 @@ input[type="submit"] {
   line-height: 20px;
   font-size: 14px;
   list-style: none;
-  background: #4a6325; }
+  background: #ddd; }
   .main-nav li {
     margin: 10px 0; }
   .main-nav a {
@@ -274,10 +286,11 @@ input[type="submit"] {
     vertical-align: top; }
 
 .datepicker {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  bottom: 0%;
   left: 0;
   width: 280px;
+  width: 100%;
   background: #fff; }
   .datepicker .head {
     display: flex;

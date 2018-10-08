@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import queryServer from '../../queryServer';
 import * as action from '../../store/actions';
 // import { clearScreenDown } from 'readline';
-import {timestampToTimeObj} from '../../support/functions';
+import {timestampToTimeObj, convertNumToTwoDigits} from '../../support/functions';
 
 class FormAddEvent extends Component {
     constructor(props) {
@@ -19,8 +19,10 @@ class FormAddEvent extends Component {
             types: [],
             categories: [],
             subcategories: [],
-            start: '',
-            finish: '',
+            startHours: '',
+            startMinutes: '',
+            finishHours: '',
+            finishMinutes: '',
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
@@ -90,22 +92,17 @@ class FormAddEvent extends Component {
 
     }
 
-    getSeconds(time) {
-        let [hour, minute] = time.split(':');
-        let {day, month, year} = this.props.date;
-        return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
-    }
-
     inputHandler(event) {
         const {name, value} = event.target;
         this.setState({[name]: value});
-        if (name === "start") {
-            let start = this.getSeconds(value);
-            this.setState({start: start});
-        }
-        if (name === "finish") {
-            let finish = this.getSeconds(value);
-            this.setState({finish: finish});
+
+        if (
+            name === "startHours" || 
+            name === "startMinutes" || 
+            name === "finishHours" || 
+            name === "finishMinutes"
+        ) {
+            this.setState({[name]: value});
         }
         if (name === 'type') {
             if (value !== 'Type') {
@@ -199,9 +196,38 @@ class FormAddEvent extends Component {
         this.props.addEvent(date, {[id]: data.addedEvent});
 
     }
+
+    getSeconds(hour, minute) {
+        let {day, month, year} = this.props.date;
+        return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
+    }
+
     submitHandler(event) {
         event.preventDefault();
-        const {start, finish, type, category, subcategory, comment} = this.state;
+        const {
+            startHours,
+            startMinutes,
+            finishHours,
+            finishMinutes,
+            type,
+            category,
+            subcategory,
+            comment
+        } = this.state;
+
+        const start = this.getSeconds(startHours, startMinutes);
+
+
+
+
+        // if (finish < start) .... etc...
+
+
+
+
+
+
+        const finish = this.getSeconds(finishHours, finishMinutes);
 
         const {hour: startHour, minute: startMinute} = timestampToTimeObj(start);
         const {hour: finishHour, minute: finishMinute} = timestampToTimeObj(finish);
@@ -242,37 +268,24 @@ class FormAddEvent extends Component {
         const showSubcategory = !newSubcategory && category.length > 0;
         const showNewSubcategory = newSubcategory && category.length > 0;
 
-        const startOptions = Array.from({length: 288}, (v, i) => i * 5)
-            .map(item => {
-                let hrsRaw = Math.floor(item / 60);
-                let hrs = hrsRaw < 10 ? '0' + hrsRaw : hrsRaw;
-                let minsRaw = item - hrs * 60;
-                let mins = minsRaw < 10 ? '0' + minsRaw: minsRaw;
-                return `${hrs}:${mins}`;
-            })
-            .map((item, i) => <option key={i}>{item}</option>);
-
-        const finishOptions = Array.from({length: 288}, (v, i) => (i + 1) * 5)
-            .map(item => {
-                let hrsRaw = Math.floor(item / 60);
-                let hrs = hrsRaw < 10 ? '0' + hrsRaw : hrsRaw;
-                let minsRaw = item - hrs * 60;
-                let mins = minsRaw < 10 ? '0' + minsRaw: minsRaw;
-                return `${hrs}:${mins}`;
-            })
-            .map((item, i) => <option key={i}>{item}</option>);
+        const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
+        const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
 
         return (
-            <form className="add-chronometry-event-form" onSubmit={this.submitHandler}>
+            <form className="add-event-form" onSubmit={this.submitHandler}>
 
-                <div className="line">
-                    <select name="start" onChange={this.inputHandler}>
-                        <option>Start</option>
-                        {startOptions}
+                <div className="line times">
+                    <select name="startHours" onChange={this.inputHandler}>
+                        {hoursOptions}
                     </select>
-                    <select name="finish" onChange={this.inputHandler}>
-                        <option>Finish</option>
-                        {finishOptions}
+                    <select name="startMinutes" onChange={this.inputHandler}>
+                        {minutesOptions}
+                    </select>
+                    <select name="finishHours" onChange={this.inputHandler}>
+                        {hoursOptions}
+                    </select>
+                    <select name="finishMinutes" onChange={this.inputHandler}>
+                        {minutesOptions}
                     </select>
                 </div>
                 {

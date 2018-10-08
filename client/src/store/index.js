@@ -40,7 +40,7 @@ const preloadedState = {
             show: false
         },
         addEvent: {
-            show: false
+            show: true // TEMP
         },
         editEvent: {
             show: false,
