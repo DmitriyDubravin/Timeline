@@ -6,6 +6,7 @@ import FormGen from './../../support/formGen';
 import { loginFormData } from './../../data/formsData';
 import { setCookie } from './../../support/cookies';
 import m from './../../support/messages';
+import paths from './../../paths';
 
 class LoginAccountForm extends Component {
     constructor(props) {
@@ -57,7 +58,7 @@ class LoginAccountForm extends Component {
     submitHandler(event) {
         event.preventDefault();
         queryServer({
-            path: '/user-login',
+            path: paths.userLogin,
             data: {
                 login: this.getField('name'),
                 password: this.getField('password')

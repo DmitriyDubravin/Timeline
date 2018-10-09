@@ -6,6 +6,7 @@ import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { changePasswordFormData } from './../../data/formsData';
 import m from "./../../support/messages";
+import paths from './../../paths';
 
 
 
@@ -42,7 +43,7 @@ class ChangePasswordForm extends Component {
     submitHandler(event) {
         event.preventDefault();
         queryServer({
-            path: '/user-change-password',
+            path: paths.userChangePassword,
             data: {
                 login: this.props.name,
                 currentPassword: this.state.form[0].value,

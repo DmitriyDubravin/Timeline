@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import queryServer from './../queryServer';
 import ChangePasswordForm from './../components/forms/ChangePasswordForm';
 import RemoveAccountForm from './../components/forms/RemoveAccountForm';
+import paths from './../paths';
 
 class UserPage extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class UserPage extends Component {
     }
     componentDidMount() {
         queryServer({
-            path: '/user-get-data',
+            path: paths.userGetData,
             data: {name: this.props.match.params.user},
             callback: this.handleServerResponse
         });

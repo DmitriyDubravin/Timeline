@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import queryServer from '../../queryServer';
 import * as action from '../../store/actions';
 // import { clearScreenDown } from 'readline';
-import {timestampToTimeObj, convertNumToTwoDigits} from '../../support/functions';
+import {convertNumToTwoDigits} from '../../support/functions';
+import paths from './../../paths';
 
 class FormAddEvent extends Component {
     constructor(props) {
@@ -19,14 +20,15 @@ class FormAddEvent extends Component {
             types: [],
             categories: [],
             subcategories: [],
-            startHours: '',
-            startMinutes: '',
-            finishHours: '',
-            finishMinutes: '',
+            startHours: '00',
+            startMinutes: '00',
+            finishHours: '00',
+            finishMinutes: '00',
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
+        this.eventAdded = this.eventAdded.bind(this);
     }
 
     componentDidMount() {
@@ -34,98 +36,73 @@ class FormAddEvent extends Component {
     }
 
     getTypes() {
-
         queryServer({
-            path: '/get-types',
+            path: paths.getTypes,
             data: {
-                name: 'admin'
+                name: this.props.name
             },
             callback: this.gotTypes.bind(this)
         });
-
     }
     gotTypes(response) {
-
         let typesList = response.types;
         let sortedTypesList = typesList.filter(type => type.length !== 0).sort();
         this.setState({types: sortedTypesList});
-
     }
 
     getCategories(type) {
-
         queryServer({
-            path: '/get-categories',
+            path: paths.getCategories,
             data: {
-                name: 'admin',
+                name: this.props.name,
                 type: type
             },
             callback: this.gotCategories.bind(this)
         });
-
     }
     gotCategories(response) {
-
         let categoriesList = response.categories;
         let sortedCategoriesList = categoriesList.filter(category => category.length !== 0).sort();
         this.setState({categories: sortedCategoriesList});
-
     }
 
     getSubcategories(category) {
-
         queryServer({
-            path: '/get-subcategories',
+            path: paths.getSubcategories,
             data: {
-                name: 'admin',
+                name: this.props.name,
                 category: category
             },
             callback: this.gotSubcategories.bind(this)
-
         });
     }
     gotSubcategories(response) {
-
         let subCategoriesList = response.subcategories;
         let sortedSubcategoriesList = subCategoriesList.filter(subcategory => subcategory.length !== 0).sort();
         this.setState({subcategories: sortedSubcategoriesList});
-
     }
 
     inputHandler(event) {
         const {name, value} = event.target;
         this.setState({[name]: value});
 
-        if (
-            name === "startHours" || 
-            name === "startMinutes" || 
-            name === "finishHours" || 
-            name === "finishMinutes"
-        ) {
-            this.setState({[name]: value});
-        }
         if (name === 'type') {
             if (value !== 'Type') {
-                this.setState({
-                    category: '',
-                    subcategory: '',
-                    categories: [],
-                    subcategories: [],
-                });
-                this.getCategories(value)
+                this.getCategories(value);
             } else {
-                this.setState({
-                    type: '',
-                    category: '',
-                    subcategory: '',
-                    categories: [],
-                    subcategories: [],
-                });
+                this.setState({type: ''});
             }
+            this.setState({
+                category: '',
+                subcategory: '',
+                categories: [],
+                subcategories: [],
+            });
         }
+
         if (name === 'category') {
             if (value !== 'Category') {
-                this.getSubcategories(value)
+                this.getSubcategories(value);
             } else {
                 this.setState({
                     category: '',
@@ -134,6 +111,7 @@ class FormAddEvent extends Component {
             }
         }
     }
+
     btnHandler(event) {
         const {name} = event.target;
         if (name === 'newType') {
@@ -187,13 +165,17 @@ class FormAddEvent extends Component {
             });
         }
     }
+
     eventAdded(data) {
 
-        // TEMP! no errors check
-        const date = this.props.date.date;
-        const id = data.addedEvent._id;
-        this.props.togglePopupAddEvent(false);
-        this.props.addEvent(date, {[id]: data.addedEvent});
+        if (data.status === "success") {
+            const {date: {date}, togglePopupAddEvent, addEvent} = this.props;
+            const id = data.addedEvent._id;
+            togglePopupAddEvent(false);
+            addEvent(date, {[id]: data.addedEvent});
+        } else {
+            console.log('c%Adding Error', 'color: red');
+        }
 
     }
 
@@ -215,45 +197,39 @@ class FormAddEvent extends Component {
             comment
         } = this.state;
 
-        const start = this.getSeconds(startHours, startMinutes);
+        let start = this.getSeconds(startHours, startMinutes);
+        let finish = this.getSeconds(finishHours, finishMinutes);
 
+        // is event ends on next day
+        const startTotalMinutes = startHours * 60 + startMinutes * 1;
+        const finishTotalMinutes = finishHours * 60 + finishMinutes * 1;
+        if (finishTotalMinutes <= startTotalMinutes) {
+            finish += 86400
+        }
 
-
-
-        // if (finish < start) .... etc...
-
-
-
-
-
-
-        const finish = this.getSeconds(finishHours, finishMinutes);
-
-        const {hour: startHour, minute: startMinute} = timestampToTimeObj(start);
-        const {hour: finishHour, minute: finishMinute} = timestampToTimeObj(finish);
-
-        
         queryServer({
-            path: '/add-event',
+            path: paths.addEvent,
             data: {
-                name: 'admin',
+                name: this.props.name,
                 start: start,
-                startHour: startHour,
-                startMinute: startMinute,
+                startHour: startHours,
+                startMinute: startMinutes,
                 finish: finish,
-                finishHour: finishHour,
-                finishMinute: finishMinute,
+                finishHour: finishHours,
+                finishMinute: finishMinutes,
                 type: type,
                 category: category,
                 subcategory: subcategory,
                 comment: comment
             },
-            callback: this.eventAdded.bind(this)
+            callback: this.eventAdded
         });
     }
 
 
+
     render() {
+        console.log('state', this.state);
 
         const {types, categories, subcategories, type, newType, category, newCategory, newSubcategory} = this.state;
 

@@ -7,6 +7,7 @@ import { getCookie, deleteCookie } from './support/cookies';
 import m from "./support/messages";
 import App from './App';
 import {withData} from './support/functions';
+import paths from './paths';
 
 
 
@@ -45,7 +46,7 @@ class AppContainer extends Component {
         const cookie = getCookie('token');
         if (cookie) {
             queryServer({
-                path: '/token-acknowledge',
+                path: paths.tokenAcknowledge,
                 data: {token: cookie.token},
                 callback: this.handleServerResponse(cookie.token)
             });

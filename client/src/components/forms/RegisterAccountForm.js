@@ -7,6 +7,7 @@ import { registerFormData } from './../../data/formsData';
 import GlobalMessage from './../GlobalMessage';
 import LocalMessage from './../LocalMessage';
 import m from './../../support/messages';
+import paths from './../../paths';
 
 
 export default class RegisterAccountForm extends Component {
@@ -44,7 +45,7 @@ export default class RegisterAccountForm extends Component {
     submitHandler(event) {
         event.preventDefault();
         queryServer({
-            path: '/user-register',
+            path: paths.userRegister,
             data: {
                 login: this.getField('name'),
                 email: this.getField('email'),

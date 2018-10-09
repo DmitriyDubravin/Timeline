@@ -15,42 +15,42 @@ export default [
         component: App,
         routes: [
             {
-                path: '/',
+                path: "/",
                 exact: true,
                 component: HomePage
             },
             {
-                path: '/register',
+                path: "/register",
                 exact: true,
                 component: RegisterPage
             },
             {
-                path: '/chronometry',
+                path: "/chronometry",
                 exact: true,
                 component: ChronometryPage
             },
             {
-                path: '/users',
+                path: "/users",
                 exact: true,
                 component: UsersPage,
             },
             {
-                path: '/users/:user',
+                path: "/users/:user",
                 exact: true,
                 component: UserPage,
             },
             {
-                path: '/search',
+                path: "/search",
                 exact: true,
                 component: SearchPage
             },
             {
-                path: '/email-confirmation/:hash',
+                path: "/email-confirmation/:hash",
                 exact: true,
                 component: EmailConfirmedPage,
             },
             {
-                path: '/404',
+                path: "/404",
                 exact: true,
                 component: NoMatchPage
             },

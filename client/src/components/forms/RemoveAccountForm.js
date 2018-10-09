@@ -6,6 +6,7 @@ import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { removeFormData } from './../../data/formsData';
 import m from "./../../support/messages";
+import paths from './../../paths';
 
 class RemoveAccountForm extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class RemoveAccountForm extends Component {
     submitHandler(event) {
         event.preventDefault();
         queryServer({
-            path: '/user-remove',
+            path: paths.userDelete,
             data: {
                 login: this.props.name,
                 password: this.getField('password')

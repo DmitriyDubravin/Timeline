@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import queryServer from './../queryServer';
 import m from './../support/messages';
+import paths from './../paths';
 
 class HomePage extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class HomePage extends Component {
 
     componentDidMount() {
         queryServer({
-            path: '/email-confirmation',
+            path: paths.emailConfiguration,
             data: {hash: this.props.match.params.hash},
             callback: this.handleServerResponse
         });

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import queryServer from '../../queryServer';
 import {timestampToTimeObj} from '../../support/functions';
 import * as action from '../../store/actions';
+import paths from './../../paths';
 
 class FormEditEvent extends Component {
     constructor(props) {
@@ -42,9 +43,9 @@ class FormEditEvent extends Component {
     getTypes() {
 
         queryServer({
-            path: '/get-types',
+            path: paths.getTypes,
             data: {
-                name: 'admin'
+                name: this.props.name
             },
             callback: this.gotTypes.bind(this)
         });
@@ -61,9 +62,9 @@ class FormEditEvent extends Component {
     getCategories(type) {
 
         queryServer({
-            path: '/get-categories',
+            path: paths.getCategories,
             data: {
-                name: 'admin',
+                name: this.props.name,
                 type: type
             },
             callback: this.gotCategories.bind(this)
@@ -81,9 +82,9 @@ class FormEditEvent extends Component {
     getSubcategories(category) {
 
         queryServer({
-            path: '/get-subcategories',
+            path: paths.getSubcategories,
             data: {
-                name: 'admin',
+                name: this.props.name,
                 category: category
             },
             callback: this.gotSubcategories.bind(this)
@@ -215,9 +216,9 @@ class FormEditEvent extends Component {
         const {start, finish, type, category, subcategory, comment} = this.state;
         
         queryServer({
-            path: '/edit-event',
+            path: paths.editEvent,
             data: {
-                name: 'admin',
+                name: this.props.name,
                 _id: this.props.event._id,
                 start: start,
                 finish: finish,

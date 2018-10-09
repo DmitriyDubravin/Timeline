@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import queryServer from './../queryServer';
 import EventsList from '../components/EventsList';
 import * as action from './../store/actions';
+import paths from './../paths';
 
 class SearchPage extends Component {
     constructor(props) {
@@ -23,9 +24,9 @@ class SearchPage extends Component {
         if (this.props.queries[this.state.query] === undefined) {
 
             queryServer({
-                path: '/search',
+                path: paths.search,
                 data: {
-                    name: 'admin',
+                    name: this.props.name,
                     query: this.state.query
                 },
                 callback: this.gotSearchResults.bind(this)
