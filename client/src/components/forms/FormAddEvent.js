@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import queryServer from '../../queryServer';
 import * as action from '../../store/actions';
-// import { clearScreenDown } from 'readline';
 import {convertNumToTwoDigits} from '../../support/functions';
 import paths from './../../paths';
 
 class FormAddEvent extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             newType: false,
             newCategory: false,
@@ -29,57 +29,27 @@ class FormAddEvent extends Component {
         this.submitHandler = this.submitHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
         this.eventAdded = this.eventAdded.bind(this);
+        this.gotData = this.gotData.bind(this);
     }
 
     componentDidMount() {
-        this.getTypes(); // TEMP! need caching
+        this.getData(paths.getTypes); // TEMP! need caching
     }
 
-    getTypes() {
+    getData(path, data = '') {
         queryServer({
-            path: paths.getTypes,
-            data: {
-                name: this.props.name
-            },
-            callback: this.gotTypes.bind(this)
-        });
-    }
-    gotTypes(response) {
-        let typesList = response.types;
-        let sortedTypesList = typesList.filter(type => type.length !== 0).sort();
-        this.setState({types: sortedTypesList});
-    }
-
-    getCategories(type) {
-        queryServer({
-            path: paths.getCategories,
+            path: path,
             data: {
                 name: this.props.name,
-                type: type
+                data: data
             },
-            callback: this.gotCategories.bind(this)
+            callback: this.gotData
         });
-    }
-    gotCategories(response) {
-        let categoriesList = response.categories;
-        let sortedCategoriesList = categoriesList.filter(category => category.length !== 0).sort();
-        this.setState({categories: sortedCategoriesList});
     }
 
-    getSubcategories(category) {
-        queryServer({
-            path: paths.getSubcategories,
-            data: {
-                name: this.props.name,
-                category: category
-            },
-            callback: this.gotSubcategories.bind(this)
-        });
-    }
-    gotSubcategories(response) {
-        let subCategoriesList = response.subcategories;
-        let sortedSubcategoriesList = subCategoriesList.filter(subcategory => subcategory.length !== 0).sort();
-        this.setState({subcategories: sortedSubcategoriesList});
+    gotData(response) {
+        const sortedDataList = response.data.filter(item => item.length !== 0).sort();
+        this.setState({[response.dataName]: sortedDataList});
     }
 
     inputHandler(event) {
@@ -88,7 +58,7 @@ class FormAddEvent extends Component {
 
         if (name === 'type') {
             if (value !== 'Type') {
-                this.getCategories(value);
+                this.getData(paths.getCategories, value);
             } else {
                 this.setState({type: ''});
             }
@@ -102,7 +72,7 @@ class FormAddEvent extends Component {
 
         if (name === 'category') {
             if (value !== 'Category') {
-                this.getSubcategories(value);
+                this.getData(paths.getSubcategories, value);
             } else {
                 this.setState({
                     category: '',
@@ -114,60 +84,32 @@ class FormAddEvent extends Component {
 
     btnHandler(event) {
         const {name} = event.target;
-        if (name === 'newType') {
-            this.setState({
-                newType: true,
-                newCategory: true,
-                newSubcategory: true,
-                type: '',
-                category: '',
-                subcategory: ''
-            });
-        }
-        if (name === 'type') {
-            this.setState({
-                newType: false,
-                newCategory: false,
-                newSubcategory: false,
-                type: '',
-                category: '',
-                subcategory: ''
-            });
-        }
 
-        if (name === 'newCategory') {
-            this.setState({
-                newCategory: true,
-                newSubcategory: true,
-                category: '',
-                subcategory: ''
-            });
-        }
-        if (name === 'category') {
-            this.setState({
-                newCategory: false,
-                newSubcategory: false,
-                category: '',
-                subcategory: ''
-            });
-        }
+        switch (name) {
+            case "type":
+                this.setState({newType: false, newCategory: false, newSubcategory: false, type: '', category: '', subcategory: ''});
+                break;
+            case "category":
+                this.setState({newCategory: false, newSubcategory: false, category: '', subcategory: ''});
+                break;
+            case "subcategory":
+                this.setState({newSubcategory: false, subcategory: ''});
+                break;
+            case "newType":
+                this.setState({newType: true, newCategory: true, newSubcategory: true, type: '', category: '', subcategory: ''});
+                break;
+            case "newCategory":
+                this.setState({newCategory: true, newSubcategory: true, category: '', subcategory: ''});
+                break;
+            case "newSubcategory":
+                this.setState({newSubcategory: true, subcategory: ''});
+                break;
+            default:
 
-        if (name === 'newSubcategory') {
-            this.setState({
-                newSubcategory: true,
-                subcategory: ''
-            });
-        }
-        if (name === 'subcategory') {
-            this.setState({
-                newSubcategory: false,
-                subcategory: ''
-            });
         }
     }
 
     eventAdded(data) {
-
         if (data.status === "success") {
             const {date: {date}, togglePopupAddEvent, addEvent} = this.props;
             const id = data.addedEvent._id;
@@ -176,10 +118,9 @@ class FormAddEvent extends Component {
         } else {
             console.log('c%Adding Error', 'color: red');
         }
-
     }
 
-    getSeconds(hour, minute) {
+    calcSeconds(hour, minute) {
         let {day, month, year} = this.props.date;
         return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
     }
@@ -197,8 +138,8 @@ class FormAddEvent extends Component {
             comment
         } = this.state;
 
-        let start = this.getSeconds(startHours, startMinutes);
-        let finish = this.getSeconds(finishHours, finishMinutes);
+        let start = this.calcSeconds(startHours, startMinutes);
+        let finish = this.calcSeconds(finishHours, finishMinutes);
 
         // is event ends on next day
         const startTotalMinutes = startHours * 60 + startMinutes * 1;
@@ -228,10 +169,27 @@ class FormAddEvent extends Component {
 
 
 
-    render() {
-        console.log('state', this.state);
 
-        const {types, categories, subcategories, type, newType, category, newCategory, newSubcategory} = this.state;
+
+
+
+
+    render() {
+        // console.log('state', this.state);
+
+        const {
+            types,
+            categories,
+            subcategories,
+            type,
+            newType,
+            category,
+            newCategory,
+            newSubcategory
+        } = this.state;
+
+        const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
+        const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
 
         const typesList = types.map((type, i) => <option key={type}>{type}</option>);
         const categoriesList = categories.map((category, i) => <option key={category}>{category}</option>);
@@ -243,9 +201,6 @@ class FormAddEvent extends Component {
         const showNewCategory = newCategory && type.length > 0;
         const showSubcategory = !newSubcategory && category.length > 0;
         const showNewSubcategory = newSubcategory && category.length > 0;
-
-        const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
-        const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
 
         return (
             <form className="add-event-form" onSubmit={this.submitHandler}>

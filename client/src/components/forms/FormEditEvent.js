@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import {Redirect} from "react-router-dom";
 import {connect} from 'react-redux';
 import queryServer from '../../queryServer';
-import {timestampToTimeObj} from '../../support/functions';
+import {convertNumToTwoDigits} from '../../support/functions';
 import * as action from '../../store/actions';
 import paths from './../../paths';
 
 class FormEditEvent extends Component {
     constructor(props) {
         super(props);
-        const {type, category, subcategory, comment, start, finish} = props.event;
+        const {type, category, subcategory, comment, startHour, finishHour, startMinute, finishMinute} = props.event;
         this.state = {
             newType: false,
             newCategory: false,
@@ -21,127 +20,65 @@ class FormEditEvent extends Component {
             types: [],
             categories: [],
             subcategories: [],
-            start: start,
-            finish: finish,
-            redirect: false
+            startHours: startHour,
+            startMinutes: startMinute,
+            finishHours: finishHour,
+            finishMinutes: finishMinute,
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
+        this.eventEdited = this.eventEdited.bind(this);
+        this.gotData = this.gotData.bind(this);
     }
 
     componentDidMount() {
-        this.getTypes();
+        this.getData(paths.getTypes);
         if(this.props.event.category.length > 0) {
-            this.getCategories(this.props.event.type);
+            this.getData(paths.getCategories, this.props.event.type);
         }
         if(this.props.event.category.length > 0) {
-            this.getSubcategories(this.props.event.category);
+            this.getData(paths.getSubcategories, this.props.event.category);
         }
     }
 
-    getTypes() {
-
+    getData(path, data = '') {
         queryServer({
-            path: paths.getTypes,
-            data: {
-                name: this.props.name
-            },
-            callback: this.gotTypes.bind(this)
-        });
-
-    }
-    gotTypes(response) {
-
-        let typesList = response.types;
-        let sortedTypesList = typesList.filter(type => type.length !== 0).sort();
-        this.setState({types: sortedTypesList});
-
-    }
-
-    getCategories(type) {
-
-        queryServer({
-            path: paths.getCategories,
+            path: path,
             data: {
                 name: this.props.name,
-                type: type
+                data: data
             },
-            callback: this.gotCategories.bind(this)
-        });
-
-    }
-    gotCategories(response) {
-
-        let categoriesList = response.categories;
-        let sortedCategoriesList = categoriesList.filter(category => category.length !== 0).sort();
-        this.setState({categories: sortedCategoriesList});
-
-    }
-
-    getSubcategories(category) {
-
-        queryServer({
-            path: paths.getSubcategories,
-            data: {
-                name: this.props.name,
-                category: category
-            },
-            callback: this.gotSubcategories.bind(this)
-
+            callback: this.gotData
         });
     }
-    gotSubcategories(response) {
 
-        let subCategoriesList = response.subcategories;
-        let sortedSubcategoriesList = subCategoriesList.filter(subcategory => subcategory.length !== 0).sort();
-        this.setState({subcategories: sortedSubcategoriesList});
-
-    }
-
-    getSeconds(time) {
-        let [hour, minute] = time.split(':');
-        let {day, month, year} = this.props.date;
-        return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
-    }
-    getTime(timestamp) {
-        let date = timestampToTimeObj(timestamp);
-        return `${date.hours}:${date.minutes}`;
+    gotData(response) {
+        const sortedDataList = response.data.filter(item => item.length !== 0).sort();
+        this.setState({[response.dataName]: sortedDataList});
     }
 
     inputHandler(event) {
         const {name, value} = event.target;
         this.setState({[name]: value});
-        if (name === "start") {
-            let start = this.getSeconds(value);
-            this.setState({start: start});
-        }
-        if (name === "finish") {
-            let finish = this.getSeconds(value);
-            this.setState({finish: finish});
-        }
+
         if (name === 'type') {
             if (value !== 'Type') {
-                this.setState({
-                    category: '',
-                    subcategory: '',
-                    categories: [],
-                    subcategories: [],
-                });
-                this.getCategories(value)
+                this.getData(paths.getCategories, value)
             } else {
-                this.setState({
-                    type: '',
-                    category: '',
-                    subcategory: '',
-                    categories: [],
-                    subcategories: [],
-                });
+                this.setState({type: ''});
             }
+            this.setState({
+                category: '',
+                subcategory: '',
+                categories: [],
+                subcategories: [],
+            });
         }
+
         if (name === 'category') {
             if (value !== 'Category') {
-                this.getSubcategories(value)
+                this.getData(paths.getSubcategories, value)
             } else {
                 this.setState({
                     category: '',
@@ -150,96 +87,132 @@ class FormEditEvent extends Component {
             }
         }
     }
+
     btnHandler(event) {
         const {name} = event.target;
-        if (name === 'newType') {
-            this.setState({
-                newType: true,
-                newCategory: true,
-                newSubcategory: true,
-                type: '',
-                category: '',
-                subcategory: ''
-            });
-        }
-        if (name === 'type') {
-            this.setState({
-                newType: false,
-                newCategory: false,
-                newSubcategory: false,
-                type: '',
-                category: '',
-                subcategory: ''
-            });
-        }
 
-        if (name === 'newCategory') {
-            this.setState({
-                newCategory: true,
-                newSubcategory: true,
-                category: '',
-                subcategory: ''
-            });
-        }
-        if (name === 'category') {
-            this.setState({
-                newCategory: false,
-                newSubcategory: false,
-                category: '',
-                subcategory: ''
-            });
-        }
+        switch (name) {
+            case "type":
+                this.setState({newType: false, newCategory: false, newSubcategory: false, type: '', category: '', subcategory: ''});
+                break;
+            case "category":
+                this.setState({newCategory: false, newSubcategory: false, category: '', subcategory: ''});
+                break;
+            case "subcategory":
+                this.setState({newSubcategory: false, subcategory: ''});
+                break;
+            case "newType":
+                this.setState({newType: true, newCategory: true, newSubcategory: true, type: '', category: '', subcategory: ''});
+                break;
+            case "newCategory":
+                this.setState({newCategory: true, newSubcategory: true, category: '', subcategory: ''});
+                break;
+            case "newSubcategory":
+                this.setState({newSubcategory: true, subcategory: ''});
+                break;
+            default:
 
-        if (name === 'newSubcategory') {
-            this.setState({
-                newSubcategory: true,
-                subcategory: ''
-            });
-        }
-        if (name === 'subcategory') {
-            this.setState({
-                newSubcategory: false,
-                subcategory: ''
-            });
         }
     }
+
     eventEdited(data) {
-        this.props.togglePopupEditEvent(false);
         if (data.status === "success") {
-            this.props.editEvent({[this.props.event._id]: data.updatedEvent})
+            const {event, togglePopupEditEvent, editEvent} = this.props;
+            const id = event._id;
+            togglePopupEditEvent(false);
+            editEvent({[id]: data.updatedEvent})
         } else {
             console.log('c%Editing Error', 'color: red');
         }
     }
+
+    calcSeconds(hour, minute) {
+        let {day, month, year} = this.props.date;
+        return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
+    }
+
     submitHandler(event) {
         event.preventDefault();
-        const {start, finish, type, category, subcategory, comment} = this.state;
+        const {
+            startHours,
+            startMinutes,
+            finishHours,
+            finishMinutes,
+            type,
+            category,
+            subcategory,
+            comment
+        } = this.state;
         
+        let start = this.calcSeconds(startHours, startMinutes);
+        let finish = this.calcSeconds(finishHours, finishMinutes);
+
+        // is event ends on next day
+        const startTotalMinutes = startHours * 60 + startMinutes * 1;
+        const finishTotalMinutes = finishHours * 60 + finishMinutes * 1;
+        if (finishTotalMinutes <= startTotalMinutes) {
+            finish += 86400
+        }
+
         queryServer({
             path: paths.editEvent,
             data: {
                 name: this.props.name,
                 _id: this.props.event._id,
                 start: start,
+                startHour: startHours,
+                startMinute: startMinutes,
                 finish: finish,
+                finishHour: finishHours,
+                finishMinute: finishMinutes,
                 type: type,
                 category: category,
                 subcategory: subcategory,
                 comment: comment
             },
-            callback: this.eventEdited.bind(this)
+            callback: this.eventEdited
         });
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     render() {
+        // console.log('state', this.state);
 
-        if (this.state.redirect) {
-            return <Redirect to="/chronometry" push={true} />
-        }
+        const {
+            types,
+            categories,
+            subcategories,
+            type,
+            newType,
+            category,
+            newCategory,
+            newSubcategory,
+            startHours,
+            startMinutes,
+            finishHours,
+            finishMinutes,
+        } = this.state;
 
-
-        const {types, categories, subcategories, type, newType, category, newCategory, newSubcategory} = this.state;
+        const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
+        const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
 
         const typesList = types.map((type, i) => <option key={type}>{type}</option>);
         const categoriesList = categories.map((category, i) => <option key={category}>{category}</option>);
@@ -252,37 +225,21 @@ class FormEditEvent extends Component {
         const showSubcategory = !newSubcategory && category.length > 0;
         const showNewSubcategory = newSubcategory && category.length > 0;
 
-        const startOptions = Array.from({length: 288}, (v, i) => i * 5)
-            .map(item => {
-                let hrsRaw = Math.floor(item / 60);
-                let hrs = hrsRaw < 10 ? '0' + hrsRaw : hrsRaw;
-                let minsRaw = item - hrs * 60;
-                let mins = minsRaw < 10 ? '0' + minsRaw: minsRaw;
-                return `${hrs}:${mins}`;
-            })
-            .map((item, i) => <option key={i}>{item}</option>);
-
-        const finishOptions = Array.from({length: 288}, (v, i) => (i + 1) * 5)
-            .map(item => {
-                let hrsRaw = Math.floor(item / 60);
-                let hrs = hrsRaw < 10 ? '0' + hrsRaw : hrsRaw;
-                let minsRaw = item - hrs * 60;
-                let mins = minsRaw < 10 ? '0' + minsRaw: minsRaw;
-                return `${hrs}:${mins}`;
-            })
-            .map((item, i) => <option key={i}>{item}</option>);
-
         return (
-            <form className="add-chronometry-event-form" onSubmit={this.submitHandler}>
+            <form className="add-event-form" onSubmit={this.submitHandler}>
 
-                <div className="line">
-                    <select name="start" value={this.getTime(this.state.start)} onChange={this.inputHandler}>
-                        <option>Start</option>
-                        {startOptions}
+                <div className="line times">
+                    <select name="startHours" value={startHours} onChange={this.inputHandler}>
+                        {hoursOptions}
                     </select>
-                    <select name="finish" value={this.getTime(this.state.finish)} onChange={this.inputHandler}>
-                        <option>Finish</option>
-                        {finishOptions}
+                    <select name="startMinutes" value={startMinutes} onChange={this.inputHandler}>
+                        {minutesOptions}
+                    </select>
+                    <select name="finishHours" value={finishHours} onChange={this.inputHandler}>
+                        {hoursOptions}
+                    </select>
+                    <select name="finishMinutes" value={finishMinutes} onChange={this.inputHandler}>
+                        {minutesOptions}
                     </select>
                 </div>
                 {
