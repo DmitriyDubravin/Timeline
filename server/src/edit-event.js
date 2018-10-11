@@ -5,11 +5,29 @@ module.exports = async function(req, res) {
 
     console.log('\n\n\nNEW EDIT QUERY\n\n\n');
 
-    const {name, _id, start, finish, type, category, subcategory, comment} = req.body;
+    const {
+        _id,
+        name,
+        start,
+        startHour,
+        startMinute,
+        finish,
+        finishHour,
+        finishMinute,
+        type,
+        category,
+        subcategory,
+        comment
+    } = req.body;
+
     const updateEventOptions = {
         user: name,
         start: start,
+        startHour: startHour,
+        startMinute: startMinute,
         finish: finish,
+        finishHour: finishHour,
+        finishMinute: finishMinute,
         type: type,
         category: category,
         subcategory: subcategory,

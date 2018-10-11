@@ -169,11 +169,6 @@ class FormAddEvent extends Component {
 
 
 
-
-
-
-
-
     render() {
         // console.log('state', this.state);
 

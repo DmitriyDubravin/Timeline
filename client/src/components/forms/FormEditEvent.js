@@ -120,7 +120,7 @@ class FormEditEvent extends Component {
             const {event, togglePopupEditEvent, editEvent} = this.props;
             const id = event._id;
             togglePopupEditEvent(false);
-            editEvent({[id]: data.updatedEvent})
+            editEvent({[id]: data.updatedEvent});
         } else {
             console.log('c%Editing Error', 'color: red');
         }
@@ -157,8 +157,8 @@ class FormEditEvent extends Component {
         queryServer({
             path: paths.editEvent,
             data: {
-                name: this.props.name,
                 _id: this.props.event._id,
+                name: this.props.name,
                 start: start,
                 startHour: startHours,
                 startMinute: startMinutes,
@@ -173,23 +173,6 @@ class FormEditEvent extends Component {
             callback: this.eventEdited
         });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -9,14 +9,20 @@ class SearchPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: '',
+            queries: {},
             resultList: []
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
     }
     inputHandler(event) {
-        this.setState({query: event.target.value});
+        const {name, value} = event.target;
+        this.setState({
+            queries: {
+                ...this.state.queries,
+                [name]: value
+            }
+        });
     }
     submitHandler(event) {
         event.preventDefault();
@@ -26,8 +32,8 @@ class SearchPage extends Component {
             queryServer({
                 path: paths.search,
                 data: {
-                    name: this.props.name,
-                    query: this.state.query
+                    user: this.props.name,
+                    queries: this.state.queries
                 },
                 callback: this.gotSearchResults.bind(this)
             });
@@ -46,13 +52,14 @@ class SearchPage extends Component {
 
     }
     gotSearchResults(response) {
+        console.log(response.data);
         this.setState({resultList: response.data});
 
-        const events = {};
-        response.data.forEach(event => {
-            events[event._id] = event;
-        });
-        this.props.addQueryEvents(this.state.query, events);
+        // const events = {};
+        // response.data.forEach(event => {
+        //     events[event._id] = event;
+        // });
+        // this.props.addQueryEvents(this.state.query, events);
 
     }
 
@@ -64,14 +71,21 @@ class SearchPage extends Component {
     }
 
     render() {
-
-
         return (
             <div>
                 <h2>Search Page</h2>
                 <form className="search-form" onSubmit={this.submitHandler}>
                     <div className="line">
-                        <input type="text" name="query" placeholder="Search in comment" onChange={this.inputHandler} />
+                        <input type="text" name="type" placeholder="Type" onChange={this.inputHandler} />
+                    </div>
+                    <div className="line">
+                        <input type="text" name="category" placeholder="Category" onChange={this.inputHandler} />
+                    </div>
+                    <div className="line">
+                        <input type="text" name="subcategory" placeholder="Subcategory" onChange={this.inputHandler} />
+                    </div>
+                    <div className="line">
+                        <input type="text" name="comment" placeholder="Comment" onChange={this.inputHandler} />
                     </div>
                     <input type="submit" value="Search" />
                 </form>
