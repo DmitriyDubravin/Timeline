@@ -14,6 +14,8 @@ class SearchPage extends Component {
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
+        this.editEvent = this.editEvent.bind(this);
+        this.deleteEvent = this.deleteEvent.bind(this);
     }
     inputHandler(event) {
         const {name, value} = event.target;
@@ -55,11 +57,11 @@ class SearchPage extends Component {
         console.log(response.data);
         this.setState({resultList: response.data});
 
-        // const events = {};
-        // response.data.forEach(event => {
-        //     events[event._id] = event;
-        // });
-        // this.props.addQueryEvents(this.state.query, events);
+        const events = {};
+        response.data.forEach(event => {
+            events[event._id] = event;
+        });
+        this.props.addQueryEvents(this.state.query, events);
 
     }
 

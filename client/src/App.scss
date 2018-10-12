@@ -8,6 +8,7 @@
 @import './css/components/datepicker';
 @import './css/components/date';
 @import './css/components/loader';
+@import './css/components/event';
 
 
 
@@ -96,15 +97,6 @@
         margin: 0 0 0 10px;
     }
 }
-
-
-.event {
-    margin: 10px;
-    // max-width: 300px;
-    padding: 10px;
-    background: #eee;
-}
-
 
 
 

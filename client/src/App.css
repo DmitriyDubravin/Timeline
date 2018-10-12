@@ -371,6 +371,11 @@ input[type="submit"] {
   100% {
     transform: rotate(360deg); } }
 
+.event {
+  margin: 10px;
+  padding: 10px;
+  background: #eee; }
+
 * {
   box-sizing: border-box; }
   *:before, *:after {
@@ -435,11 +440,6 @@ input[type="submit"] {
   right: 20px; }
   .user-box button {
     margin: 0 0 0 10px; }
-
-.event {
-  margin: 10px;
-  padding: 10px;
-  background: #eee; }
 
 .dateswitcher-box {
   display: inline-block;

@@ -20,10 +20,10 @@ class FormAddEvent extends Component {
             types: [],
             categories: [],
             subcategories: [],
-            startHours: '00',
-            startMinutes: '00',
-            finishHours: '00',
-            finishMinutes: '00',
+            startHour: '00',
+            startMinute: '00',
+            finishHour: '00',
+            finishMinute: '00',
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
@@ -128,22 +128,22 @@ class FormAddEvent extends Component {
     submitHandler(event) {
         event.preventDefault();
         const {
-            startHours,
-            startMinutes,
-            finishHours,
-            finishMinutes,
+            startHour,
+            startMinute,
+            finishHour,
+            finishMinute,
             type,
             category,
             subcategory,
             comment
         } = this.state;
 
-        let start = this.calcSeconds(startHours, startMinutes);
-        let finish = this.calcSeconds(finishHours, finishMinutes);
+        let start = this.calcSeconds(startHour, startMinute);
+        let finish = this.calcSeconds(finishHour, finishMinute);
 
-        // is event ends on next day
-        const startTotalMinutes = startHours * 60 + startMinutes * 1;
-        const finishTotalMinutes = finishHours * 60 + finishMinutes * 1;
+        // check if event ends on next day
+        const startTotalMinutes = startHour * 60 + startMinute * 1;
+        const finishTotalMinutes = finishHour * 60 + finishMinute * 1;
         if (finishTotalMinutes <= startTotalMinutes) {
             finish += 86400
         }
@@ -153,11 +153,7 @@ class FormAddEvent extends Component {
             data: {
                 name: this.props.name,
                 start: start,
-                startHour: startHours,
-                startMinute: startMinutes,
                 finish: finish,
-                finishHour: finishHours,
-                finishMinute: finishMinutes,
                 type: type,
                 category: category,
                 subcategory: subcategory,
@@ -201,16 +197,16 @@ class FormAddEvent extends Component {
             <form className="add-event-form" onSubmit={this.submitHandler}>
 
                 <div className="line times">
-                    <select name="startHours" onChange={this.inputHandler}>
+                    <select name="startHour" onChange={this.inputHandler}>
                         {hoursOptions}
                     </select>
-                    <select name="startMinutes" onChange={this.inputHandler}>
+                    <select name="startMinute" onChange={this.inputHandler}>
                         {minutesOptions}
                     </select>
-                    <select name="finishHours" onChange={this.inputHandler}>
+                    <select name="finishHour" onChange={this.inputHandler}>
                         {hoursOptions}
                     </select>
-                    <select name="finishMinutes" onChange={this.inputHandler}>
+                    <select name="finishMinute" onChange={this.inputHandler}>
                         {minutesOptions}
                     </select>
                 </div>

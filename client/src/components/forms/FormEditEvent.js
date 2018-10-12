@@ -1,14 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import queryServer from '../../queryServer';
-import {convertNumToTwoDigits} from '../../support/functions';
+import {convertNumToTwoDigits, timestampToTimeObj} from '../../support/functions';
 import * as action from '../../store/actions';
 import paths from './../../paths';
 
 class FormEditEvent extends Component {
     constructor(props) {
         super(props);
-        const {type, category, subcategory, comment, startHour, finishHour, startMinute, finishMinute} = props.event;
+        const {
+            type,
+            category,
+            subcategory,
+            comment,
+            start,
+            startHour,
+            startMinute,
+            finish,
+            finishHour,
+            finishMinute
+        } = props.event;
+
         this.state = {
             newType: false,
             newCategory: false,
@@ -20,10 +32,12 @@ class FormEditEvent extends Component {
             types: [],
             categories: [],
             subcategories: [],
-            startHours: startHour,
-            startMinutes: startMinute,
-            finishHours: finishHour,
-            finishMinutes: finishMinute,
+            start: start,
+            startHour: startHour,
+            startMinute: startMinute,
+            finish: finish,
+            finishHour: finishHour,
+            finishMinute: finishMinute,
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
@@ -134,22 +148,22 @@ class FormEditEvent extends Component {
     submitHandler(event) {
         event.preventDefault();
         const {
-            startHours,
-            startMinutes,
-            finishHours,
-            finishMinutes,
+            startHour,
+            startMinute,
+            finishHour,
+            finishMinute,
             type,
             category,
             subcategory,
             comment
         } = this.state;
         
-        let start = this.calcSeconds(startHours, startMinutes);
-        let finish = this.calcSeconds(finishHours, finishMinutes);
+        let start = this.calcSeconds(startHour, startMinute);
+        let finish = this.calcSeconds(finishHour, finishMinute);
 
         // is event ends on next day
-        const startTotalMinutes = startHours * 60 + startMinutes * 1;
-        const finishTotalMinutes = finishHours * 60 + finishMinutes * 1;
+        const startTotalMinutes = startHour * 60 + startMinute * 1;
+        const finishTotalMinutes = finishHour * 60 + finishMinute * 1;
         if (finishTotalMinutes <= startTotalMinutes) {
             finish += 86400
         }
@@ -157,14 +171,10 @@ class FormEditEvent extends Component {
         queryServer({
             path: paths.editEvent,
             data: {
-                _id: this.props.event._id,
                 name: this.props.name,
+                _id: this.props.event._id,
                 start: start,
-                startHour: startHours,
-                startMinute: startMinutes,
                 finish: finish,
-                finishHour: finishHours,
-                finishMinute: finishMinutes,
                 type: type,
                 category: category,
                 subcategory: subcategory,
@@ -178,8 +188,11 @@ class FormEditEvent extends Component {
 
     render() {
         // console.log('state', this.state);
+        console.log('props.event', this.props.event);
 
         const {
+            start,
+            finish,
             types,
             categories,
             subcategories,
@@ -188,11 +201,14 @@ class FormEditEvent extends Component {
             category,
             newCategory,
             newSubcategory,
-            startHours,
-            startMinutes,
-            finishHours,
-            finishMinutes,
         } = this.state;
+
+        const startData = timestampToTimeObj(start);
+        const finishData = timestampToTimeObj(finish);
+        const startHour = startData.hour;
+        const startMinute = startData.minute;
+        const finishHour = finishData.hour;
+        const finishMinute = finishData.minute;
 
         const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
         const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
@@ -212,16 +228,16 @@ class FormEditEvent extends Component {
             <form className="add-event-form" onSubmit={this.submitHandler}>
 
                 <div className="line times">
-                    <select name="startHours" value={startHours} onChange={this.inputHandler}>
+                    <select name="startHour" value={startHour} onChange={this.inputHandler}>
                         {hoursOptions}
                     </select>
-                    <select name="startMinutes" value={startMinutes} onChange={this.inputHandler}>
+                    <select name="startMinute" value={startMinute} onChange={this.inputHandler}>
                         {minutesOptions}
                     </select>
-                    <select name="finishHours" value={finishHours} onChange={this.inputHandler}>
+                    <select name="finishHour" value={finishHour} onChange={this.inputHandler}>
                         {hoursOptions}
                     </select>
-                    <select name="finishMinutes" value={finishMinutes} onChange={this.inputHandler}>
+                    <select name="finishMinute" value={finishMinute} onChange={this.inputHandler}>
                         {minutesOptions}
                     </select>
                 </div>

@@ -123,12 +123,12 @@ export const eventsData = (state = {}, {type, data}) => {
         case "ADD_QUERY_EVENTS":
             return {
                 ...state,
-                ranges: {
-                    ...state.ranges,
-                    queries: {
-                        ...state.ranges.queries, [data.query]: Object.keys(data.events)
-                    }
-                },
+                // ranges: {
+                //     ...state.ranges,
+                //     queries: {
+                //         ...state.ranges.queries, [data.query]: Object.keys(data.events)
+                //     }
+                // },
                 events: {
                     ...state.events, ...data.events
                 }

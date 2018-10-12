@@ -9,9 +9,7 @@ export default ({
         <div className="events-list">
             {
                 eventsListData.map(eventData => (
-                    <div className="event-item" key={eventData._id}>
-                        <Event {...eventData} editCb={editCb} deleteCb={deleteCb} />
-                    </div>
+                    <Event {...eventData} key={eventData._id} editCb={editCb} deleteCb={deleteCb} />
                 ))
             }
         </div>
