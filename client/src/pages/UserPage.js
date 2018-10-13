@@ -15,7 +15,7 @@ class UserPage extends Component {
     }
     componentDidMount() {
         queryServer({
-            path: paths.userGetData,
+            path: paths.getUserData,
             data: {name: this.props.match.params.user},
             callback: this.handleServerResponse
         });

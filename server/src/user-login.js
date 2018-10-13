@@ -2,6 +2,7 @@ const f = require('./support/functions');
 const e = require('./support/errors');
 
 module.exports = async function(req, res) {
+    console.log(1);
 
     const {login, password} = req.body;
     const findUserNameOptions = {name: login}

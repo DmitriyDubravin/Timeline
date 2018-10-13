@@ -20,7 +20,7 @@ class HomePage extends Component {
 
     componentDidMount() {
         queryServer({
-            path: paths.emailConfiguration,
+            path: paths.emailConfirmation,
             data: {hash: this.props.match.params.hash},
             callback: this.handleServerResponse
         });

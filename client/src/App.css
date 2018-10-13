@@ -434,7 +434,6 @@ input[type="submit"] {
   left: 10px; }
 
 .user-box {
-  display: none;
   position: absolute;
   top: 20px;
   right: 20px; }

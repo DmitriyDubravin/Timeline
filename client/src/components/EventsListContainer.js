@@ -5,6 +5,7 @@ import queryServer from './../queryServer';
 import paths from './../paths';
 // import {withData, withQuery} from './../support/functions';
 import EventsList from './EventsList';
+import {extendEventWithHoursMinutes} from './../support/functions';
 
 
 class EventsListContainer extends Component {
@@ -63,7 +64,7 @@ class EventsListContainer extends Component {
         const dateIds = dates[date];
         const dateEventsList = dateIds === undefined
             ? []
-            : dateIds.map(id => events[id]);
+            : dateIds.map(id => extendEventWithHoursMinutes(events[id]));
 
         return <EventsList eventsListData={dateEventsList} editCb={this.editEvent} deleteCb={this.deleteEvent} />
     }

@@ -1,5 +1,5 @@
 
-export default {
+module.exports = {
     getTypes: "/get-types",
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",
@@ -10,7 +10,7 @@ export default {
     getEvent: "/get-event",
     removeEvent: "/remove-event",
     getUsersList: "/get-users-list",
-    tokenAcknowledge: "./token-acknowledge",
+    tokenAcknowledge: "/token-acknowledge",
 
     userRegister: "/user-register",
     userLogin: "/user-login",

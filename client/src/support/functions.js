@@ -14,6 +14,7 @@ export const timestampToTimeObj = timestamp => {
     const minute = convertNumToTwoDigits(date.getUTCMinutes());
     return {year, month, day, hour, minute}
 }
+
 export const getRange = (start, finish) => {
     let {day: sDay, month: sMonth, year: sYear} = start;
     let {day: fDay, month: fMonth, year: fYear} = finish;
@@ -21,6 +22,12 @@ export const getRange = (start, finish) => {
         start: Math.floor(+new Date(Date.UTC(sYear, sMonth, sDay)) / 1000),
         finish: Math.floor(+new Date(Date.UTC(fYear, fMonth, fDay, 23, 59, 59)) / 1000)
     }
+}
+
+export const extendEventWithHoursMinutes = event => {
+    const {hour: startHour, minute: startMinute} = timestampToTimeObj(event.start);
+    const {hour: finishHour, minute: finishMinute} = timestampToTimeObj(event.finish);
+    return {...event, startHour, startMinute, finishHour, finishMinute};
 }
 
 export const withData = conditionFn => Component => props => {

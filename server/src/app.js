@@ -11,11 +11,11 @@ const userLogin = require('./user-login');
 const userRemove = require('./user-remove');
 const userChangePassword = require('./user-change-password');
 const tokenAcknowledge = require('./token-acknowledge');
-const usersList = require('./users-list');
+const getUsersList = require('./get-users-list');
 const getEventsList = require('./get-events-list');
 const getEvent = require('./get-event');
 const emailConfirmation = require('./email-confirmation');
-const userData = require('./user-data');
+const getUserData = require('./get-user-data');
 const getTypes = require('./get-types');
 const getCategories = require('./get-categories');
 const getSubcategories = require('./get-subcategories');
@@ -51,11 +51,11 @@ app.post('/user-login', userLogin);
 app.post('/user-change-password', userChangePassword);
 app.post('/user-remove', userRemove);
 app.post('/token-acknowledge', tokenAcknowledge);
-app.post('/get-users-list', usersList);
+app.post('/get-users-list', getUsersList);
 
 app.post('/email-confirmation', emailConfirmation);
 
-app.post('/user-get-data', userData);
+app.post('/get-user-data', getUserData);
 
 app.post('/get-events-list', getEventsList);
 app.post('/get-event', getEvent);
@@ -71,3 +71,5 @@ app.post('/remove-event', removeEvent);
 app.post('/search', search);
 
 app.listen(process.env.PORT || 8081);
+
+
