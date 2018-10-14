@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 
 import queryServer from './queryServer';
 import * as action from './store/actions';
-import { getCookie, deleteCookie } from './support/cookies';
 import m from "./support/messages";
 import App from './App';
 import {withData} from './support/functions';
 import paths from './paths';
+import UserModule from './User';
 
+const UM = new UserModule();
 
 
 const withStore = connect(
@@ -43,12 +44,13 @@ class AppContainer extends Component {
     }
 
     setUser = () => {
-        const cookie = getCookie('token');
-        if (cookie) {
+        const isToken = UM.checkToken();
+        if (isToken) {
+            const token = UM.token;
             queryServer({
                 path: paths.tokenAcknowledge,
-                data: {token: cookie.token},
-                callback: this.handleServerResponse(cookie.token)
+                data: {token: token},
+                callback: this.handleServerResponse(token)
             });
         } else {
             this.props.setUser({
@@ -76,7 +78,7 @@ class AppContainer extends Component {
                 token: false,
                 isAuthorized: false
             });
-            deleteCookie();
+            UM.deleteToken();
             console.log(m.tokenAcknowledgeFailure());
         }
     }

@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {renderRoutes} from 'react-router-config';
-import * as action from './store/actions';
 import Header from './components/Header';
 import PopupAddEvent from './components/PopupAddEvent';
 import PopupEditEvent from './components/PopupEditEvent';
@@ -16,8 +15,7 @@ const App = ({
         location,
         addEvent,
         editEvent,
-        deleteEvent,
-        togglePopupAddEvent
+        deleteEvent
     }) => (
         <div className="App">
             <Header />
@@ -33,10 +31,5 @@ export default connect(
         addEvent: state.popups.addEvent,
         editEvent: state.popups.editEvent,
         deleteEvent: state.popups.deleteEvent
-    }),
-    dispatch => ({
-        togglePopupAddEvent: function(boolean) {
-            dispatch(action.togglePopupAddEvent(boolean))
-        },
     })
 )(App)
