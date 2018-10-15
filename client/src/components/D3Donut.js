@@ -5,7 +5,7 @@ import * as d3 from "d3";
 export default class Donut extends Component {
     componentDidMount() {
 
-        const s = 500;
+        const s = 400;
         const r = s / 2;
 
         const arc = d3

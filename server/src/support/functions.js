@@ -28,8 +28,9 @@ module.exports = {
     editEvent: (event, data) => Events.findOneAndUpdate(event, data, {new: true}),
     removeEvent: event => Events.remove(event),
 
-    success: (res, data = {}) => res.send({...data, status: 'success'}),
-    failure: (res, data = {}) => res.send({...data, status: 'error'}),
+    success: (res, data = {}) => res.send({...data, success: true, status: 'success'}), // TEMP -> delete 'status'
+    failure: (res, data = {}) => res.send({...data, success: false, status: 'error'}), // TEMP -> delete 'status'
+
 
     search: query => Events.find(query)
 

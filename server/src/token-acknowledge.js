@@ -12,7 +12,8 @@ module.exports = async function(req, res) {
     if (f.isUserFound(foundUser.data)) {
 
         f.success(res, {
-            name: foundUser.data[0].name
+            name: foundUser.data[0].name,
+            token: token
         });
 
     } else {

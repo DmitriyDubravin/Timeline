@@ -62,3 +62,7 @@ export const withQuery = queryFn => Component => class extends React.Component {
         return <Component {...this.props} />
     }
 }
+
+export const tryCatch = promise => promise
+    .then(data => ({...data}))
+    .catch(err => ({err}));

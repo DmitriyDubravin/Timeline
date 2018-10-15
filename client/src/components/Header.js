@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
-import { deleteCookie } from './../support/cookies';
 import Date from './Date';
 import MainNav from './MainNav';
 import LoginPopup from './LoginPopup';
@@ -11,6 +10,9 @@ import Logo from './logo';
 import DateSwitcher from './DateSwitcher';
 import DatePicker from './DatePicker';
 import { FaPlus } from 'react-icons/fa';
+import UM from './../UserModule';
+
+
 
 class Header extends Component {
     constructor(props) {
@@ -24,7 +26,7 @@ class Header extends Component {
         this.props.togglePopupLogin(!this.props.isLoginShown);
     }
     logout() {
-        deleteCookie();
+        UM.deleteToken();
         this.props.setUserName(false);
         this.props.setUserToken(false);
         this.props.setUserAuthorization(false);

@@ -4,7 +4,11 @@ import {server} from "./support/constants";
 export default ({path, data, callback, method = 'post'}) => {
     return axios[method](`${server}${path}`, data)
         .then(response => {
-            callback(response.data);
+            if (!!callback) {
+                callback(response.data);
+            } else {
+                return response.data;
+            }
         })
         .catch(error => {
             console.log('%cError', 'color: red');
