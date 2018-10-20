@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import queryServer from './../queryServer';
-import m from './../support/messages';
+import MM from './../modules/MessageModule';
 import paths from './../paths';
 
 class HomePage extends Component {
@@ -12,9 +12,10 @@ class HomePage extends Component {
     }
 
     handleServerResponse(response) {
-        const message = response.status === "success"
-            ? m.emailConfirmationSuccess()
-            : m.emailConfirmationFailure();
+        const {success} = response;
+        const message = success
+            ? MM.emailConfirmationSuccess().text
+            : MM.emailConfirmationFailure().text;
         console.log(message);
     }
 

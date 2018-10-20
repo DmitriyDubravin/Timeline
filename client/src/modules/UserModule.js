@@ -1,4 +1,8 @@
-import { checkCookie, getCookie, deleteCookie } from './support/cookies';
+import {
+    checkCookie,
+    getCookie,
+    deleteCookie
+} from './../support/cookies';
 
 export default (function() {
     var instance = null;

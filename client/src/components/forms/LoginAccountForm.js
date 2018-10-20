@@ -5,7 +5,7 @@ import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { loginFormData } from './../../data/formsData';
 import { setCookie } from './../../support/cookies';
-import m from './../../support/messages';
+import MM from './../../modules/MessageModule';
 import paths from './../../paths';
 
 class LoginAccountForm extends Component {
@@ -31,22 +31,23 @@ class LoginAccountForm extends Component {
 
     handleServerResponse(response) {
 
-        const {status} = response;
+        const {success} = response;
 
         let message = "";
-        if (status === 'success') {
-            message = m.loginSuccess()
+        const status = success ? 'success' : 'error';
+        if (success) {
+            message = MM.loginSuccess().text;
         } else {
             if (response.cause === "email") {
-                message = m.loginFailureEmail();
+                message = MM.loginFailureEmail().text;
             } else {
-                message = m.loginFailure()
+                message = MM.loginFailure().text;
             }
         }
 
         this.setState({message, messageStatus: status})
 
-        if (status === 'success') {
+        if (success) {
             this.props.setUserName(response.name);
             this.props.setUserToken(response.token);
             this.props.setUserAuthorization(true);

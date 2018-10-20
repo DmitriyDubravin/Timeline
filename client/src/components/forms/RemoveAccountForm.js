@@ -5,7 +5,7 @@ import * as action from './../../store/actions';
 // import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { removeFormData } from './../../data/formsData';
-import m from "./../../support/messages";
+import MM from './../../modules/MessageModule';
 import paths from './../../paths';
 
 class RemoveAccountForm extends Component {
@@ -30,11 +30,12 @@ class RemoveAccountForm extends Component {
     }
 
     handleServerResponse(response) {
-        const {status} = response;
+        const {success} = response;
 
-        let message = status === "success"
-            ? m.userRemoveSuccess()
-            : m.userRemoveFailure();
+        const status = success ? 'success' : 'error';
+        let message = success
+            ? MM.userRemoveSuccess().text
+            : MM.userRemoveFailure().text;
 
         this.setState({message: message, messageStatus: status});
 

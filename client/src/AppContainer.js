@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 
 // import queryServer from './queryServer';
 import * as action from './store/actions';
-import m from "./support/messages";
 import App from './App';
 import {withData} from './support/functions';
 // import paths from './paths';
-import UM from './UserModule';
-import QM from './QueryModule';
+import UM from './modules/UserModule';
+import QM from './modules/QueryModule';
+import MM from './modules/MessageModule';
 
 
 
@@ -41,12 +41,6 @@ const ConditionalApp = withData(condition)(App);
 
 class AppContainer extends Component {
 
-    // constructor(props) {
-    //    super(props);
-
-    //    this.verifyTokenResponse = this.verifyTokenResponse.bind(this);
-    // }
-
     componentDidMount() {
         this.setDate();
         this.setUser();
@@ -66,55 +60,31 @@ class AppContainer extends Component {
         const isToken = UM.checkToken();
 
         if (isToken) {
-            console.log('isToken');
 
             const token = UM.getToken();
             const response = await QM.verifyToken(token);
-            console.log(response);
             const {success, name} = response;
 
             if (success) {
-                console.log('success');
 
                 setUser(name, token);
-                console.log(m.tokenAcknowledgeSuccess());
+                MM.tokenAcknowledgeSuccess().log();
 
             } else {
 
                 removeUser();
                 UM.deleteToken();
-                console.log(m.tokenAcknowledgeFailure());
+                MM.tokenAcknowledgeFailure().log();
 
             }
 
         } else {
 
             removeUser();
-            console.log(m.userIsGuest());
+            MM.userIsGuest().log();
 
         }
     }
-
-    // verifyTokenResponse = response => {
-    //     const {status, token} = response;
-    //     if (status === "success") {
-    //         this.props.setUser({
-    //             name: response.name,
-    //             token: token,
-    //             isAuthorized: true
-    //         });
-    //         console.log(m.tokenAcknowledgeSuccess());
-    //     }
-    //     if (status === "error") {
-    //         this.props.setUser({
-    //             name: false,
-    //             token: false,
-    //             isAuthorized: false
-    //         });
-    //         UM.deleteToken();
-    //         console.log(m.tokenAcknowledgeFailure());
-    //     }
-    // }
 
     render() {
         return <ConditionalApp {...this.props} />

@@ -5,8 +5,8 @@ import queryServer from './../../queryServer';
 import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { changePasswordFormData } from './../../data/formsData';
-import m from "./../../support/messages";
 import paths from './../../paths';
+import MM from './../../modules/MessageModule';
 
 
 
@@ -33,11 +33,16 @@ class ChangePasswordForm extends Component {
     }
     handleServerResponse(response) {
 
-        const {status} = response;
-        let message = status === "success"
-            ? m.userPasswordChangeSuccess()
-            : m.userPasswordChangeFailure();
-        this.setState({message: message, messageStatus: status});
+        const {success} = response;
+        const status = success ? 'success' : 'error';
+        let message = success
+            ? MM.userPasswordChangeSuccess().text
+            : MM.userPasswordChangeFailure().text;
+
+        this.setState({
+            message: message,
+            messageStatus: status
+        });
 
     }
     submitHandler(event) {

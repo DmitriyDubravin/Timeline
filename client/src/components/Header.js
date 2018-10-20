@@ -10,7 +10,7 @@ import Logo from './logo';
 import DateSwitcher from './DateSwitcher';
 import DatePicker from './DatePicker';
 import { FaPlus } from 'react-icons/fa';
-import UM from './../UserModule';
+import UM from './../modules/UserModule';
 
 
 

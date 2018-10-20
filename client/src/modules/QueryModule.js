@@ -1,6 +1,6 @@
-import queryServer from './queryServer';
-import paths from './paths';
-import {tryCatch} from './support/functions';
+import queryServer from '../queryServer';
+import paths from '../paths';
+import {tryCatch} from '../support/functions';
 
 export default (function() {
     var instance = null;

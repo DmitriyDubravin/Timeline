@@ -6,7 +6,7 @@ import { registerFormData } from './../../data/formsData';
 
 import GlobalMessage from './../GlobalMessage';
 import LocalMessage from './../LocalMessage';
-import m from './../../support/messages';
+import MM from './../../modules/MessageModule';
 import paths from './../../paths';
 
 
@@ -33,11 +33,12 @@ export default class RegisterAccountForm extends Component {
 
     handleServerResponse(response) {
 
-        const {status} = response;
+        const {success} = response;
 
-        const message = status === "success"
-            ? m.registerSuccess()
-            : m.registerFailure();
+        const status = success ? 'success' : 'error';
+        const message = success
+            ? MM.registerSuccess().text
+            : MM.registerFailure().text;
 
         this.setState({message, messageStatus: status})
 
