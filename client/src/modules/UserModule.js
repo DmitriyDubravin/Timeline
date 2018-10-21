@@ -1,60 +1,42 @@
 import {
+    setCookie,
     checkCookie,
     getCookie,
     deleteCookie
 } from './../support/cookies';
+import * as action from './../store/actions';
 
 export default (function() {
     var instance = null;
     if (!instance) {
         instance = {
-            token: undefined,
+            setToken(token) {
+                setCookie(token);
+            },
             checkToken() {
                 return checkCookie('token');
             },
             getToken() {
-                if (this.token === undefined) {
-                    this.token = getCookie('token');
-                }
-                return this.token;
+                return getCookie('token');
             },
             deleteToken() {
-                this.token = false;
                 deleteCookie('token');
-            }
+            },
+            setUser(dispatch, name, token) {
+                dispatch(action.setUser({
+                    name: name,
+                    token: token,
+                    isAuthorized: true
+                }))
+            },
+            unsetUser(dispatch) {
+                dispatch(action.setUser({
+                    name: false,
+                    token: false,
+                    isAuthorized: false
+                }));
+            },
         }
     }
     return instance;
 })();
-
-
-
-
-// var userInstance = null;
-
-// class UserModule {
-//     constructor(props) {
-
-//         this.token = undefined;
-
-//         if (!userInstance) {
-//             userInstance = this;
-//         }
-//         return userInstance;
-//     }
-//     checkToken() {
-//         return checkCookie('token');
-//     }
-//     getToken() {
-//         if (this.token === undefined) {
-//             this.token = getCookie('token');
-//         }
-//         return this.token;
-//     }
-//     deleteToken() {
-//         this.token = false;
-//         deleteCookie('token');
-//     }
-// }
-
-// export default new UserModule();

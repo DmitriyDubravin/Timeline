@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import queryServer from './../../queryServer';
-import * as action from './../../store/actions';
-// import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { removeFormData } from './../../data/formsData';
 import MM from './../../modules/MessageModule';
+import UM from './../../modules/UserModule';
 import paths from './../../paths';
 
 class RemoveAccountForm extends Component {
@@ -39,8 +38,8 @@ class RemoveAccountForm extends Component {
 
         this.setState({message: message, messageStatus: status});
 
-        if (status === "success") {
-            this.props.setUserName(false);
+        if (success) {
+            UM.unsetUser(this.props.dispath);
         }
 
     }
@@ -76,8 +75,6 @@ export default connect(
         name: state.user.name
     }),
     dispatch => ({
-        setUserName: function(name) {
-            dispatch(action.setUserName(name))
-        }
+        dispatch
     })
 )(RemoveAccountForm)

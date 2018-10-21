@@ -2,9 +2,9 @@
 // user
 export const setUser = data => ({type: "SET_USER", data: data});
 
-export const setUserName = name => ({type: "SET_USER_NAME", data: name});
-export const setUserToken = token => ({type: "SET_USER_TOKEN", data: token});
-export const setUserAuthorization = boolean => ({type: "SET_USER_AUTHORIZATION", data: boolean});
+// export const setUserName = name => ({type: "SET_USER_NAME", data: name});
+// export const setUserToken = token => ({type: "SET_USER_TOKEN", data: token});
+// export const setUserAuthorization = boolean => ({type: "SET_USER_AUTHORIZATION", data: boolean});
 
 // date
 export const setDate = date => ({type: "SET_DATE", data: date});

@@ -26,10 +26,9 @@ class Header extends Component {
         this.props.togglePopupLogin(!this.props.isLoginShown);
     }
     logout() {
+        const {dispatch} = this.props;
+        UM.unsetUser(dispatch);
         UM.deleteToken();
-        this.props.setUserName(false);
-        this.props.setUserToken(false);
-        this.props.setUserAuthorization(false);
     }
     render() {
 
@@ -72,15 +71,7 @@ export default connect(
         login: state.popups.login
     }),
     dispatch => ({
-        setUserName: function(name) {
-            dispatch(action.setUserName(name))
-        },
-        setUserToken: function(token) {
-            dispatch(action.setUserToken(token))
-        },
-        setUserAuthorization: function(name) {
-            dispatch(action.setUserAuthorization(name))
-        },
+        dispatch,
         togglePopupLogin: function(boolean) {
             dispatch(action.togglePopupLogin(boolean))
         },

@@ -4,8 +4,8 @@ import queryServer from './../../queryServer';
 import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { loginFormData } from './../../data/formsData';
-import { setCookie } from './../../support/cookies';
 import MM from './../../modules/MessageModule';
+import UM from './../../modules/UserModule';
 import paths from './../../paths';
 
 class LoginAccountForm extends Component {
@@ -48,11 +48,13 @@ class LoginAccountForm extends Component {
         this.setState({message, messageStatus: status})
 
         if (success) {
-            this.props.setUserName(response.name);
-            this.props.setUserToken(response.token);
-            this.props.setUserAuthorization(true);
-            this.props.togglePopupLogin(false);
-            setCookie(response.token);
+            const {dispatch, togglePopupLogin} = this.props;
+            const {name, token} = response;
+
+            UM.setUser(dispatch, name, token)
+            UM.setToken(token);
+
+            togglePopupLogin(false);
         }
     }
 
@@ -86,19 +88,8 @@ class LoginAccountForm extends Component {
 
 export default connect(
     null,
-    // state => ({
-    //     name: state.user.name
-    // }),
     dispatch => ({
-        setUserName: function(name) {
-            dispatch(action.setUserName(name))
-        },
-        setUserToken: function(token) {
-            dispatch(action.setUserToken(token))
-        },
-        setUserAuthorization: function(boolean) {
-            dispatch(action.setUserAuthorization(boolean))
-        },
+        dispatch,
         togglePopupLogin: function(boolean) {
             dispatch(action.togglePopupLogin(boolean))
         }

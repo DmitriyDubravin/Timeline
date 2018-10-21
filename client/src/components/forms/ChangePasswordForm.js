@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import queryServer from './../../queryServer';
-import * as action from './../../store/actions';
 import FormGen from './../../support/formGen';
 import { changePasswordFormData } from './../../data/formsData';
 import paths from './../../paths';
@@ -79,9 +78,4 @@ export default connect(
     state => ({
         name: state.user.name
     }),
-    dispatch => ({
-        setUserName: function(name) {
-            dispatch(action.setUserName(name))
-        }
-    })
 )(ChangePasswordForm)

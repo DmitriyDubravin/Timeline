@@ -17,23 +17,10 @@ const withStore = connect(
         user: state.user
     }),
     dispatch => ({
-        setUser: function(name, token) {
-            dispatch(action.setUser({
-                name: name,
-                token: token,
-                isAuthorized: true
-            }))
-        },
-        removeUser: function() {
-            dispatch(action.setUser({
-                name: false,
-                token: false,
-                isAuthorized: false
-            }));
-        },
+        dispatch,
         setDate: function(date) {
             dispatch(action.setDate(date))
-        }
+        },
     })
 );
 const condition = props => props.user.isAuthorized !== undefined;
@@ -43,7 +30,7 @@ class AppContainer extends Component {
 
     componentDidMount() {
         this.setDate();
-        this.setUser();
+        this.checkUser();
     }
 
     setDate = () => {
@@ -54,9 +41,9 @@ class AppContainer extends Component {
         this.props.setDate({day, month, year});
     }
 
-    setUser = async () => {
+    checkUser = async () => {
 
-        const {setUser, removeUser} = this.props;
+        const {dispatch} = this.props;
         const isToken = UM.checkToken();
 
         if (isToken) {
@@ -67,12 +54,12 @@ class AppContainer extends Component {
 
             if (success) {
 
-                setUser(name, token);
+                UM.setUser(dispatch, name, token);
                 MM.tokenAcknowledgeSuccess().log();
 
             } else {
 
-                removeUser();
+                UM.unsetUser(dispatch);
                 UM.deleteToken();
                 MM.tokenAcknowledgeFailure().log();
 
@@ -80,7 +67,7 @@ class AppContainer extends Component {
 
         } else {
 
-            removeUser();
+            UM.unsetUser(dispatch);
             MM.userIsGuest().log();
 
         }
