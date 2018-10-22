@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import queryServer from '../../queryServer';
 import {convertNumToTwoDigits, timestampToTimeObj} from '../../support/functions';
 import * as action from '../../store/actions';
+import QM from './../../modules/QueryModule';
 import paths from './../../paths';
 
 class FormEditEvent extends Component {
@@ -42,34 +42,24 @@ class FormEditEvent extends Component {
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
-        this.eventEdited = this.eventEdited.bind(this);
-        this.gotData = this.gotData.bind(this);
     }
 
     componentDidMount() {
-        this.getData(paths.getTypes);
+        this.getData(paths.getTypes, this.props.name);
         if(this.props.event.category.length > 0) {
-            this.getData(paths.getCategories, this.props.event.type);
+            this.getData(paths.getCategories, this.props.name, this.props.event.type);
         }
         if(this.props.event.category.length > 0) {
-            this.getData(paths.getSubcategories, this.props.event.category);
+            this.getData(paths.getSubcategories, this.props.name, this.props.event.category);
         }
     }
 
-    getData(path, data = '') {
-        queryServer({
-            path: path,
-            data: {
-                name: this.props.name,
-                data: data
-            },
-            callback: this.gotData
-        });
-    }
-
-    gotData(response) {
-        const sortedDataList = response.data.filter(item => item.length !== 0).sort();
-        this.setState({[response.dataName]: sortedDataList});
+    async getData(path, name, queryData = '') {
+        const {success, data, dataName} = await QM.getData(path, name, queryData);
+        if (success) {
+            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            this.setState({[dataName]: sortedDataList});
+        }
     }
 
     inputHandler(event) {
@@ -78,7 +68,7 @@ class FormEditEvent extends Component {
 
         if (name === 'type') {
             if (value !== 'Type') {
-                this.getData(paths.getCategories, value)
+                this.getData(paths.getCategories, this.props.name, value)
             } else {
                 this.setState({type: ''});
             }
@@ -92,7 +82,7 @@ class FormEditEvent extends Component {
 
         if (name === 'category') {
             if (value !== 'Category') {
-                this.getData(paths.getSubcategories, value)
+                this.getData(paths.getSubcategories, this.props.name, value)
             } else {
                 this.setState({
                     category: '',
@@ -129,24 +119,13 @@ class FormEditEvent extends Component {
         }
     }
 
-    eventEdited(data) {
-        if (data.status === "success") {
-            const {event, togglePopupEditEvent, editEvent} = this.props;
-            const id = event._id;
-            togglePopupEditEvent(false);
-            editEvent({[id]: data.updatedEvent});
-        } else {
-            console.log('c%Editing Error', 'color: red');
-        }
-    }
-
     calcSeconds(hour, minute) {
         let {day, month, year} = this.props.date;
         return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
     }
 
-    submitHandler(event) {
-        event.preventDefault();
+    async submitHandler(e) {
+        e.preventDefault();
         const {
             startHour,
             startMinute,
@@ -157,6 +136,7 @@ class FormEditEvent extends Component {
             subcategory,
             comment
         } = this.state;
+        const {name, event: {_id}} = this.props;
         
         let start = this.calcSeconds(startHour, startMinute);
         let finish = this.calcSeconds(finishHour, finishMinute);
@@ -168,20 +148,27 @@ class FormEditEvent extends Component {
             finish += 86400
         }
 
-        queryServer({
-            path: paths.editEvent,
-            data: {
-                name: this.props.name,
-                _id: this.props.event._id,
-                start: start,
-                finish: finish,
-                type: type,
-                category: category,
-                subcategory: subcategory,
-                comment: comment
-            },
-            callback: this.eventEdited
-        });
+        const queryData = {
+            name: name,
+            _id: _id,
+            start: start,
+            finish: finish,
+            type: type,
+            category: category,
+            subcategory: subcategory,
+            comment: comment
+        };
+
+        const {success, updatedEvent} = await QM.editEvent(queryData);
+        if (success) {
+            const {togglePopupEditEvent, editEvent} = this.props;
+            togglePopupEditEvent(false);
+            editEvent({[_id]: updatedEvent});
+        } else {
+            // TEMP!
+            console.log('c%Editing Error', 'color: red');
+        }
+
     }
 
 

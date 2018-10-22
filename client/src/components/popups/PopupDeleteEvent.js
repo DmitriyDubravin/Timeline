@@ -1,34 +1,29 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as action from '../store/actions';
-import Event from './Event';
-import queryServer from './../queryServer';
-import paths from './../paths';
 import { FaTimes, FaTrashAlt } from 'react-icons/fa';
+import * as action from './../../store/actions';
+import Event from './../Event';
+import QM from './../../modules/QueryModule';
 
 class PopupEventEdit extends Component {
     constructor(props) {
         super(props);
         this.removeEvent = this.removeEvent.bind(this);
-        this.handleServerResponse = this.handleServerResponse.bind(this);
     }
-    handleServerResponse(response) {
-        // TEMP! no errors handling
-        if (response.status === 'success') {
+    async removeEvent() {
+
+        const {name, event} = this.props;
+        const response = await QM.removeEvent(name, event._id);
+        const {success} = response;
+
+        if (success) {
             const {date, event, removeEvent, togglePopupDeleteEvent} = this.props;
             removeEvent(date, event._id);
             togglePopupDeleteEvent(false);
+        } else {
+            // TEMP! no errors handling
         }
-    }
-    removeEvent() {
-        queryServer({
-            path: paths.removeEvent,
-            data: {
-                name: this.props.name,
-                _id: this.props.event._id
-            },
-            callback: this.handleServerResponse
-        });
+
     }
     render() {
         const {event, togglePopupDeleteEvent} = this.props;

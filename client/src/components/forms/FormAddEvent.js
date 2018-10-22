@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import queryServer from '../../queryServer';
-import * as action from '../../store/actions';
-import {convertNumToTwoDigits} from '../../support/functions';
+import * as action from './../../store/actions';
+import {convertNumToTwoDigits} from './../../support/functions';
+import QM from './../../modules/QueryModule';
 import paths from './../../paths';
 
 class FormAddEvent extends Component {
@@ -28,28 +28,18 @@ class FormAddEvent extends Component {
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.btnHandler = this.btnHandler.bind(this);
-        this.eventAdded = this.eventAdded.bind(this);
-        this.gotData = this.gotData.bind(this);
     }
 
     componentDidMount() {
-        this.getData(paths.getTypes); // TEMP! need caching
+        this.getData(paths.getTypes, this.props.name); // TEMP! need caching
     }
 
-    getData(path, data = '') {
-        queryServer({
-            path: path,
-            data: {
-                name: this.props.name,
-                data: data
-            },
-            callback: this.gotData
-        });
-    }
-
-    gotData(response) {
-        const sortedDataList = response.data.filter(item => item.length !== 0).sort();
-        this.setState({[response.dataName]: sortedDataList});
+    async getData(path, name, queryData = '') {
+        const {success, data, dataName} = await QM.getData(path, name, queryData);
+        if (success) {
+            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            this.setState({[dataName]: sortedDataList});
+        }
     }
 
     inputHandler(event) {
@@ -58,7 +48,7 @@ class FormAddEvent extends Component {
 
         if (name === 'type') {
             if (value !== 'Type') {
-                this.getData(paths.getCategories, value);
+                this.getData(paths.getCategories, this.props.name, value);
             } else {
                 this.setState({type: ''});
             }
@@ -72,7 +62,7 @@ class FormAddEvent extends Component {
 
         if (name === 'category') {
             if (value !== 'Category') {
-                this.getData(paths.getSubcategories, value);
+                this.getData(paths.getSubcategories, this.props.name, value);
             } else {
                 this.setState({
                     category: '',
@@ -109,24 +99,13 @@ class FormAddEvent extends Component {
         }
     }
 
-    eventAdded(data) {
-        if (data.status === "success") {
-            const {date: {date}, togglePopupAddEvent, addEvent} = this.props;
-            const id = data.addedEvent._id;
-            togglePopupAddEvent(false);
-            addEvent(date, {[id]: data.addedEvent});
-        } else {
-            console.log('c%Adding Error', 'color: red');
-        }
-    }
-
     calcSeconds(hour, minute) {
         let {day, month, year} = this.props.date;
         return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
     }
 
-    submitHandler(event) {
-        event.preventDefault();
+    async submitHandler(e) {
+        e.preventDefault();
         const {
             startHour,
             startMinute,
@@ -137,10 +116,10 @@ class FormAddEvent extends Component {
             subcategory,
             comment
         } = this.state;
+        const {name} = this.props;
 
         let start = this.calcSeconds(startHour, startMinute);
         let finish = this.calcSeconds(finishHour, finishMinute);
-
         // check if event ends on next day
         const startTotalMinutes = startHour * 60 + startMinute * 1;
         const finishTotalMinutes = finishHour * 60 + finishMinute * 1;
@@ -148,19 +127,27 @@ class FormAddEvent extends Component {
             finish += 86400
         }
 
-        queryServer({
-            path: paths.addEvent,
-            data: {
-                name: this.props.name,
-                start: start,
-                finish: finish,
-                type: type,
-                category: category,
-                subcategory: subcategory,
-                comment: comment
-            },
-            callback: this.eventAdded
-        });
+        const queryData = {
+            name,
+            start,
+            finish,
+            type,
+            category,
+            subcategory,
+            comment
+        };
+
+        const {success, addedEvent} = await QM.addEvent(queryData);
+        if (success) {
+            const {date: {date}, togglePopupAddEvent, addEvent} = this.props;
+            const id = addedEvent._id;
+            togglePopupAddEvent(false);
+            addEvent(date, {[id]: addedEvent});
+        } else {
+            // TEMP!
+            console.log('c%Adding Error', 'color: red');
+        }
+
     }
 
 
@@ -245,7 +232,6 @@ class FormAddEvent extends Component {
                         {!newType && <button name="category" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>}
                     </div>
                 }
-
                 {
                     showSubcategory &&
                     <div className="line">
@@ -264,7 +250,6 @@ class FormAddEvent extends Component {
                     </div>
                 }
                 <textarea name="comment" onChange={this.inputHandler} ></textarea>
-
                 <input type="submit" value="Add event" />
             </form>
         )

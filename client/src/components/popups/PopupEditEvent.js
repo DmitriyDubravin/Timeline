@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import * as action from '../store/actions';
-import FormEditEvent from './forms/FormEditEvent';
 import { FaTimes } from 'react-icons/fa';
+import * as action from './../../store/actions';
+import FormEditEvent from './../forms/FormEditEvent';
 
 const PopupEventEdit = ({togglePopupEditEvent}) => (
     <div className="popup">
@@ -12,9 +12,7 @@ const PopupEventEdit = ({togglePopupEditEvent}) => (
 );
 
 export default connect(
-    state => ({
-        user: state.user
-    }),
+    null,
     dispatch => ({
         togglePopupEditEvent: function(boolean) {
             dispatch(action.togglePopupEditEvent(boolean))

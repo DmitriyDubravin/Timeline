@@ -3,12 +3,12 @@ export const user = (state = {}, {type, data}) => {
     switch (type) {
         case "SET_USER":
             return {...state, ...data}
-        case "SET_USER_NAME":
-            return {...state, name: data}
-        case "SET_USER_TOKEN":
-            return {...state, token: data}
-        case "SET_USER_AUTHORIZATION":
-            return {...state, isAuthorized: data}
+        // case "SET_USER_NAME":
+        //     return {...state, name: data}
+        // case "SET_USER_TOKEN":
+        //     return {...state, token: data}
+        // case "SET_USER_AUTHORIZATION":
+        //     return {...state, isAuthorized: data}
         default:
             return state;
     }

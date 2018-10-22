@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as action from './../store/actions';
-import LoginAccountForm from './forms/LoginAccountForm';
+import * as action from '../../store/actions';
+import LoginAccountForm from '../forms/LoginAccountForm';
 
 
 

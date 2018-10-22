@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import * as action from './../store/actions';
 import Date from './Date';
 import MainNav from './MainNav';
-import LoginPopup from './LoginPopup';
+import LoginPopup from './popups/PopupLogin';
 import Logo from './logo';
 import DateSwitcher from './DateSwitcher';
 import DatePicker from './DatePicker';
