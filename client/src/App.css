@@ -103,6 +103,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="submit"],
+.button,
 button {
   display: inline-block;
   vertical-align: middle;
@@ -118,6 +119,7 @@ button {
   input[type="password"], form
   input[type="email"], form
   input[type="submit"], form
+  .button, form
   button {
     display: block;
     margin: 0 auto 24px;
@@ -126,6 +128,7 @@ button {
   input[type="password"][disabled],
   input[type="email"][disabled],
   input[type="submit"][disabled],
+  .button[disabled],
   button[disabled] {
     opacity: 0.5;
     cursor: default !important; }
@@ -133,6 +136,7 @@ button {
   input[type="password"].error,
   input[type="email"].error,
   input[type="submit"].error,
+  .button.error,
   button.error {
     color: #f00 !important;
     border-color: #f00 !important; }
@@ -147,22 +151,30 @@ input[type="email"] {
   input[type="email"]:focus {
     border-color: #683; }
 
+.button,
 button,
 input[type="submit"] {
+  text-align: center;
   color: #fff;
   background: #683;
   cursor: pointer; }
-  button:hover, button:focus,
+  .button:hover, .button:focus,
+  button:hover,
+  button:focus,
   input[type="submit"]:hover,
   input[type="submit"]:focus {
+    color: #fff;
     background: #4a6325; }
+  .button.danger,
   button.danger,
   input[type="submit"].danger {
     background: red; }
+  .button.icon,
   button.icon,
   input[type="submit"].icon {
     padding: 4px 0;
     width: 30px; }
+    .button.icon svg,
     button.icon svg,
     input[type="submit"].icon svg {
       display: block;

@@ -5,14 +5,14 @@ module.exports = async function(req, res) {
 
     console.log('\n\n\nNEW SEARCH QUERY\n\n\n');
 
-    const {user, queries} = req.body;
+    const {body: {author}, query} = req;
     const searchOptions = {
-        user: user
+        user: author
     };
 
-    for (var key in queries) {
-        if (queries.hasOwnProperty(key) && !!queries[key]) {
-            searchOptions[key] = {$regex: queries[key], $options: "i"};
+    for (var key in query) {
+        if (query.hasOwnProperty(key) && !!query[key]) {
+            searchOptions[key] = {$regex: query[key], $options: "i"};
         }
     }
 

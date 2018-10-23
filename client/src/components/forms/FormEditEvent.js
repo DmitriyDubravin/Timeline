@@ -162,8 +162,8 @@ class FormEditEvent extends Component {
         const {success, updatedEvent} = await QM.editEvent(queryData);
         if (success) {
             const {togglePopupEditEvent, editEvent} = this.props;
-            togglePopupEditEvent(false);
             editEvent({[_id]: updatedEvent});
+            togglePopupEditEvent(false);
         } else {
             // TEMP!
             console.log('c%Editing Error', 'color: red');

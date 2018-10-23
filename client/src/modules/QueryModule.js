@@ -50,6 +50,14 @@ export default (function() {
                         }
                     })
                 );
+            },
+            search(query, data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.search + '' + query,
+                        data: data
+                    })
+                );
             }
         }
     }

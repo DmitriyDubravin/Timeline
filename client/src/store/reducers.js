@@ -96,17 +96,24 @@ export const eventsData = (state = {}, {type, data}) => {
             };
         case "REMOVE_EVENT":
             delete state.events[data.eventId];
-            return {
-                ...state,
-                ranges: {
-                    ...state.ranges,
-                    dates: {
-                        ...state.ranges.dates,
-                        [data.date]: state.ranges.dates[data.date].filter(id => id !== data.eventId)
-                    }
-                },
-                events: {...state.events}
-            };
+            if (state.ranges.dates[data.date]) {
+                return {
+                    ...state,
+                    ranges: {
+                        ...state.ranges,
+                        dates: {
+                            ...state.ranges.dates,
+                            [data.date]: state.ranges.dates[data.date].filter(id => id !== data.eventId)
+                        }
+                    },
+                    events: {...state.events}
+                };
+            } else {
+                return {
+                    ...state,
+                    events: {...state.events}
+                };
+            }
         case "ADD_DATE_EVENTS":
             return {
                 ...state,
@@ -120,15 +127,9 @@ export const eventsData = (state = {}, {type, data}) => {
                     ...state.events, ...data.events
                 }
             };
-        case "ADD_QUERY_EVENTS":
+        case "ADD_EVENTS":
             return {
                 ...state,
-                // ranges: {
-                //     ...state.ranges,
-                //     queries: {
-                //         ...state.ranges.queries, [data.query]: Object.keys(data.events)
-                //     }
-                // },
                 events: {
                     ...state.events, ...data.events
                 }

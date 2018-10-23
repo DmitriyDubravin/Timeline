@@ -90,6 +90,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="submit"],
+.button,
 button {
     display: inline-block;
     vertical-align: middle;
@@ -124,13 +125,16 @@ input[type="email"] {
         border-color: $mbc;
     }
 }
+.button,
 button,
 input[type="submit"] {
+    text-align: center;
     color: $sfgc;
     background: $sbgc;
     cursor: pointer;
     &:hover,
     &:focus {
+        color: $sfgc;
         background: $mbch;
     }
     &.danger {
