@@ -127,6 +127,17 @@ export const eventsData = (state = {}, {type, data}) => {
                     ...state.events, ...data.events
                 }
             };
+        case "ADD_RANGE_EVENTS":
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    [data.range]: Object.keys(data.events)
+                },
+                events: {
+                    ...state.events, ...data.events
+                }
+            };
         case "ADD_EVENTS":
             return {
                 ...state,

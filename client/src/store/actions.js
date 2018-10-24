@@ -26,4 +26,5 @@ export const editEvent = event => ({type: 'EDIT_EVENT', data: event});
 export const removeEvent = (date, eventId) => ({type: "REMOVE_EVENT", data: {date, eventId}});
 
 export const addDateEvents = (date, events) => ({type: 'ADD_DATE_EVENTS', data: {date, events}});
+export const addRangeEvents = (range, events) => ({type: 'ADD_RANGE_EVENTS', data: {range, events}});
 export const addEvents = events => ({type: 'ADD_EVENTS', data: events});
