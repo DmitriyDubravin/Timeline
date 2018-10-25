@@ -3,9 +3,9 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const {name, start, finish} = req.body;
+    const {author, start, finish} = req.body;
     const findEventsOptions = {
-        user: name,
+        user: author,
         start: {$gte: start},
         finish: {$lte: finish}
     }

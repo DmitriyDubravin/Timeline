@@ -66,3 +66,13 @@ export const withQuery = queryFn => Component => class extends React.Component {
 export const tryCatch = promise => promise
     .then(data => ({...data}))
     .catch(err => ({err}));
+
+export const removeEmptyKeys = obj => {
+    const cleanObj = {};
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key) && !!obj[key]) {
+            cleanObj[key] = obj[key];
+        }
+    }
+    return cleanObj;
+}

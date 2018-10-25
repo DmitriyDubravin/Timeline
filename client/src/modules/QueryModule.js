@@ -24,6 +24,14 @@ export default (function() {
                     })
                 );
             },
+            getEvents(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.getEventsList,
+                        data: data
+                    })
+                );
+            },
             addEvent(data) {
                 return tryCatch(
                     queryServer({
@@ -40,14 +48,11 @@ export default (function() {
                     })
                 );
             },
-            removeEvent(userName, eventId) {
+            removeEvent(data) {
                 return tryCatch(
                     queryServer({
                         path: paths.removeEvent,
-                        data: {
-                            name: userName,
-                            _id: eventId
-                        }
+                        data: data
                     })
                 );
             },

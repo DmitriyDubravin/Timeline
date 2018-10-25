@@ -5,27 +5,18 @@ import EventsList from '../components/EventsList';
 import * as action from './../store/actions';
 import QM from './../modules/QueryModule';
 import QS from 'query-string';
-import {extendEventWithHoursMinutes} from './../support/functions';
+import {extendEventWithHoursMinutes, removeEmptyKeys} from './../support/functions';
 
 class SearchPage extends Component {
     constructor(props) {
         super(props);
-
         const queryString = props.location.search;
         const queryObjTemplate = {type: '', category: '', subcategory: '', comment: ''};
-        const queryObj = queryString.length > 0 ? {...QS.parse(queryString)} : queryObjTemplate;
-
-        this.state = {
-            queryObj: queryObj,
-            queryString: queryString
-        }
+        const queryObj = {...queryObjTemplate, ...QS.parse(queryString)};
+        this.state = {queryObj, queryString};
         this.inputHandler = this.inputHandler.bind(this);
         this.editEvent = this.editEvent.bind(this);
         this.deleteEvent = this.deleteEvent.bind(this);
-    }
-
-    isSearchString() {
-        return this.props.location.search.length > 0
     }
 
     componentDidMount() {
@@ -41,14 +32,12 @@ class SearchPage extends Component {
     }
 
     async search() {
-
         const {name, addRangeEvents} = this.props;
         const {queryObj, queryString} = this.state;
         const queryData = {
             author: name,
             queries: queryObj
         };
-
         const {success, data} = await QM.search(queryString, queryData);
         if (success) {
             const events = {};
@@ -57,28 +46,19 @@ class SearchPage extends Component {
             });
             addRangeEvents(queryString, events);
         }
-
-    }
-
-    trimObj(queryObj) {
-        const trimedObj = {};
-        for (let key in queryObj) {
-            if (queryObj.hasOwnProperty(key)) {
-                trimedObj[key] = queryObj[key].length > 0 ? queryObj[key] : undefined;
-            }
-        }
-        return trimedObj;
     }
 
     inputHandler(event) {
         const {name, value} = event.target;
         const queryObj = {...this.state.queryObj, [name]: value};
-        const string = QS.stringify(this.trimObj(queryObj));
+        const string = QS.stringify(removeEmptyKeys(queryObj));
         const queryString = string.length > 1 ? "?" + string : '';
         this.setState({queryObj, queryString});
     }
 
-
+    isSearchString() {
+        return this.props.location.search.length > 0
+    }
 
     editEvent(id) {
         this.props.togglePopupEditEvent(true, id);
@@ -87,11 +67,13 @@ class SearchPage extends Component {
         this.props.togglePopupDeleteEvent(true, id);
     }
 
+
+
     render() {
 
-        const {ranges, events} = this.props;
-        const rangeIds = ranges[this.state.queryString];
-        const resultList = rangeIds === undefined
+        const {ranges, events, date: {date}} = this.props;
+        const rangeIds = ranges[date];
+        const eventsList = rangeIds === undefined
             ? []
             : rangeIds.map(id => extendEventWithHoursMinutes(events[id]));
 
@@ -116,7 +98,7 @@ class SearchPage extends Component {
                         search: this.state.queryString
                     }}>Search</Link>
                 </form>
-                <EventsList eventsListData={resultList} editCb={this.editEvent} deleteCb={this.deleteEvent} />
+                <EventsList eventsListData={eventsList} editCb={this.editEvent} deleteCb={this.deleteEvent} />
             </div>
         );
     }

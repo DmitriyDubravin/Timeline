@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
-import queryServer from './../queryServer';
-import paths from './../paths';
-// import {withData, withQuery} from './../support/functions';
 import EventsList from './EventsList';
 import {extendEventWithHoursMinutes} from './../support/functions';
+import QM from './../modules/QueryModule';
 
 
 class EventsListContainer extends Component {
     constructor(props) {
         super(props);
-        this.handleServerResponse = this.handleServerResponse.bind(this);
         this.editEvent = this.editEvent.bind(this);
         this.deleteEvent = this.deleteEvent.bind(this);
     }
@@ -22,33 +19,30 @@ class EventsListContainer extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.date !== this.props.date) {
-            const {date: {date}, dates} = this.props;
-            if (dates[date] === undefined) {
+            const {date: {date}, ranges} = this.props;
+            if (ranges[date] === undefined) {
                 this.getEventsList();
             }
         }
     }
 
-    getEventsList() {
-        const {user, date} = this.props;
-        queryServer({
-            path: paths.getEventsList,
-            data: {
-                name: user.name,
-                start: date.rangeStart,
-                finish: date.rangeFinish,
-            },
-            callback: this.handleServerResponse
-        });
-    }
+    async getEventsList() {
 
-    handleServerResponse(response) {
-        const date = this.props.date.date;
-        const events = {};
-        response.data.forEach(event => {
-            events[event._id] = event;
-        });
-        this.props.addDateEvents(date, events);
+        const {date: {date: range, rangeStart, rangeFinish}, name} = this.props;
+        const queryData = {
+            author: name,
+            start: rangeStart,
+            finish: rangeFinish
+        };
+
+        const {success, data} = await QM.getEvents(queryData);
+        if (success) {
+            const events = {};
+            data.forEach(event => {
+                events[event._id] = event;
+            });
+            this.props.addRangeEvents(range, events);
+        }
     }
 
     editEvent(id) {
@@ -60,29 +54,27 @@ class EventsListContainer extends Component {
     }
 
     render() {
-        const {date: {date}, dates, events} = this.props;
-        const dateIds = dates[date];
-        const dateEventsList = dateIds === undefined
-            ? []
-            : dateIds.map(id => extendEventWithHoursMinutes(events[id]));
 
-        return <EventsList eventsListData={dateEventsList} editCb={this.editEvent} deleteCb={this.deleteEvent} />
+        const {ranges, events, date: {date}} = this.props;
+        const rangeIds = ranges[date];
+        const eventsList = rangeIds === undefined
+            ? []
+            : rangeIds.map(id => extendEventWithHoursMinutes(events[id]));
+
+        return <EventsList eventsListData={eventsList} editCb={this.editEvent} deleteCb={this.deleteEvent} />
     }
 }
 
 export default connect(
     state => ({
-        user: state.user,
+        name: state.user.name,
         date: state.date,
         events: state.eventsData.events,
-        dates: state.eventsData.ranges.dates
+        ranges: state.eventsData.ranges
     }),
     dispatch => ({
-        addEvent(event) {
-            dispatch(action.addEvent(event));
-        },
-        addDateEvents(date, events) {
-            dispatch(action.addDateEvents(date, events));
+        addRangeEvents(range, events) {
+            dispatch(action.addRangeEvents(range, events));
         },
         togglePopupEditEvent: function(boolean, id) {
             dispatch(action.togglePopupEditEvent(boolean, id))

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import queryServer from './queryServer';
 import * as action from './store/actions';
 import App from './App';
 import {withData} from './support/functions';

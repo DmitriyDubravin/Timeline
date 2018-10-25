@@ -12,13 +12,15 @@ class PopupEventEdit extends Component {
     }
     async removeEvent() {
 
-        const {name, event} = this.props;
-        const response = await QM.removeEvent(name, event._id);
-        const {success} = response;
-
+        const {name, event: {_id}} = this.props;
+        const queryData = {
+            author: name,
+            _id: _id
+        };
+        const {success} = await QM.removeEvent(queryData);
         if (success) {
-            const {date, event, removeEvent, togglePopupDeleteEvent} = this.props;
-            removeEvent(date, event._id);
+            const {date, removeEvent, togglePopupDeleteEvent} = this.props;
+            removeEvent(date, _id);
             togglePopupDeleteEvent(false);
         } else {
             // TEMP! no errors handling

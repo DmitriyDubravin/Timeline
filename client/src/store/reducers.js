@@ -70,7 +70,7 @@ export const eventsData = (state = {}, {type, data}) => {
     switch(type) {
         case "ADD_EVENT": 
         {
-            const oldEventsIds = state.ranges.dates[data.date];
+            const oldEventsIds = state.ranges[data.range];
             const eventId = Object.keys(data.event)[0];
             const newEventsIds = oldEventsIds === undefined ? eventId : [...oldEventsIds, eventId];
 
@@ -78,12 +78,11 @@ export const eventsData = (state = {}, {type, data}) => {
                 ...state,
                 ranges: {
                     ...state.ranges,
-                    dates: {
-                        ...state.ranges.dates, [data.date]: newEventsIds
-                    }
+                    [data.range]: newEventsIds
                 },
                 events: {
-                    ...state.events, ...data.event
+                    ...state.events,
+                    ...data.event
                 }
             };
         }
@@ -91,40 +90,23 @@ export const eventsData = (state = {}, {type, data}) => {
             return {
                 ...state,
                 events: {
-                    ...state.events, ...data
+                    ...state.events,
+                    ...data
                 }
             };
         case "REMOVE_EVENT":
             delete state.events[data.eventId];
-            if (state.ranges.dates[data.date]) {
-                return {
-                    ...state,
-                    ranges: {
-                        ...state.ranges,
-                        dates: {
-                            ...state.ranges.dates,
-                            [data.date]: state.ranges.dates[data.date].filter(id => id !== data.eventId)
-                        }
-                    },
-                    events: {...state.events}
-                };
-            } else {
-                return {
-                    ...state,
-                    events: {...state.events}
-                };
+
+            let ranges = {};
+            for (let key in state.ranges) {
+                ranges[key] = state.ranges[key].filter(id => id === data.eventId);
             }
-        case "ADD_DATE_EVENTS":
+
             return {
                 ...state,
-                ranges: {
-                    ...state.ranges,
-                    dates: {
-                        ...state.ranges.dates, [data.date]: Object.keys(data.events)
-                    }
-                },
+                ranges: ranges,
                 events: {
-                    ...state.events, ...data.events
+                    ...state.events
                 }
             };
         case "ADD_RANGE_EVENTS":
@@ -135,14 +117,16 @@ export const eventsData = (state = {}, {type, data}) => {
                     [data.range]: Object.keys(data.events)
                 },
                 events: {
-                    ...state.events, ...data.events
+                    ...state.events,
+                    ...data.events
                 }
             };
         case "ADD_EVENTS":
             return {
                 ...state,
                 events: {
-                    ...state.events, ...data.events
+                    ...state.events,
+                    ...data.events
                 }
             };
         default:

@@ -53,10 +53,7 @@ const preloadedState = {
     },
     usersList: null,
     eventsData: {
-        ranges: {
-            dates: {},
-            queries: {}
-        },
+        ranges: {},
         events: {}
     }
 }
