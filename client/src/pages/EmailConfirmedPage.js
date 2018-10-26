@@ -1,34 +1,27 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import queryServer from './../queryServer';
 import MM from './../modules/MessageModule';
-import paths from './../paths';
+import QM from './../modules/QueryModule';
 
-class HomePage extends Component {
-    constructor(props) {
-        super(props);
+export default class extends Component {
 
-        this.handleServerResponse = this.handleServerResponse.bind(this);
+    componentDidMount() {
+        this.confirmEmail();
     }
 
-    handleServerResponse(response) {
-        const {success} = response;
+    async confirmEmail() {
+
+        const queryData = {
+            hash: this.props.match.params.hash
+        };
+        const {success} = await QM.confirmEmail(queryData);
         const message = success
             ? MM.emailConfirmationSuccess().text
             : MM.emailConfirmationFailure().text;
         console.log(message);
-    }
-
-    componentDidMount() {
-        queryServer({
-            path: paths.emailConfirmation,
-            data: {hash: this.props.match.params.hash},
-            callback: this.handleServerResponse
-        });
 
     }
+
     render() {
-
         return (
             <div>
                 <h2>Email confirmation...</h2>
@@ -36,9 +29,3 @@ class HomePage extends Component {
         );
     }
 }
-
-export default connect(
-    state => ({
-        name: state.user.name
-    })
-)(HomePage)

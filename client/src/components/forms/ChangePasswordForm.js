@@ -47,7 +47,7 @@ class ChangePasswordForm extends Component {
     submitHandler(event) {
         event.preventDefault();
         queryServer({
-            path: paths.userChangePassword,
+            path: paths.changeUserPassword,
             data: {
                 login: this.props.name,
                 currentPassword: this.state.form[0].value,

@@ -10,6 +10,7 @@ module.exports = async function(req, res) {
     if (foundUser.err) e.findUserNameError(res);
 
     if (f.isUserFound(foundUser.data)) {
+        // f.success(res, {addedEvent: addedEvent.data});
         res.send({
             message: "User found"
         })
@@ -17,3 +18,5 @@ module.exports = async function(req, res) {
         
     }
 }
+
+// TEMP! DELETE THIS FILE ?!

@@ -12,10 +12,10 @@ export default {
     getUsersList: "/get-users-list",
     tokenAcknowledge: "/token-acknowledge",
 
-    userRegister: "/user-register",
-    userLogin: "/user-login",
-    userChangePassword: "/user-change-password",
-    userDelete: "/user-remove", // TEMP! remove -> delete everywhere!
+    registerUser: "/register-user",
+    loginUser: "/login-user",
+    changeUserPassword: "/change-user-password",
+    deleteUser: "/delete-user",
 
     getUserData: "/get-user-data",
 

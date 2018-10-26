@@ -1,26 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import queryServer from './../queryServer';
 import ChangePasswordForm from './../components/forms/ChangePasswordForm';
 import RemoveAccountForm from './../components/forms/RemoveAccountForm';
-import paths from './../paths';
 
 class UserPage extends Component {
-    constructor(props) {
-        super(props);
-        this.handleServerResponse = this.handleServerResponse.bind(this)
-    }
-    handleServerResponse(response) {
 
-    }
-    componentDidMount() {
-        queryServer({
-            path: paths.getUserData,
-            data: {name: this.props.match.params.user},
-            callback: this.handleServerResponse
-        });
-        // queryServer to get user's data
-    }
     render() {
 
         let pathName = this.props.match.params.user;
@@ -38,7 +22,6 @@ class UserPage extends Component {
         )
     }
 }
-
 
 export default connect(
     state => ({

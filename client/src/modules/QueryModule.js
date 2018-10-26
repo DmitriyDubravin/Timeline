@@ -63,6 +63,38 @@ export default (function() {
                         data: data
                     })
                 );
+            },
+            confirmEmail(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.emailConfirmation,
+                        data: data
+                    })
+                );
+            },
+            deleteUser(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.deleteUser,
+                        data: data
+                    })
+                );
+            },
+            registerUser(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.registerUser,
+                        data: data
+                    })
+                );
+            },
+            loginUser(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.loginUser,
+                        data: data
+                    })
+                );
             }
         }
     }

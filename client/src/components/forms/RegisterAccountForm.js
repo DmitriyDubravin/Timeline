@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
-import queryServer from './../../queryServer';
-
 import FormGen from './../../support/formGen';
 import { registerFormData } from './../../data/formsData';
-
 import GlobalMessage from './../GlobalMessage';
 import LocalMessage from './../LocalMessage';
 import MM from './../../modules/MessageModule';
-import paths from './../../paths';
+import QM from './../../modules/QueryModule';
 
 
 export default class RegisterAccountForm extends Component {
@@ -23,7 +20,6 @@ export default class RegisterAccountForm extends Component {
             form: this.form.getFormData()
         }
         this.submitHandler = this.submitHandler.bind(this);
-        this.handleServerResponse = this.handleServerResponse.bind(this);
         this.getField = this.getField.bind(this);
     }
 
@@ -31,9 +27,19 @@ export default class RegisterAccountForm extends Component {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
 
-    handleServerResponse(response) {
+    submitHandler(e) {
+        e.preventDefault();
+        this.registerUser();
+    }
 
-        const {success} = response;
+    async registerUser() {
+
+        const queryData = {
+            login: this.getField('name'),
+            email: this.getField('email'),
+            password: this.getField('password')
+        };
+        const {success} = await QM.registerUser(queryData);
 
         const status = success ? 'success' : 'error';
         const message = success
@@ -42,18 +48,8 @@ export default class RegisterAccountForm extends Component {
 
         this.setState({message, messageStatus: status})
 
-    }
-    submitHandler(event) {
-        event.preventDefault();
-        queryServer({
-            path: paths.userRegister,
-            data: {
-                login: this.getField('name'),
-                email: this.getField('email'),
-                password: this.getField('password')
-            },
-            callback: this.handleServerResponse
-        });
+        console.log(message);
+
     }
 
     render() {

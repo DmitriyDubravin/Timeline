@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import queryServer from './../../queryServer';
 import FormGen from './../../support/formGen';
 import { removeFormData } from './../../data/formsData';
 import MM from './../../modules/MessageModule';
 import UM from './../../modules/UserModule';
+import QM from './../../modules/QueryModule';
 import paths from './../../paths';
 
 class RemoveAccountForm extends Component {
@@ -20,7 +20,6 @@ class RemoveAccountForm extends Component {
             form: this.form.getFormData()
         }
         this.submitHandler = this.submitHandler.bind(this);
-        this.handleServerResponse = this.handleServerResponse.bind(this);
         this.getField = this.getField.bind(this);
     }
 
@@ -28,8 +27,19 @@ class RemoveAccountForm extends Component {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
 
-    handleServerResponse(response) {
-        const {success} = response;
+    submitHandler(e) {
+        e.preventDefault();
+        this.deleteUser();
+
+    }
+
+    async deleteUser() {
+
+        const queryData = {
+            login: this.props.name,
+            password: this.getField('password')
+        }
+        const {success} = QM.deleteUser(queryData);
 
         const status = success ? 'success' : 'error';
         let message = success
@@ -42,19 +52,10 @@ class RemoveAccountForm extends Component {
             UM.unsetUser(this.props.dispath);
         }
 
+
     }
 
-    submitHandler(event) {
-        event.preventDefault();
-        queryServer({
-            path: paths.userDelete,
-            data: {
-                login: this.props.name,
-                password: this.getField('password')
-            },
-            callback: this.handleServerResponse
-        });
-    }
+
     render() {
         const {message, messageStatus} = this.state;
 
