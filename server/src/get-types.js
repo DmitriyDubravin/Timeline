@@ -3,9 +3,9 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const {name} = req.body;
+    const {author} = req.body;
     const getTypesOptions = {
-        user: name
+        user: author
     }
 
     const foundTypes = await f.tryCatch(f.getTypes(getTypesOptions));
@@ -13,7 +13,7 @@ module.exports = async function(req, res) {
 
     f.success(res, {
         data: foundTypes.data,
-        dataName: 'types'
+        // dataName: 'types'
     });
 
 }

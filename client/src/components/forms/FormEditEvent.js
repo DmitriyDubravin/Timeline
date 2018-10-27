@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {convertNumToTwoDigits, timestampToTimeObj} from '../../support/functions';
 import * as action from '../../store/actions';
 import QM from './../../modules/QueryModule';
-import paths from './../../paths';
+
 
 class FormEditEvent extends Component {
     constructor(props) {
@@ -45,22 +45,50 @@ class FormEditEvent extends Component {
     }
 
     componentDidMount() {
-        this.getData(paths.getTypes, this.props.name);
+        this.getTypes();
         if(this.props.event.category.length > 0) {
-            this.getData(paths.getCategories, this.props.name, this.props.event.type);
+            this.getCategories(this.props.event.type);
         }
         if(this.props.event.category.length > 0) {
-            this.getData(paths.getSubcategories, this.props.name, this.props.event.category);
+            this.getSubcategories(this.props.event.category);
         }
     }
 
-    async getData(path, name, queryData = '') {
-        const {success, data, dataName} = await QM.getData(path, name, queryData);
+    async getTypes() {
+        const queryData = {
+            author: this.props.name
+        };
+        const {success, data} = await QM.getTypes(queryData);
         if (success) {
             const sortedDataList = data.filter(item => item.length !== 0).sort();
-            this.setState({[dataName]: sortedDataList});
+            this.setState({types: sortedDataList});
         }
     }
+
+    async getCategories(type) {
+        const queryData = {
+            author: this.props.name,
+            data: type
+        };
+        const {success, data} = await QM.getCategories(queryData);
+        if (success) {
+            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            this.setState({categories: sortedDataList});
+        }
+    }
+
+    async getSubcategories(category) {
+        const queryData = {
+            author: this.props.name,
+            data: category
+        };
+        const {success, data} = await QM.getCategories(queryData);
+        if (success) {
+            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            this.setState({subcategories: sortedDataList});
+        }
+    }
+
 
     inputHandler(event) {
         const {name, value} = event.target;
@@ -68,7 +96,7 @@ class FormEditEvent extends Component {
 
         if (name === 'type') {
             if (value !== 'Type') {
-                this.getData(paths.getCategories, this.props.name, value)
+                this.getCategories(value);
             } else {
                 this.setState({type: ''});
             }
@@ -82,7 +110,7 @@ class FormEditEvent extends Component {
 
         if (name === 'category') {
             if (value !== 'Category') {
-                this.getData(paths.getSubcategories, this.props.name, value)
+                this.getSubcategories(value);
             } else {
                 this.setState({
                     category: '',

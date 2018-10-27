@@ -5,7 +5,6 @@ import { removeFormData } from './../../data/formsData';
 import MM from './../../modules/MessageModule';
 import UM from './../../modules/UserModule';
 import QM from './../../modules/QueryModule';
-import paths from './../../paths';
 
 class RemoveAccountForm extends Component {
     constructor(props) {

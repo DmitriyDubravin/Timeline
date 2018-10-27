@@ -48,7 +48,10 @@ class AppContainer extends Component {
         if (isToken) {
 
             const token = UM.getToken();
-            const {success, name} = await QM.verifyToken(token);
+            const queryData = {
+                token: token
+            }
+            const {success, name} = await QM.verifyToken(queryData);
 
             if (success) {
 

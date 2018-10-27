@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
-import queryServer from './../../queryServer';
 import FormGen from './../../support/formGen';
 import { changePasswordFormData } from './../../data/formsData';
-import paths from './../../paths';
 import MM from './../../modules/MessageModule';
+import QM from './../../modules/QueryModule';
 
 
 
@@ -23,16 +21,27 @@ class ChangePasswordForm extends Component {
         }
 
         this.submitHandler = this.submitHandler.bind(this);
-        this.handleServerResponse = this.handleServerResponse.bind(this);
         this.getField = this.getField.bind(this);
     }
 
     getField(fieldName) {
         return this.state.form.filter(field => field.name === fieldName)[0].value;
     }
-    handleServerResponse(response) {
 
-        const {success} = response;
+    submitHandler(e) {
+        e.preventDefault();
+        this.changeUserPassword();
+    }
+
+    async changeUserPassword() {
+
+        const queryData = {
+            login: this.props.name,
+            currentPassword: this.state.form[0].value,
+            newPassword: this.state.form[1].value
+        };
+        const {success} = await QM.changeUserPassword(queryData);
+
         const status = success ? 'success' : 'error';
         let message = success
             ? MM.userPasswordChangeSuccess().text
@@ -41,19 +50,6 @@ class ChangePasswordForm extends Component {
         this.setState({
             message: message,
             messageStatus: status
-        });
-
-    }
-    submitHandler(event) {
-        event.preventDefault();
-        queryServer({
-            path: paths.changeUserPassword,
-            data: {
-                login: this.props.name,
-                currentPassword: this.state.form[0].value,
-                newPassword: this.state.form[1].value
-            },
-            callback: this.handleServerResponse
         });
     }
 

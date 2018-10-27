@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import * as action from './../../store/actions';
 import {convertNumToTwoDigits} from './../../support/functions';
 import QM from './../../modules/QueryModule';
-import paths from './../../paths';
 
 class FormAddEvent extends Component {
     constructor(props) {
@@ -31,14 +30,41 @@ class FormAddEvent extends Component {
     }
 
     componentDidMount() {
-        this.getData(paths.getTypes, this.props.name); // TEMP! need caching
+        this.getTypes();
     }
 
-    async getData(path, name, queryData = '') {
-        const {success, data, dataName} = await QM.getData(path, name, queryData);
+    async getTypes() {
+        const queryData = {
+            author: this.props.name
+        };
+        const {success, data} = await QM.getTypes(queryData);
         if (success) {
             const sortedDataList = data.filter(item => item.length !== 0).sort();
-            this.setState({[dataName]: sortedDataList});
+            this.setState({types: sortedDataList});
+        }
+    }
+
+    async getCategories(type) {
+        const queryData = {
+            author: this.props.name,
+            data: type
+        };
+        const {success, data} = await QM.getCategories(queryData);
+        if (success) {
+            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            this.setState({categories: sortedDataList});
+        }
+    }
+
+    async getSubcategories(category) {
+        const queryData = {
+            author: this.props.name,
+            data: category
+        };
+        const {success, data} = await QM.getCategories(queryData);
+        if (success) {
+            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            this.setState({subcategories: sortedDataList});
         }
     }
 
@@ -48,7 +74,7 @@ class FormAddEvent extends Component {
 
         if (name === 'type') {
             if (value !== 'Type') {
-                this.getData(paths.getCategories, this.props.name, value);
+                this.getCategories(value);
             } else {
                 this.setState({type: ''});
             }
@@ -62,7 +88,7 @@ class FormAddEvent extends Component {
 
         if (name === 'category') {
             if (value !== 'Category') {
-                this.getData(paths.getSubcategories, this.props.name, value);
+                this.getSubcategories(value);
             } else {
                 this.setState({
                     category: '',
@@ -169,6 +195,7 @@ class FormAddEvent extends Component {
         const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
         const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
 
+        console.log(this.state.types);
         const typesList = types.map((type, i) => <option key={type}>{type}</option>);
         const categoriesList = categories.map((category, i) => <option key={category}>{category}</option>);
         const subCategoriesList = subcategories.map((subcategory, i) => <option key={subcategory}>{subcategory}</option>);

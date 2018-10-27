@@ -3,9 +3,9 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const {name, data} = req.body;
+    const {author, data} = req.body;
     const getCategoriesOptions = {
-        user: name,
+        user: author,
         type: data
     };
 
@@ -14,7 +14,7 @@ module.exports = async function(req, res) {
 
     f.success(res, {
         data: foundCategories.data,
-        dataName: 'categories'
+        // dataName: 'categories'
     });
 
 }

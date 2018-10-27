@@ -6,21 +6,35 @@ export default (function() {
     var instance = null;
     if (!instance) {
         instance = {
-            getData(path, name, data = '') {
+            getTypes(data) {
                 return tryCatch(
                     queryServer({
-                        path: path,
-                        data: {name, data}
+                        path: paths.getTypes,
+                        data: data
                     })
                 );
             },
-            verifyToken(token) {
+            getCategories(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.getCategories,
+                        data: data
+                    })
+                );
+            },
+            getSubcategories(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.getSubcategories,
+                        data: data
+                    })
+                );
+            },
+            verifyToken(data) {
                 return tryCatch(
                     queryServer({
                         path: paths.tokenAcknowledge,
-                        data: {
-                            token: token
-                        }
+                        data: data
                     })
                 );
             },
@@ -92,6 +106,14 @@ export default (function() {
                 return tryCatch(
                     queryServer({
                         path: paths.loginUser,
+                        data: data
+                    })
+                );
+            },
+            changeUserPassword(data) {
+                return tryCatch(
+                    queryServer({
+                        path: paths.changeUserPassword,
                         data: data
                     })
                 );
