@@ -3,6 +3,8 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
+    console.log('\n\n\nGET EVENTS LIST QUERY\n\n\n');
+
     const {author, start, finish} = req.body;
     const findEventsOptions = {
         user: author,
@@ -10,10 +12,9 @@ module.exports = async function(req, res) {
         finish: {$lte: finish}
     }
 
-    const foundEvents = await f.tryCatch(f.findEvents(findEventsOptions));
-    foundEvents.err && e.findEventsError(res);
+    const {data, err} = await f.tryCatch(f.findEvents(findEventsOptions));
+    err && e.findEventsError(res);
 
-    let eventsList = foundEvents.data;
-    f.success(res, {data: eventsList});
+    f.success(res, {eventsList: data});
 
 }

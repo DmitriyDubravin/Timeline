@@ -165,6 +165,7 @@ class FormEditEvent extends Component {
             comment
         } = this.state;
         const {name, event: {_id}} = this.props;
+        console.log('sss', startHour, startMinute, finishHour, finishMinute);
         
         let start = this.calcSeconds(startHour, startMinute);
         let finish = this.calcSeconds(finishHour, finishMinute);
@@ -177,14 +178,14 @@ class FormEditEvent extends Component {
         }
 
         const queryData = {
-            name: name,
-            _id: _id,
-            start: start,
-            finish: finish,
-            type: type,
-            category: category,
-            subcategory: subcategory,
-            comment: comment
+            author: name,
+            _id,
+            start,
+            finish,
+            type,
+            category,
+            subcategory,
+            comment
         };
 
         const {success, updatedEvent} = await QM.editEvent(queryData);

@@ -154,7 +154,7 @@ class FormAddEvent extends Component {
         }
 
         const queryData = {
-            name,
+            author: name,
             start,
             finish,
             type,
@@ -195,7 +195,6 @@ class FormAddEvent extends Component {
         const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
         const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
 
-        console.log(this.state.types);
         const typesList = types.map((type, i) => <option key={type}>{type}</option>);
         const categoriesList = categories.map((category, i) => <option key={category}>{category}</option>);
         const subCategoriesList = subcategories.map((subcategory, i) => <option key={subcategory}>{subcategory}</option>);

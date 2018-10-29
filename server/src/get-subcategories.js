@@ -13,8 +13,7 @@ module.exports = async function(req, res) {
     foundSubcategories.err && e.getSubcategoriesError(res);
 
     f.success(res, {
-        data: foundSubcategories.data,
-        // dataName: 'subcategories'
+        data: foundSubcategories.data
     });
 
 }

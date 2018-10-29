@@ -23,7 +23,7 @@ app.use(cors());
 
 for (var key in paths) {
     let path = paths[key];
-    let file = '.' + paths[key];
+    let file = '.' + path;
     app.post(path, require(file));
 }
 

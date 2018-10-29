@@ -13,8 +13,7 @@ module.exports = async function(req, res) {
     foundCategories.err && e.getCategoriesError(res);
 
     f.success(res, {
-        data: foundCategories.data,
-        // dataName: 'categories'
+        data: foundCategories.data
     });
 
 }

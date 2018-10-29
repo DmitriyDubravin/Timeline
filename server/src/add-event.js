@@ -3,17 +3,17 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    console.log('\n\n\nNEW ADD QUERY\n\n\n');
+    console.log('\n\n\nADD EVENT QUERY\n\n\n');
 
-    const {name, ...rest} = req.body;
+    const {author, ...rest} = req.body;
     const eventData = {
-        user: name,
+        user: author,
         ...rest
     }
 
-    const addedEvent = await f.tryCatch(f.addEvent(eventData));
-    addedEvent.err && e.addEventError(res);
+    const {data, err} = await f.tryCatch(f.addEvent(eventData));
+    err && e.addEventError(res);
 
-    f.success(res, {addedEvent: addedEvent.data});
+    f.success(res, {addedEvent: data});
 
 }

@@ -36,7 +36,7 @@ class SearchPage extends Component {
         const {queryObj, queryString} = this.state;
         const queryData = {
             author: name,
-            queries: queryObj
+            queries: removeEmptyKeys(queryObj)
         };
         const {success, data} = await QM.search(queryString, queryData);
         if (success) {
@@ -71,11 +71,15 @@ class SearchPage extends Component {
 
     render() {
 
-        const {ranges, events, date: {date}} = this.props;
-        const rangeIds = ranges[date];
+        const {ranges, events} = this.props;
+        const {queryString} = this.state;
+        const rangeIds = ranges[queryString];
         const eventsList = rangeIds === undefined
             ? []
-            : rangeIds.map(id => extendEventWithHoursMinutes(events[id]));
+            : rangeIds.map(id => events[id]);
+            // : rangeIds.map(id => extendEventWithHoursMinutes(events[id]));
+
+            console.log(eventsList);
 
         return (
             <div>
@@ -107,6 +111,7 @@ class SearchPage extends Component {
 export default connect(
     state => ({
         name: state.user.name,
+        date: state.date,
         events: state.eventsData.events,
         ranges: state.eventsData.ranges
     }),

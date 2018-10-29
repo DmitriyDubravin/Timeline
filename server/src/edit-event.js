@@ -3,46 +3,25 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    console.log('\n\n\nNEW EDIT QUERY\n\n\n');
+    console.log('\n\n\nEDIT EVENT QUERY\n\n\n');
 
-    const {
-        _id,
-        name,
-        start,
-        startHour,
-        startMinute,
-        finish,
-        finishHour,
-        finishMinute,
-        type,
-        category,
-        subcategory,
-        comment
-    } = req.body;
-
-    const updateEventOptions = {
-        user: name,
-        start: start,
-        startHour: startHour,
-        startMinute: startMinute,
-        finish: finish,
-        finishHour: finishHour,
-        finishMinute: finishMinute,
-        type: type,
-        category: category,
-        subcategory: subcategory,
-        comment: comment
-    }
+    const {author, _id, ...rest} = req.body;
 
     const findEventOptions = {
-        user: name,
-        _id: _id
+        user: author,
+        _id
     }
 
-    const foundEvent = await f.tryCatch(f.findEvents(findEventOptions));
-    foundEvent.err && e.findEventsError(res);
+    const {data, err} = await f.tryCatch(f.findEvents(findEventOptions));
+    err && e.findEventsError(res);
 
-    if(f.isEventFound(foundEvent.data)) {
+
+
+    const updateEventOptions = {
+        user: author,
+        ...rest
+    }
+    if(f.isEventFound(data)) {
         const updatedEvent = await f.tryCatch(f.editEvent(findEventOptions, updateEventOptions))
         updatedEvent.err && e.updateEventError(res);
 

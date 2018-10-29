@@ -1,122 +1,93 @@
 import queryServer from '../queryServer';
 import paths from '../paths';
-import {tryCatch} from '../support/functions';
 
 export default (function() {
     var instance = null;
     if (!instance) {
         instance = {
             getTypes(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.getTypes,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.getTypes,
+                    data
+                });
             },
             getCategories(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.getCategories,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.getCategories,
+                    data
+                })
             },
             getSubcategories(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.getSubcategories,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.getSubcategories,
+                    data
+                })
             },
             verifyToken(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.tokenAcknowledge,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.tokenAcknowledge,
+                    data
+                })
             },
             getEvents(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.getEventsList,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.getEventsList,
+                    data
+                })
             },
             addEvent(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.addEvent,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.addEvent,
+                    data
+                })
             },
             editEvent(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.editEvent,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.editEvent,
+                    data
+                })
             },
             removeEvent(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.removeEvent,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.removeEvent,
+                    data
+                })
             },
             search(query, data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.search + '' + query,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.search + '' + query,
+                    data
+                })
             },
             confirmEmail(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.emailConfirmation,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.emailConfirmation,
+                    data
+                })
             },
             deleteUser(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.deleteUser,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.deleteUser,
+                    data
+                })
             },
             registerUser(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.registerUser,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.registerUser,
+                    data
+                })
             },
             loginUser(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.loginUser,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.loginUser,
+                    data
+                })
             },
             changeUserPassword(data) {
-                return tryCatch(
-                    queryServer({
-                        path: paths.changeUserPassword,
-                        data: data
-                    })
-                );
+                return queryServer({
+                    path: paths.changeUserPassword,
+                    data
+                })
             }
         }
     }

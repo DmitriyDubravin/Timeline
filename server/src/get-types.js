@@ -12,8 +12,7 @@ module.exports = async function(req, res) {
     foundTypes.err && e.getTypesError(res);
 
     f.success(res, {
-        data: foundTypes.data,
-        // dataName: 'types'
+        data: foundTypes.data
     });
 
 }

@@ -3,17 +3,20 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
+    console.log('\n\n\nTOKEN CHECK QUERY\n\n\n');
+
     const {token} = req.body;
-    const findUserTokenOptions = {token: token}
+    const findUserTokenOptions = {
+        token
+    }
 
-    const foundUser = await f.tryCatch(f.findUser(findUserTokenOptions));
-    foundUser.err && e.findUserTokenError(res);
+    const {data, err} = await f.tryCatch(f.findUser(findUserTokenOptions));
+    err && e.findUserTokenError(res);
 
-    if (f.isUserFound(foundUser.data)) {
+    if (f.isUserFound(data)) {
 
         f.success(res, {
-            name: foundUser.data[0].name,
-            token: token
+            name: data[0].name
         });
 
     } else {

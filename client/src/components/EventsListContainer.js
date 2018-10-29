@@ -35,10 +35,10 @@ class EventsListContainer extends Component {
             finish: rangeFinish
         };
 
-        const {success, data} = await QM.getEvents(queryData);
+        const {success, eventsList} = await QM.getEvents(queryData);
         if (success) {
             const events = {};
-            data.forEach(event => {
+            eventsList.forEach(event => {
                 events[event._id] = event;
             });
             this.props.addRangeEvents(range, events);
