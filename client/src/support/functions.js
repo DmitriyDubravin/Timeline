@@ -78,6 +78,7 @@ export const removeEmptyKeys = obj => {
 }
 
 
+
 export const checkTypes = (args, types) => {
     for (let i = 0; i < types.length; i++) {
         let value = args[i];
@@ -86,7 +87,8 @@ export const checkTypes = (args, types) => {
             value === undefined ? 'Undefined' :
             Object.prototype.toString.call(value).slice(8, -1);
         if (valueType !== expectedValueType) {
-            throw new Error(`${i} parameter should be ${expectedValueType} ! \n Got:\n type: ${valueType}\n value: ${value}`);
+            throw new Error(`${i} parameter type should be ${expectedValueType} ! \n Got:\n type: ${valueType}\n value: ${value}`);
         }
     }
 }
+
