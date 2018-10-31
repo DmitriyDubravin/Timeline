@@ -5,7 +5,7 @@ import EventsList from '../components/EventsList';
 import * as action from './../store/actions';
 import QM from './../modules/QueryModule';
 import QS from 'query-string';
-import {extendEventWithHoursMinutes, removeEmptyKeys} from './../support/functions';
+import {extendEventWithHoursMinutes, removeEmptyKeys, checkEventModel} from './../support/functions';
 
 class SearchPage extends Component {
     constructor(props) {
@@ -20,33 +20,6 @@ class SearchPage extends Component {
     }
 
     componentDidMount() {
-
-function getType(value) {
-    return value === null ? 'Null' :
-        value === undefined ? 'Undefined' :
-        Object.prototype.toString.call(value).slice(8, -1);
-}
-
-
-const eventModel = {
-    start: ['String', 'Number'],
-    f: ['String']
-}
-const checkModel = model => data => {
-    return Object.keys(model).every(key => {
-        return data[key] && model[key].some(modelType => {
-            return getType(data[key]) === modelType
-        })
-    });
-}
-const checkEventModel = checkModel(eventModel);
-
-const event = {
-    start: 'mystart'
-}
-console.log(checkEventModel(event));
-
-
         if (this.isSearchString()) {
             this.search();
         }
@@ -103,10 +76,9 @@ console.log(checkEventModel(event));
         const rangeIds = ranges[queryString];
         const eventsList = rangeIds === undefined
             ? []
-            // : rangeIds.map(id => events[id]);
-            : rangeIds.map(id => extendEventWithHoursMinutes(events[id]));
-
-            // console.log(eventsList);
+            : rangeIds.map(id => {
+                return extendEventWithHoursMinutes(checkEventModel(events[id]))
+            });
 
         return (
             <div>

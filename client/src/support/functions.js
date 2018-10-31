@@ -77,8 +77,6 @@ export const removeEmptyKeys = obj => {
     return cleanObj;
 }
 
-
-
 export const checkTypes = (args, types) => {
     for (let i = 0; i < types.length; i++) {
         let value = args[i];
@@ -92,3 +90,30 @@ export const checkTypes = (args, types) => {
     }
 }
 
+export const getType = value => {
+    return value === null ? 'Null' :
+        value === undefined ? 'Undefined' :
+        Object.prototype.toString.call(value).slice(8, -1);
+}
+
+export const checkModel = model => data => {
+    let result = Object.keys(model).every(key => {
+        return data[key] && model[key].some(modelType => {
+            return getType(data[key]) === modelType
+        })
+    });
+    if (!result) {
+        console.log('model: ', model);
+        console.log('data: ', data);
+        throw new Error(`model check failed`);
+    } else {
+        return data;
+    }
+}
+
+const eventModel = {
+    start: ['String', 'Number'],
+    finish: ['String', 'Number'],
+}
+
+export const checkEventModel = checkModel(eventModel);
