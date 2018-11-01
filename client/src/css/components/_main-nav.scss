@@ -1,61 +1,29 @@
 
-
-.main-nav-opener {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 5;
-}
 .main-nav {
-    position: fixed;
-    z-index: 4;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 100%;
+    height: calc(100vh - 25vw);
     margin: 0;
     padding: 0;
     line-height: 20px;
     font-size: 14px;
     list-style: none;
-    background: #ddd;
+    background: $brand;
     li {
-        margin: 10px 0;
     }
     a {
-        display: inline-block;
-        vertical-align: middle;
-        padding: 5px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
         color: $sfgc;
         background: $sbgc;
         &:hover,
         &:focus {
             background: $mbch;
-        }
-    }
-    li:hover ul {
-        display: block;
-    }
-    ul {
-        position: absolute;
-        display: none;
-        bottom: 100%;
-        left: 0;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        min-width: 100px;
-        li {
-            display: block;
-            margin: 0;
-            padding: 3px 0;
-        }
-        a {
-            display: block;
         }
     }
 }

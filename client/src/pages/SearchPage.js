@@ -38,10 +38,10 @@ class SearchPage extends Component {
             author: name,
             queries: removeEmptyKeys(queryObj)
         };
-        const {success, data} = await QM.search(queryString, queryData);
+        const {success, eventsList} = await QM.search(queryString, queryData);
         if (success) {
             const events = {};
-            data.forEach(event => {
+            eventsList.forEach(event => {
                 events[event._id] = event;
             });
             addRangeEvents(queryString, events);

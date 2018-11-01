@@ -238,56 +238,28 @@ input[type="submit"] {
       top: 75%;
       transition: all 0.5s ease-out; }
 
-.main-nav-opener {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 5; }
-
 .main-nav {
-  position: fixed;
-  z-index: 4;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 100%;
+  height: calc(100vh - 25vw);
   margin: 0;
   padding: 0;
   line-height: 20px;
   font-size: 14px;
   list-style: none;
-  background: #ddd; }
-  .main-nav li {
-    margin: 10px 0; }
+  background: #683; }
   .main-nav a {
-    display: inline-block;
-    vertical-align: middle;
-    padding: 5px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     color: #fff;
     background: #683; }
     .main-nav a:hover, .main-nav a:focus {
       background: #4a6325; }
-  .main-nav li:hover ul {
-    display: block; }
-  .main-nav ul {
-    position: absolute;
-    display: none;
-    bottom: 100%;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-width: 100px; }
-    .main-nav ul li {
-      display: block;
-      margin: 0;
-      padding: 3px 0; }
-    .main-nav ul a {
-      display: block; }
 
 .datepicker-holder {
   position: relative;
@@ -354,12 +326,6 @@ input[type="submit"] {
       background: #fff;
       cursor: default; }
 
-.date-box {
-  display: inline-block;
-  vertical-align: top;
-  line-height: 30px;
-  font-size: 16px; }
-
 .loader {
   position: relative;
   margin: 20px auto;
@@ -395,20 +361,19 @@ input[type="submit"] {
 
 .App {
   position: relative;
-  padding: 100px 10px;
   min-height: 100vh; }
+
+.main-holder {
+  display: flex;
+  flex-wrap: wrap;
+  border: solid #fff;
+  border-width: 1px 0 0 1px; }
 
 .header {
   position: absolute;
   top: 10px;
   left: 10px;
   right: 10px; }
-
-.main-logo {
-  display: block;
-  margin: 0 auto 8px;
-  width: 40px;
-  height: 40px; }
 
 .add-popup-opener {
   position: fixed;
@@ -435,10 +400,11 @@ input[type="submit"] {
   right: 0;
   bottom: 0;
   left: 0;
-  background: #bbb;
   display: flex;
-  align-items: center;
-  align-content: center; }
+  flex-wrap: wrap;
+  border: solid #fff;
+  border-width: 1px 0 0 1px;
+  background: #bbb; }
 
 .link-close {
   position: absolute;
@@ -458,3 +424,38 @@ input[type="submit"] {
   margin: 0 5px; }
   .dateswitcher-box button {
     vertical-align: top; }
+
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border: solid #fff;
+  border-width: 0 1px 1px 0;
+  padding: 0;
+  width: 25%;
+  height: 25vw;
+  color: #fff;
+  background: #683; }
+  .tile:focus {
+    background: #683; }
+  .tile svg {
+    width: calc(100% / 3);
+    height: calc(100% / 3); }
+    .tile svg path {
+      fill: #fff; }
+  .tile.main-logo {
+    width: 50%; }
+    .tile.main-logo svg {
+      width: calc(100% / 1.5);
+      height: calc(100% / 1.5); }
+  .tile.date-string {
+    width: 100%;
+    height: 10vw;
+    line-height: 30px;
+    font-size: 16px; }
+  .tile.btn-close {
+    width: 100%; }
+  .main-nav .tile {
+    width: 50%;
+    height: 50vw; }

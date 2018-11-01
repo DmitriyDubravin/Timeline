@@ -4,7 +4,9 @@ const e = require('./support/errors');
 module.exports = async function(req, res) {
 
     const {login, password} = req.body;
-    const findUserNameOptions = {name: login}
+    const findUserNameOptions = {
+        name: login
+    };
 
     const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
     foundUser.err && e.findUserNameError(res);

@@ -3,17 +3,17 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const {author, data} = req.body;
+    const {author, type} = req.body;
     const getCategoriesOptions = {
         user: author,
-        type: data
+        type
     };
 
-    const foundCategories = await f.tryCatch(f.getCategories(getCategoriesOptions));
-    foundCategories.err && e.getCategoriesError(res);
+    const {data, err} = await f.tryCatch(f.getCategories(getCategoriesOptions));
+    err && e.getCategoriesError(res);
 
     f.success(res, {
-        data: foundCategories.data
+        categoriesList: data
     });
 
 }

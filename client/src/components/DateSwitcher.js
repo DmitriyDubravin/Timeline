@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
 import {
@@ -10,7 +10,7 @@ import {
 class DatePicker extends Component {
 
     switchDay = modificator => {
-        let {day, month, year} = this.props.date;
+        const {day, month, year} = this.props.date;
         let date = new Date(year, month, day + modificator);
         let newDay = date.getDate();
         let newMonth = date.getMonth();
@@ -30,11 +30,11 @@ class DatePicker extends Component {
 
     render() {
         return (
-            <div className="dateswitcher-box">
-                <button className="icon" onClick={() => this.switchDay(-1)}><FaArrowLeft /></button>
-                <button className="icon" onClick={() => this.switchToToday()}><FaBullseye /></button>
-                <button className="icon" onClick={() => this.switchDay(1)}><FaArrowRight /></button>
-            </div>
+            <Fragment>
+                <button className="tile" onClick={() => this.switchDay(-1)}><FaArrowLeft /></button>
+                <button className="tile" onClick={() => this.switchToToday()}><FaBullseye /></button>
+                <button className="tile" onClick={() => this.switchDay(1)}><FaArrowRight /></button>
+            </Fragment>
         )
     }
 }

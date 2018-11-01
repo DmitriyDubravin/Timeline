@@ -5,6 +5,7 @@ import Header from './components/Header';
 import PopupAddEvent from './components/popups/PopupAddEvent';
 import PopupEditEvent from './components/popups/PopupEditEvent';
 import PopupDeleteEvent from './components/popups/PopupDeleteEvent';
+import PopupMainNav from './components/popups/PopupMainNav';
 
 // TEMP! needs more protection agains unauthorized users
 
@@ -15,14 +16,18 @@ const App = ({
         location,
         addEvent,
         editEvent,
-        deleteEvent
+        deleteEvent,
+        mainNav
     }) => (
         <div className="App">
-            <Header />
+            <div className="main-holder">
+                <Header />
+                {renderRoutes(route.routes, {history, location})}
+            </div>
             {addEvent.show && <PopupAddEvent />}
             {editEvent.show && <PopupEditEvent />}
             {deleteEvent.show && <PopupDeleteEvent />}
-            {renderRoutes(route.routes, {history, location})}
+            {mainNav.show && <PopupMainNav />}
         </div>
     );
 
@@ -30,6 +35,7 @@ export default connect(
     state => ({
         addEvent: state.popups.addEvent,
         editEvent: state.popups.editEvent,
-        deleteEvent: state.popups.deleteEvent
+        deleteEvent: state.popups.deleteEvent,
+        mainNav: state.popups.mainNav,
     })
 )(App)

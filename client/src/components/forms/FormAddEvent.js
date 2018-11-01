@@ -37,9 +37,9 @@ class FormAddEvent extends Component {
         const queryData = {
             author: this.props.name
         };
-        const {success, data} = await QM.getTypes(queryData);
+        const {success, typesList} = await QM.getTypes(queryData);
         if (success) {
-            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            const sortedDataList = typesList.filter(item => item.length !== 0).sort();
             this.setState({types: sortedDataList});
         }
     }
@@ -47,11 +47,11 @@ class FormAddEvent extends Component {
     async getCategories(type) {
         const queryData = {
             author: this.props.name,
-            data: type
+            type
         };
-        const {success, data} = await QM.getCategories(queryData);
+        const {success, categoriesList} = await QM.getCategories(queryData);
         if (success) {
-            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            const sortedDataList = categoriesList.filter(item => item.length !== 0).sort();
             this.setState({categories: sortedDataList});
         }
     }
@@ -59,11 +59,11 @@ class FormAddEvent extends Component {
     async getSubcategories(category) {
         const queryData = {
             author: this.props.name,
-            data: category
+            category
         };
-        const {success, data} = await QM.getCategories(queryData);
+        const {success, subcategoriesList} = await QM.getCategories(queryData);
         if (success) {
-            const sortedDataList = data.filter(item => item.length !== 0).sort();
+            const sortedDataList = subcategoriesList.filter(item => item.length !== 0).sort();
             this.setState({subcategories: sortedDataList});
         }
     }

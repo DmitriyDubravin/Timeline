@@ -8,11 +8,11 @@ module.exports = async function(req, res) {
         user: author
     }
 
-    const foundTypes = await f.tryCatch(f.getTypes(getTypesOptions));
-    foundTypes.err && e.getTypesError(res);
+    const {data, err} = await f.tryCatch(f.getTypes(getTypesOptions));
+    err && e.getTypesError(res);
 
     f.success(res, {
-        data: foundTypes.data
+        typesList: data
     });
 
 }

@@ -49,7 +49,10 @@ const preloadedState = {
         deleteEvent: {
             show: false,
             id: null
-        }
+        },
+        mainNav: {
+            show: true
+        },
     },
     usersList: null,
     eventsData: {

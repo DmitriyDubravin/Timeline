@@ -3,17 +3,18 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    const {name, id} = req.body;
+    const {author, _id} = req.body;
 
     const findEventsOptions = {
-        user: name,
-        _id: id
+        user: author,
+        _id
     }
 
-    const foundEvent = await f.tryCatch(f.findEvents(findEventsOptions));
-    foundEvent.err && e.findEventsError(res);
+    const {data, err} = await f.tryCatch(f.findEvents(findEventsOptions));
+    err && e.findEventsError(res);
 
-    let event = foundEvent.data;
-    f.success(res, {event: event});
+    f.success(res, {
+        event: data
+    });
 
 }

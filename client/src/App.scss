@@ -3,10 +3,12 @@
 @import './css/global';
 @import './css/forms';
 
+@import './css/components/main-logo';
 @import './css/components/menu-switch';
 @import './css/components/main-nav';
+@import './css/components/user-nav';
 @import './css/components/datepicker';
-@import './css/components/date';
+@import './css/components/date-string';
 @import './css/components/loader';
 @import './css/components/event';
 
@@ -22,9 +24,16 @@
 
 .App {
     position: relative;
-    padding: 100px 10px;
     min-height: 100vh;
 }
+
+.main-holder {
+    display: flex;
+    flex-wrap: wrap;
+    border: solid $white;
+    border-width: 1px 0 0 1px;
+}
+
 .header {
     position: absolute;
     top: 10px;
@@ -32,12 +41,6 @@
     right: 10px;
 }
 
-.main-logo {
-    display: block;
-    margin: 0 auto 8px;
-    width: 40px;
-    height: 40px;
-}
 
 .add-popup-opener {
     position: fixed;
@@ -70,10 +73,14 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: #bbb;
     display: flex;
-    align-items: center;
-    align-content: center;
+    flex-wrap: wrap;
+    border: solid $white;
+    border-width: 1px 0 0 1px;
+    background: #bbb;
+    // display: flex;
+    // align-items: center;
+    // align-content: center;
     // .close {
     //     position: absolute;
     //     top: 10px;
@@ -106,5 +113,49 @@
     margin: 0 5px;
     button {
         vertical-align: top;
+    }
+}
+
+.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    border: solid $white;
+    border-width: 0 1px 1px 0;
+    padding: 0;
+    width: 25%;
+    height: 25vw;
+    color: $white;
+    background: $brand;
+    &:focus {
+        background: $brand;
+    }
+    svg {
+        width: calc(100% / 3);
+        height: calc(100% / 3);
+        path {
+            fill: $white;
+        }
+    }
+    &.main-logo {
+        width: 50%;
+        svg {
+            width: calc(100% / 1.5);
+            height: calc(100% / 1.5);
+        }
+    }
+    &.date-string {
+        width: 100%;
+        height: 10vw;
+        line-height: 30px;
+        font-size: 16px;
+    }
+    &.btn-close {
+        width: 100%;
+    }
+    .main-nav & {
+        width: 50%;
+        height: 50vw;
     }
 }

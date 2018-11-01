@@ -14,6 +14,7 @@ export const togglePopupLogin = boolean => ({type: "TOGGLE_POPUP_LOGIN", data: b
 export const togglePopupAddEvent = boolean => ({type: "TOGGLE_POPUP_ADD_EVENT", data: boolean});
 export const togglePopupEditEvent = (boolean, id = null) => ({type: "TOGGLE_POPUP_EDIT_EVENT", data: {boolean, id}});
 export const togglePopupDeleteEvent = (boolean, id = null) => ({type: "TOGGLE_POPUP_DELETE_EVENT", data: {boolean, id}});
+export const togglePopupMainNav = boolean => ({type: "TOGGLE_POPUP_MAIN_NAV", data: boolean});
 
 // usersList
 

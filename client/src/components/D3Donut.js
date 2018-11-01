@@ -5,15 +5,15 @@ import * as d3 from "d3";
 export default class Donut extends Component {
     componentDidMount() {
 
-        const s = 400;
+        const s = 320;
         const r = s / 2;
 
         const arc = d3
             .arc()
             // .startAngle(0)
             // .endAngle(2 * Math.PI)
-            .outerRadius(r - 50)
-            .innerRadius(r - 150)
+            .outerRadius(r - 30)
+            .innerRadius(r - 100)
             .padAngle(.02)
             .padRadius(100)
             .cornerRadius(4);

@@ -18,7 +18,9 @@ export const date = (state = {}, {type, data}) => {
     switch (type) {
         case "SET_DATE":
 
-            let date = `${data.day}.${data.month}.${data.year}`;
+            let day = ('0' + data.day).slice(-2);
+            let month = ('0' + (data.month + 1)).slice(-2);
+            let date = `${day}.${month}.${data.year}`;
             let rangeStart = Math.floor(+new Date(Date.UTC(data.year, data.month, data.day)) / 1000);
             let rangeFinish = Math.floor(+new Date(Date.UTC(data.year, data.month, data.day, 23, 59, 59)) / 1000);
 
@@ -49,6 +51,11 @@ export const popups = (state = {}, {type, data}) => {
             return {
                 ...state,
                 deleteEvent: {...state.deleteEvent, show: data.boolean, id: data.id}
+            };
+        case "TOGGLE_POPUP_MAIN_NAV":
+            return {
+                ...state,
+                mainNav: {...state.mainNav, show: data}
             };
         default:
             return state;

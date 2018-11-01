@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
 import {
@@ -116,8 +116,8 @@ class DatePicker extends Component {
         });
 
         return (
-            <div className="datepicker-holder">
-                <button className="icon" onClick={this.togglePopup}><FaCalendarAlt /></button>
+            <Fragment>
+                <button className="tile" onClick={this.togglePopup}><FaCalendarAlt /></button>
                 {
                     this.state.showPopup &&
                     <div className="datepicker">
@@ -132,7 +132,7 @@ class DatePicker extends Component {
                         </div>
                     </div>
                 }
-            </div>
+            </Fragment>
         )
     }
 }

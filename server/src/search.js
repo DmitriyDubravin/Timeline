@@ -16,11 +16,11 @@ module.exports = async function(req, res) {
         }
     }
 
-    const foundSearch = await f.tryCatch(f.search(searchOptions));
-    foundSearch.err && e.searchError(res);
+    const {data, err} = await f.tryCatch(f.search(searchOptions));
+    err && e.searchError(res);
 
     f.success(res, {
-        data: foundSearch.data
+        eventsList: data
     });
 
 }
