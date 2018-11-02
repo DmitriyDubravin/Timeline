@@ -51,7 +51,10 @@ const preloadedState = {
             id: null
         },
         mainNav: {
-            show: true
+            show: false
+        },
+        userNav: {
+            show: false
         },
     },
     usersList: null,

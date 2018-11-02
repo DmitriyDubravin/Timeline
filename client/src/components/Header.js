@@ -3,8 +3,7 @@ import {connect} from 'react-redux';
 import * as action from './../store/actions';
 // import MainNav from './MainNav';
 import MainLogo from './MainLogo';
-import UserNav from './UserNav';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaUser } from 'react-icons/fa';
 
 
 
@@ -13,14 +12,16 @@ class Header extends Component {
     //     super(props);
     // }
     render() {
-        const {togglePopupMainNav} = this.props;
+        const {
+            togglePopupMainNav,
+            togglePopupUserNav
+        } = this.props;
 
         return (
             <Fragment>
-                {/* <MainNav /> */}
-                <button onClick={() => togglePopupMainNav(true)} className="tile"><FaBars /></button>
+                <button className="tile" onClick={() => togglePopupMainNav(true)}><FaBars /></button>
                 <MainLogo />
-                <UserNav />
+                <button className="tile" onClick={() => togglePopupUserNav(true)}><FaUser /></button>
             </Fragment>
         )
     }
@@ -36,7 +37,10 @@ export default connect(
     dispatch => ({
         togglePopupMainNav: function(boolean) {
             dispatch(action.togglePopupMainNav(boolean))
-        }
+        },
+        togglePopupUserNav: function(boolean) {
+            dispatch(action.togglePopupUserNav(boolean))
+        },
     })
 )(Header)
 

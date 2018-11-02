@@ -57,6 +57,11 @@ export const popups = (state = {}, {type, data}) => {
                 ...state,
                 mainNav: {...state.mainNav, show: data}
             };
+        case "TOGGLE_POPUP_USER_NAV":
+            return {
+                ...state,
+                userNav: {...state.userNav, show: data}
+            };
         default:
             return state;
     }
