@@ -8,34 +8,37 @@ import PopupEditEvent from './components/popups/PopupEditEvent';
 import PopupDeleteEvent from './components/popups/PopupDeleteEvent';
 import PopupMainNav from './components/popups/PopupMainNav';
 import PopupUserNav from './components/popups/PopupUserNav';
+import PopupDatePicker from './components/popups/PopupDatePicker';
 
 // TEMP! needs more protection agains unauthorized users
 
 
 const App = ({
-        route,
-        history,
-        location,
-        login,
-        mainNav,
-        userNav,
-        addEvent,
-        editEvent,
-        deleteEvent,
-    }) => (
-        <div className="App">
-            <div className="main-holder">
-                <Header />
-                {renderRoutes(route.routes, {history, location})}
-            </div>
-            {mainNav.show && <PopupMainNav />}
-            {userNav.show && <PopupUserNav />}
-            {addEvent.show && <PopupAddEvent />}
-            {editEvent.show && <PopupEditEvent />}
-            {deleteEvent.show && <PopupDeleteEvent />}
-            {login.show && <PopupLogin />}
+    route,
+    history,
+    location,
+    login,
+    mainNav,
+    userNav,
+    addEvent,
+    editEvent,
+    deleteEvent,
+    datePicker,
+}) => (
+    <div className="App">
+        <div className="main-holder">
+            <Header />
+            {renderRoutes(route.routes, {history, location})}
         </div>
-    );
+        {mainNav.show && <PopupMainNav />}
+        {userNav.show && <PopupUserNav />}
+        {addEvent.show && <PopupAddEvent />}
+        {editEvent.show && <PopupEditEvent />}
+        {deleteEvent.show && <PopupDeleteEvent />}
+        {login.show && <PopupLogin />}
+        {datePicker.show && <PopupDatePicker />}
+    </div>
+);
 
 export default connect(
     state => ({
@@ -45,5 +48,6 @@ export default connect(
         addEvent: state.popups.addEvent,
         editEvent: state.popups.editEvent,
         deleteEvent: state.popups.deleteEvent,
+        datePicker: state.popups.datePicker,
     })
 )(App)

@@ -82,7 +82,7 @@ class FormEditEvent extends Component {
             author: this.props.name,
             category
         };
-        const {success, subcategoriesList} = await QM.getCategories(queryData);
+        const {success, subcategoriesList} = await QM.getSubcategories(queryData);
         if (success) {
             const sortedDataList = subcategoriesList.filter(item => item.length !== 0).sort();
             this.setState({subcategories: sortedDataList});

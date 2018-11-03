@@ -1,9 +1,6 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as action from './../store/actions';
-import {
-    FaCalendarAlt,
-} from 'react-icons/fa';
 
 class DatePicker extends Component {
 
@@ -17,7 +14,6 @@ class DatePicker extends Component {
             weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
         }
 
-        this.togglePopup = this.togglePopup.bind(this);
         this.setDay = this.setDay.bind(this);
         this.switchMonth = this.switchMonth.bind(this);
 
@@ -32,9 +28,6 @@ class DatePicker extends Component {
         }
     }
 
-    togglePopup() {
-        this.setState({showPopup: !this.state.showPopup})
-    }
     getDaysInMonth(year, month) {
         return [31, (year % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
     }
@@ -60,7 +53,10 @@ class DatePicker extends Component {
         });
         const daysListCurrentMonth = [...Array(daysInCurrentMonth).keys()].map(i => {
             let d = i + 1;
-            let onClick = () => this.setDay(d);
+            let onClick = () => {
+                this.setDay(d);
+                this.props.togglePopupDatePicker(false);
+            };
             let cls = "day";
             if (
                 this.state.showingYear === this.props.date.year &&
@@ -116,23 +112,17 @@ class DatePicker extends Component {
         });
 
         return (
-            <Fragment>
-                <button className="tile" onClick={this.togglePopup}><FaCalendarAlt /></button>
-                {
-                    this.state.showPopup &&
-                    <div className="datepicker">
-                        <div className="head">
-                            <button onClick={() => this.switchMonth(-1)}>Prev</button>
-                            <div>{month} {year}</div>
-                            <button onClick={() => this.switchMonth(1)}>Next</button>
-                        </div>
-                        <div className="days">
-                            {daysNames}
-                            {days}
-                        </div>
-                    </div>
-                }
-            </Fragment>
+            <div className="datepicker">
+                <div className="head">
+                    <button onClick={() => this.switchMonth(-1)}>Prev</button>
+                    <div>{month} {year}</div>
+                    <button onClick={() => this.switchMonth(1)}>Next</button>
+                </div>
+                <div className="days">
+                    {daysNames}
+                    {days}
+                </div>
+            </div>
         )
     }
 }
@@ -144,6 +134,9 @@ export default connect(
     dispatch => ({
         setDate: function(date) {
             dispatch(action.setDate(date))
+        },
+        togglePopupDatePicker: function(boolean) {
+            dispatch(action.togglePopupDatePicker(boolean))
         }
     })
 )(DatePicker)

@@ -1,7 +1,26 @@
 
 .event {
-    margin: 10px;
+    // margin: 10px;
+    width: 100%;
+    // padding: 10px;
     // max-width: 300px;
-    padding: 10px;
+    line-height: 20px;
+    font-size: 14px;
     background: #eee;
+    .icon {
+        float: right;
+        margin: -5px -10px -5px 15px;
+        padding: 0;
+    }
+    .time {
+        padding: 5px 10px;
+        border-bottom: 1px solid $brand;
+    }
+    .line {
+        padding: 5px 10px;
+        border-bottom: 1px solid $brand;
+    }
+    & + .event {
+        margin-top: 10px;
+    }
 }

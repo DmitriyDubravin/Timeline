@@ -4,6 +4,7 @@ import { FaTimes, FaTrashAlt } from 'react-icons/fa';
 import * as action from './../../store/actions';
 import Event from './../Event';
 import QM from './../../modules/QueryModule';
+import {extendEventWithHoursMinutes} from './../../support/functions';
 
 class PopupEventEdit extends Component {
     constructor(props) {
@@ -29,11 +30,14 @@ class PopupEventEdit extends Component {
     }
     render() {
         const {event, togglePopupDeleteEvent} = this.props;
+        const eventToDelete = extendEventWithHoursMinutes(event);
         return (
             <div className="popup">
-                <button className="link-close icon" onClick={() => togglePopupDeleteEvent(false)}><FaTimes /></button>
-                <Event {...event} />
-                <button className="danger icon" onClick={this.removeEvent}><FaTrashAlt /></button>
+                <button className="tile btn-close" onClick={() => togglePopupDeleteEvent(false)}><FaTimes /></button>
+                <div className="inner">
+                    <Event {...eventToDelete} />
+                    <button className="danger icon" onClick={this.removeEvent}><FaTrashAlt /></button>
+                </div>
             </div>
         )
     }

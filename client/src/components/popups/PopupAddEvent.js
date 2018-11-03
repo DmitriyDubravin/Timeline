@@ -1,13 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { FaTimes } from 'react-icons/fa';
 import * as action from './../../store/actions';
+import { FaTimes } from 'react-icons/fa';
 import FormAddEvent from './../forms/FormAddEvent';
 
 const PopupEventAdd = ({togglePopupAddEvent}) => (
     <div className="popup">
-        <button className="link-close icon" onClick={() => togglePopupAddEvent(false)}><FaTimes /></button>
-        <FormAddEvent />
+        <button className="tile btn-close" onClick={() => togglePopupAddEvent(false)}><FaTimes /></button>
+        <div className="inner">
+            <FormAddEvent />
+        </div>
     </div>
 );
 

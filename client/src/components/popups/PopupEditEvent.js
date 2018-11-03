@@ -6,8 +6,10 @@ import FormEditEvent from './../forms/FormEditEvent';
 
 const PopupEventEdit = ({togglePopupEditEvent}) => (
     <div className="popup">
-        <button className="link-close icon" onClick={() => togglePopupEditEvent(false)}><FaTimes /></button>
-        <FormEditEvent />
+        <button className="tile btn-close" onClick={() => togglePopupEditEvent(false)}><FaTimes /></button>
+        <div className="inner">
+            <FormEditEvent />
+        </div>
     </div>
 );
 

@@ -56,6 +56,9 @@ const preloadedState = {
         userNav: {
             show: false
         },
+        datePicker: {
+            show: false
+        },
     },
     usersList: null,
     eventsData: {

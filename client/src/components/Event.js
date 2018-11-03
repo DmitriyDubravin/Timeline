@@ -15,12 +15,14 @@ export default ({
     deleteCb
 }) => (
     <div className="event">
-        {startHour}:{startMinute} | {finishHour}:{finishMinute} | 
-        {type} | 
-        {category} | 
-        {subcategory} | 
-        {comment} | 
-        {editCb && <button className="icon" onClick={() => editCb(_id)}><FaPencilAlt /></button>} |
-        {deleteCb && <button className="icon" onClick={() => deleteCb(_id)}><FaTrashAlt /></button>}
+        <div className="time">
+            {editCb && <button className="icon" onClick={() => editCb(_id)}><FaPencilAlt /></button>}
+            {deleteCb && <button className="icon" onClick={() => deleteCb(_id)}><FaTrashAlt /></button>}
+            {startHour}:{startMinute} - {finishHour}:{finishMinute}
+        </div>
+        {type && <div className="line">{type}</div>}
+        {category && <div className="line">{category}</div>}
+        {subcategory && <div className="line">{subcategory}</div>}
+        {comment && <div className="line">{comment}</div>}
     </div>
 );

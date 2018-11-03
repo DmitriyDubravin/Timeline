@@ -62,6 +62,11 @@ export const popups = (state = {}, {type, data}) => {
                 ...state,
                 userNav: {...state.userNav, show: data}
             };
+        case "TOGGLE_POPUP_DATE_PICKER":
+            return {
+                ...state,
+                datePicker: {...state.datePicker, show: data}
+            };
         default:
             return state;
     }
