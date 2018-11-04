@@ -4,7 +4,7 @@ import * as action from './../../store/actions';
 import { FaTimes } from 'react-icons/fa';
 import DatePicker from './../DatePicker';
 
-const PopupMainNav = ({togglePopupDatePicker}) => (
+const PopupDatePicker = ({togglePopupDatePicker}) => (
     <div className="popup">
         <button className="tile btn-close" onClick={() => togglePopupDatePicker(false)}><FaTimes /></button>
         <div className="inner">
@@ -20,4 +20,4 @@ export default connect(
             dispatch(action.togglePopupDatePicker(boolean))
         }
     })
-)(PopupMainNav)
+)(PopupDatePicker)
