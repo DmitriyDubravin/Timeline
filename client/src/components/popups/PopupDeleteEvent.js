@@ -20,8 +20,8 @@ class PopupEventEdit extends Component {
         };
         const {success} = await QM.removeEvent(queryData);
         if (success) {
-            const {date, removeEvent, togglePopupDeleteEvent} = this.props;
-            removeEvent(date, _id);
+            const {dateStr, removeEvent, togglePopupDeleteEvent} = this.props;
+            removeEvent(dateStr, _id);
             togglePopupDeleteEvent(false);
         } else {
             // TEMP! no errors handling
@@ -46,7 +46,7 @@ class PopupEventEdit extends Component {
 export default connect(
     state => ({
         name: state.user.name,
-        date: state.date.date,
+        dateStr: state.date.dateStr,
         event: state.eventsData.events[state.popups.deleteEvent.id]
     }),
     dispatch => ({

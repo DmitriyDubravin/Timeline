@@ -110,7 +110,7 @@ class SearchPage extends Component {
 export default connect(
     state => ({
         name: state.user.name,
-        date: state.date,
+        // date: state.date,
         events: state.eventsData.events,
         ranges: state.eventsData.ranges
     }),

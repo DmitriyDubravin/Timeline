@@ -1,16 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-function DateString({date}) {
+function DateString({dateStr}) {
     return (
         <div className="tile date-string">
-            {date}
+            {dateStr}
         </div>
     )
 }
 
 export default connect(
     state => ({
-        date: state.date.date
+        dateStr: state.date.dateStr
     })
 )(DateString)

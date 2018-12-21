@@ -1,5 +1,6 @@
 import queryServer from '../queryServer';
 import paths from '../paths';
+import * as action from './../store/actions';
 
 export default (function() {
     var instance = null;
@@ -29,12 +30,30 @@ export default (function() {
                     data
                 })
             },
+
+            // async getEvents(dispatch, data) {
+            //     const { rangeName, ...query } = data;
+            //     const { success, eventsList } = await queryServer({
+            //         path: paths.getEventsList,
+            //         data: query
+            //     });
+            //     if (success) {
+            //         const events = {};
+            //         eventsList.forEach(event => {
+            //             events[event._id] = event;
+            //         });
+            //         dispatch(action.addRangeEvents(rangeName, events));
+            //     }
+            // },
+
             getEvents(data) {
                 return queryServer({
                     path: paths.getEventsList,
                     data
-                })
+                });
             },
+
+
             addEvent(data) {
                 return queryServer({
                     path: paths.addEvent,

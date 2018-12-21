@@ -5,7 +5,7 @@ import { FaPlus, FaCalendarAlt } from 'react-icons/fa';
 import DateString from './../components/DateString';
 import DateSwitcher from './../components/DateSwitcher';
 import DefaultChronometryPage from './DefaultChronometryPage';
-import EventsListContainer from './../components/EventsListContainer';
+import EventsList from './../components/events-list';
 
 class ChronometryPage extends Component {
     render() {
@@ -29,7 +29,7 @@ class ChronometryPage extends Component {
                     <FaCalendarAlt />
                 </button>
                 <h2 className="tile main-title">Chronometry page</h2>
-                <EventsListContainer />
+                <EventsList />
             </Fragment>
         )
     }

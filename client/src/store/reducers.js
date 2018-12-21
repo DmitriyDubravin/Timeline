@@ -20,11 +20,11 @@ export const date = (state = {}, {type, data}) => {
 
             let day = ('0' + data.day).slice(-2);
             let month = ('0' + (data.month + 1)).slice(-2);
-            let date = `${day}.${month}.${data.year}`;
+            let dateStr = `${day}.${month}.${data.year}`;
             let rangeStart = Math.floor(+new Date(Date.UTC(data.year, data.month, data.day)) / 1000);
             let rangeFinish = Math.floor(+new Date(Date.UTC(data.year, data.month, data.day, 23, 59, 59)) / 1000);
 
-            return {...state, ...data, date, rangeStart, rangeFinish}
+            return {...state, ...data, dateStr, rangeStart, rangeFinish}
         default:
             return state;
     }
