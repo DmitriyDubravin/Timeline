@@ -2,12 +2,12 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { FaHome, FaClock, FaUsers, FaSearch } from 'react-icons/fa';
 
-const MainNav = ({close}) => (
+const MainNav = ({redirect}) => (
     <ul className="main-nav">
-        <li className="tile"><Link onClick={close} to="/"><FaHome /></Link></li>
-        <li className="tile"><Link onClick={close} to="/chronometry"><FaClock /></Link></li>
-        <li className="tile"><Link onClick={close} to="/users"><FaUsers /></Link></li>
-        <li className="tile"><Link onClick={close} to="/search"><FaSearch /></Link></li>
+        <li className="tile"><Link onClick={redirect} to="/"><FaHome /></Link></li>
+        <li className="tile"><Link onClick={redirect} to="/chronometry"><FaClock /></Link></li>
+        <li className="tile"><Link onClick={redirect} to="/users"><FaUsers /></Link></li>
+        <li className="tile"><Link onClick={redirect} to="/search"><FaSearch /></Link></li>
     </ul>
 );
 

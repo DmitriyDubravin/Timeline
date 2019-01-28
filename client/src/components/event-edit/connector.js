@@ -21,9 +21,6 @@ export default [
         },
         editEvent(event) {
             dispatch(action.editEvent(event))
-        },
-        // togglePopupEventEdit(boolean, id) {
-        //     dispatch(action.togglePopupEventEdit(boolean, id));
-        // }
+        }
     })
 ];

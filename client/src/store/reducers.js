@@ -49,6 +49,11 @@ export const popups = (state = {}, {payload, type, data}) => {
                 ...state,
                 eventEdit: {...state.eventEdit, show: payload.show, id: payload.id}
             };
+        case "TOGGLE_POPUP_USER_NAV":
+            return {
+                ...state,
+                userNav: {...state.userNav, show: payload.show}
+            };
         case "TOGGLE_POPUP_LOGIN":
             return {
                 ...state,
@@ -58,11 +63,6 @@ export const popups = (state = {}, {payload, type, data}) => {
             return {
                 ...state,
                 deleteEvent: {...state.deleteEvent, show: data.boolean, id: data.id}
-            };
-        case "TOGGLE_POPUP_USER_NAV":
-            return {
-                ...state,
-                userNav: {...state.userNav, show: data}
             };
         case "TOGGLE_POPUP_DATE_PICKER":
             return {

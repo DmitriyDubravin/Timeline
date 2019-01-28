@@ -2,6 +2,7 @@
 import { all, call, put, takeEvery, select } from 'redux-saga/effects';
 import * as action from './actions';
 import QM from './../modules/QueryModule';
+import UM from './../modules/UserModule';
 
 export const getUser = state => state.user;
 export const getDate = state => state.date;
@@ -143,6 +144,19 @@ export function* editEvent({payload}) {
     }
 }
 
+export function* userLogout({}) {
+    console.log('saga: userLogout');
+
+    // TODO: check UM for unsetUser function
+    put(action.setUser({
+        name: false,
+        token: false,
+        isAuthorized: false
+    }));
+    UM.deleteToken();
+}
+
+
 
 
 export function* getEventsWatcher() {
@@ -166,6 +180,9 @@ export function* addEventWatcher() {
 export function* editEventWatcher() {
     yield takeEvery("EDIT_EVENT", editEvent);
 }
+export function* userLogoutWatcher() {
+    yield takeEvery("USER_LOGOUT", userLogout);
+}
 
 
 
@@ -177,6 +194,7 @@ export function* rootSaga() {
         getCategoriesWatcher(),
         getSubcategoriesWatcher(),
         addEventWatcher(),
-        editEventWatcher()
+        editEventWatcher(),
+        userLogoutWatcher()
     ])
 }

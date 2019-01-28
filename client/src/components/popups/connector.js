@@ -11,13 +11,16 @@ export default [
         datePicker: state.popups.datePicker,
     }),
     dispatch => ({
-        togglePopupMainNav() {
+        closePopupMainNav() {
             dispatch(action.togglePopupMainNav({ show: false }))
         },
-        togglePopupEventAdd() {
+        closePopupEventAdd() {
             dispatch(action.togglePopupEventAdd({ show: false }))
         },
-        togglePopupEventEdit(id = null) {
+        closePopupUserNav() {
+            dispatch(action.togglePopupUserNav({ show: false }))
+        },
+        closePopupEventEdit(id = null) {
             dispatch(action.togglePopupEventAdd({ show: false, id }))
         }
     })

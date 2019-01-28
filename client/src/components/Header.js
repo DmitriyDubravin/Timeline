@@ -13,15 +13,15 @@ class Header extends Component {
     // }
     render() {
         const {
-            togglePopupMainNav,
-            togglePopupUserNav
+            openPopupMainNav,
+            openPopupUserNav
         } = this.props;
 
         return (
             <Fragment>
-                <button className="tile" onClick={() => togglePopupMainNav(true)}><FaBars /></button>
+                <button className="tile" onClick={openPopupMainNav}><FaBars /></button>
                 <MainLogo />
-                <button className="tile" onClick={() => togglePopupUserNav(true)}><FaUser /></button>
+                <button className="tile" onClick={openPopupUserNav}><FaUser /></button>
             </Fragment>
         )
     }
@@ -35,11 +35,11 @@ export default connect(
         login: state.popups.login
     }),
     dispatch => ({
-        togglePopupMainNav(boolean) {
-            dispatch(action.togglePopupMainNav({ show: boolean }))
+        openPopupMainNav() {
+            dispatch(action.togglePopupMainNav({ show: true }))
         },
-        togglePopupUserNav: function(boolean) {
-            dispatch(action.togglePopupUserNav(boolean))
+        openPopupUserNav() {
+            dispatch(action.togglePopupUserNav({ show: true}))
         },
     })
 )(Header)

@@ -19,9 +19,6 @@ export default [
         },
         addEvent(eventData) {
             dispatch(action.addEvent(eventData))
-        },
-        togglePopupEventAdd(boolean) {
-            dispatch(action.togglePopupEventAdd({ show: boolean }))
-        },
+        }
     })
 ];
