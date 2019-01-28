@@ -41,22 +41,22 @@ const preloadedState = {
         day: null,
     },
     popups: {
-        login: {
+        mainNav: {
             show: false
         },
-        addEvent: {
+        eventAdd: {
             show: false
         },
-        editEvent: {
+        eventEdit: {
             show: false,
             id: null
+        },
+        login: {
+            show: false
         },
         deleteEvent: {
             show: false,
             id: null
-        },
-        mainNav: {
-            show: false
         },
         userNav: {
             show: false

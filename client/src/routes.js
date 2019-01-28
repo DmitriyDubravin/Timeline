@@ -1,5 +1,5 @@
 
-import App from './AppContainer';
+import App from './components/app';
 import HomePage from './pages/HomePage';
 import ChronometryPage from './pages/ChronometryPage';
 import RegisterPage from './pages/RegisterPage';

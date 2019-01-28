@@ -1,5 +1,5 @@
 import {
-    togglePopupEditEvent,
+    togglePopupEventEdit,
     togglePopupDeleteEvent,
     getEvents
 } from './../../store/actions';
@@ -24,7 +24,7 @@ export default [
             dispatch(getEvents(data));
         },
         openPopupEditEvent(id) {
-            dispatch(togglePopupEditEvent(true, id))
+            dispatch(togglePopupEventEdit({ show: true, id }))
         },
         openPopupDeleteEvent(id) {
             dispatch(togglePopupDeleteEvent(true, id))

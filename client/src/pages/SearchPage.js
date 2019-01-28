@@ -61,7 +61,7 @@ class SearchPage extends Component {
     }
 
     editEvent(id) {
-        this.props.togglePopupEditEvent(true, id);
+        this.props.togglePopupEventEdit(id);
     }
     deleteEvent(id) {
         this.props.togglePopupDeleteEvent(true, id);
@@ -118,8 +118,8 @@ export default connect(
         addRangeEvents(range, events) {
             dispatch(action.addRangeEvents(range, events));
         },
-        togglePopupEditEvent: function(boolean, id) {
-            dispatch(action.togglePopupEditEvent(boolean, id))
+        togglePopupEditEvent(id) {
+            dispatch(action.togglePopupEventEdit({ show: true, id }))
         },
         togglePopupDeleteEvent: function(boolean, id) {
             dispatch(action.togglePopupDeleteEvent(boolean, id))

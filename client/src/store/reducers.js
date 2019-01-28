@@ -30,32 +30,34 @@ export const date = (state = {}, {type, data}) => {
     }
 }
 
-export const popups = (state = {}, {type, data}) => {
+
+
+export const popups = (state = {}, {payload, type, data}) => {
     switch (type) {
+        case "TOGGLE_POPUP_MAIN_NAV":
+            return {
+                ...state,
+                mainNav: {...state.mainNav, show: payload.show}
+            };
+        case "TOGGLE_POPUP_EVENT_ADD":
+            return {
+                ...state,
+                eventAdd: {...state.eventAdd, show: payload.show}
+            };
+        case "TOGGLE_POPUP_EVENT_EDIT":
+            return {
+                ...state,
+                eventEdit: {...state.eventEdit, show: payload.show, id: payload.id}
+            };
         case "TOGGLE_POPUP_LOGIN":
             return {
                 ...state,
                 login: {...state.login, show: data}
             };
-        case "TOGGLE_POPUP_ADD_EVENT":
-            return {
-                ...state,
-                addEvent: {...state.addEvent, show: data}
-            };
-        case "TOGGLE_POPUP_EDIT_EVENT":
-            return {
-                ...state,
-                editEvent: {...state.editEvent, show: data.boolean, id: data.id}
-            };
         case "TOGGLE_POPUP_DELETE_EVENT":
             return {
                 ...state,
                 deleteEvent: {...state.deleteEvent, show: data.boolean, id: data.id}
-            };
-        case "TOGGLE_POPUP_MAIN_NAV":
-            return {
-                ...state,
-                mainNav: {...state.mainNav, show: data}
             };
         case "TOGGLE_POPUP_USER_NAV":
             return {
@@ -83,9 +85,9 @@ export const usersList = (state = {}, {type, data}) => {
     }
 }
 
-export const eventsData = (state = {}, {type, data}) => {
+export const eventsData = (state = {}, {type, data, payload}) => {
     switch(type) {
-        case "ADD_EVENT": 
+        case "OLD_ADD_EVENT": // TODO: remove
         {
             const oldEventsIds = state.ranges[data.range];
             const eventId = Object.keys(data.event)[0];
@@ -103,12 +105,38 @@ export const eventsData = (state = {}, {type, data}) => {
                 }
             };
         }
-        case "EDIT_EVENT":
+        case "EVENT_ADDED":
+        {
+            const oldEventsIds = state.ranges[payload.range];
+            const eventId = Object.keys(payload.event)[0];
+            const newEventsIds = oldEventsIds === undefined ? eventId : [...oldEventsIds, eventId];
+
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    [payload.range]: newEventsIds
+                },
+                events: {
+                    ...state.events,
+                    ...payload.event
+                }
+            };
+        }
+        case "OLD_EDIT_EVENT": // TODO: remove
             return {
                 ...state,
                 events: {
                     ...state.events,
                     ...data
+                }
+            };
+        case "EVENT_EDITED":
+            return {
+                ...state,
+                events: {
+                    ...state.events,
+                    ...payload
                 }
             };
         case "REMOVE_EVENT":
@@ -145,6 +173,16 @@ export const eventsData = (state = {}, {type, data}) => {
                     ...state.events,
                     ...data.events
                 }
+            };
+        case "SET_TYPES":
+            return {
+                ...state,
+                types: payload
+            };
+        case "SET_CATEGORIES":
+            return {
+                ...state,
+                categories: payload
             };
         default:
             return state;

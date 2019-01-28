@@ -1,7 +1,8 @@
 import React from 'react';
 import queryServer from './../queryServer';
 
-export const convertNumToTwoDigits = n => ('0' + n).slice(-2);
+// export const convertNumToTwoDigits = n => ('0' + n).slice(-2);
+export const convertNumToTwoDigits = n => n < 10 ? '0' + n : '' + n;
 
 export const timestampToTimeObj = timestamp => {
     let time = timestamp.toString();

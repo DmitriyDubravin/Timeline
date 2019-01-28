@@ -3,6 +3,8 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
+    console.log('\n\n\nGET TYPES LIST QUERY\n\n\n');
+
     const {author} = req.body;
     const getTypesOptions = {
         user: author

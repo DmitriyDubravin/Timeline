@@ -35,8 +35,8 @@ export default connect(
         login: state.popups.login
     }),
     dispatch => ({
-        togglePopupMainNav: function(boolean) {
-            dispatch(action.togglePopupMainNav(boolean))
+        togglePopupMainNav(boolean) {
+            dispatch(action.togglePopupMainNav({ show: boolean }))
         },
         togglePopupUserNav: function(boolean) {
             dispatch(action.togglePopupUserNav(boolean))

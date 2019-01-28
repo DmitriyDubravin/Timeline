@@ -11,13 +11,13 @@ class ChronometryPage extends Component {
     render() {
         if (!this.props.user.isAuthorized) return <DefaultChronometryPage />;
 
-        const {togglePopupAddEvent, togglePopupDatePicker} = this.props;
+        const {togglePopupEventAdd, togglePopupDatePicker} = this.props;
         return (
             <Fragment>
                 <DateString />
                 <button
                     className="add-popup-opener icon"
-                    onClick={() => togglePopupAddEvent(true)}
+                    onClick={() => togglePopupEventAdd(true)}
                 >
                     <FaPlus />
                 </button>
@@ -44,8 +44,8 @@ export default connect(
         togglePopupLogin: function(boolean) {
             dispatch(action.togglePopupLogin(boolean))
         },
-        togglePopupAddEvent: function(boolean) {
-            dispatch(action.togglePopupAddEvent(boolean))
+        togglePopupEventAdd: function(boolean) {
+            dispatch(action.togglePopupEventAdd({ show: boolean }))
         },
         togglePopupDatePicker: function(boolean) {
             dispatch(action.togglePopupDatePicker(boolean))

@@ -1,28 +1,44 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as action from './../../store/actions';
-import {convertNumToTwoDigits} from './../../support/functions';
-import QM from './../../modules/QueryModule';
+import {convertNumToTwoDigits, timestampToTimeObj, extendEventWithHoursMinutes} from '../../support/functions';
+import * as action from '../../store/actions';
+import QM from '../../modules/QueryModule';
+// import { bool } from 'prop-types';
 
-class FormAddEvent extends Component {
+
+class FormEditEvent extends Component {
     constructor(props) {
         super(props);
+        const {
+            type,
+            category,
+            subcategory,
+            comment,
+            start,
+            startHour,
+            startMinute,
+            finish,
+            finishHour,
+            finishMinute
+        } = extendEventWithHoursMinutes(props.event); // TODO: get rid of this function
 
         this.state = {
             newType: false,
             newCategory: false,
             newSubcategory: false,
-            type: '',
-            category: '',
-            subcategory: '',
-            comment: '',
+            type: type,
+            category: category,
+            subcategory: subcategory,
+            comment: comment,
             types: [],
             categories: [],
             subcategories: [],
-            startHour: '00',
-            startMinute: '00',
-            finishHour: '00',
-            finishMinute: '00',
+            start: start,
+            startHour: startHour,
+            startMinute: startMinute,
+            finish: finish,
+            finishHour: finishHour,
+            finishMinute: finishMinute,
         }
         this.inputHandler = this.inputHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
@@ -31,6 +47,12 @@ class FormAddEvent extends Component {
 
     componentDidMount() {
         this.getTypes();
+        if(this.props.event.category.length > 0) {
+            this.getCategories(this.props.event.type);
+        }
+        if(this.props.event.category.length > 0) {
+            this.getSubcategories(this.props.event.category);
+        }
     }
 
     async getTypes() {
@@ -67,6 +89,7 @@ class FormAddEvent extends Component {
             this.setState({subcategories: sortedDataList});
         }
     }
+
 
     inputHandler(event) {
         const {name, value} = event.target;
@@ -142,11 +165,13 @@ class FormAddEvent extends Component {
             subcategory,
             comment
         } = this.state;
-        const {name} = this.props;
-
+        const {name, event: {_id}} = this.props;
+        console.log('sss', startHour, startMinute, finishHour, finishMinute);
+        
         let start = this.calcSeconds(startHour, startMinute);
         let finish = this.calcSeconds(finishHour, finishMinute);
-        // check if event ends on next day
+
+        // is event ends on next day
         const startTotalMinutes = startHour * 60 + startMinute * 1;
         const finishTotalMinutes = finishHour * 60 + finishMinute * 1;
         if (finishTotalMinutes <= startTotalMinutes) {
@@ -155,6 +180,7 @@ class FormAddEvent extends Component {
 
         const queryData = {
             author: name,
+            _id,
             start,
             finish,
             type,
@@ -163,15 +189,14 @@ class FormAddEvent extends Component {
             comment
         };
 
-        const {success, addedEvent} = await QM.addEvent(queryData);
+        const {success, updatedEvent} = await QM.editEvent(queryData);
         if (success) {
-            const {date: {date}, togglePopupAddEvent, addEvent} = this.props;
-            const id = addedEvent._id;
-            togglePopupAddEvent(false);
-            addEvent(date, {[id]: addedEvent});
+            const {togglePopupEditEvent, editEvent} = this.props;
+            editEvent({[_id]: updatedEvent});
+            togglePopupEditEvent(false);
         } else {
-            // TEMP!
-            console.log('c%Adding Error', 'color: red');
+            // TODO!
+            console.log('c%Editing Error', 'color: red');
         }
 
     }
@@ -180,8 +205,11 @@ class FormAddEvent extends Component {
 
     render() {
         // console.log('state', this.state);
+        console.log('props.event', this.props.event);
 
         const {
+            start,
+            finish,
             types,
             categories,
             subcategories,
@@ -189,8 +217,15 @@ class FormAddEvent extends Component {
             newType,
             category,
             newCategory,
-            newSubcategory
+            newSubcategory,
         } = this.state;
+
+        const startData = timestampToTimeObj(start);
+        const finishData = timestampToTimeObj(finish);
+        const startHour = startData.hour;
+        const startMinute = startData.minute;
+        const finishHour = finishData.hour;
+        const finishMinute = finishData.minute;
 
         const hoursOptions = Array.from({length: 24}, (v,i) => i).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
         const minutesOptions = Array.from({length: 12}, (v,i) => i * 5).map((item, i) => <option key={i}>{convertNumToTwoDigits(item)}</option>);
@@ -210,23 +245,23 @@ class FormAddEvent extends Component {
             <form className="add-event-form" onSubmit={this.submitHandler}>
 
                 <div className="line times">
-                    <select name="startHour" onChange={this.inputHandler}>
+                    <select name="startHour" value={startHour} onChange={this.inputHandler}>
                         {hoursOptions}
                     </select>
-                    <select name="startMinute" onChange={this.inputHandler}>
+                    <select name="startMinute" value={startMinute} onChange={this.inputHandler}>
                         {minutesOptions}
                     </select>
-                    <select name="finishHour" onChange={this.inputHandler}>
+                    <select name="finishHour" value={finishHour} onChange={this.inputHandler}>
                         {hoursOptions}
                     </select>
-                    <select name="finishMinute" onChange={this.inputHandler}>
+                    <select name="finishMinute" value={finishMinute} onChange={this.inputHandler}>
                         {minutesOptions}
                     </select>
                 </div>
                 {
                     showType &&
                     <div className="line">
-                        <select name="type" onChange={this.inputHandler}>
+                        <select name="type" value={this.state.type} onChange={this.inputHandler}>
                             <option>Type</option>
                             {typesList}
                         </select>
@@ -244,7 +279,7 @@ class FormAddEvent extends Component {
                 {
                     showCategory &&
                     <div className="line">
-                        <select name="category" onChange={this.inputHandler}>
+                        <select name="category" value={this.state.category} onChange={this.inputHandler}>
                             <option>Category</option>
                             {categoriesList}
                         </select>
@@ -258,10 +293,11 @@ class FormAddEvent extends Component {
                         {!newType && <button name="category" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>}
                     </div>
                 }
+
                 {
                     showSubcategory &&
                     <div className="line">
-                        <select name="subcategory" onChange={this.inputHandler}>
+                        <select name="subcategory" value={this.state.subcategory} onChange={this.inputHandler}>
                             <option>Subcategory</option>
                             {subCategoriesList}
                         </select>
@@ -275,12 +311,18 @@ class FormAddEvent extends Component {
                         {!newCategory && <button name="subcategory" className="side-btn remove-btn" type="button" onClick={this.btnHandler}>-</button>}
                     </div>
                 }
-                <textarea name="comment" onChange={this.inputHandler} ></textarea>
-                <input type="submit" value="Add event" />
+                <textarea name="comment" value={this.state.comment} onChange={this.inputHandler} ></textarea>
+
+                <input type="submit" value="Edit event" />
             </form>
         )
     }
 }
+
+// TODO
+// FormEditEvent.propTypes = {
+//     event: bool
+// };
 
 
 
@@ -288,14 +330,14 @@ export default connect(
     state => ({
         name: state.user.name,
         date: state.date,
-        eventsListings: state.eventsListings
+        event: state.eventsData.events[state.popups.editEvent.id]
     }),
     dispatch => ({
-        addEvent: function(date, event) {
-            dispatch(action.addEvent(date, event))
+        editEvent(event) {
+            dispatch(action.editEvent(event))
         },
-        togglePopupAddEvent: function(boolean) {
-            dispatch(action.togglePopupAddEvent(boolean))
-        },
+        togglePopupEditEvent(boolean, id) {
+            dispatch(action.togglePopupEditEvent(boolean, id));
+        }
     })
-)(FormAddEvent)
+)(FormEditEvent)
