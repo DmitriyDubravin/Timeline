@@ -42,7 +42,7 @@ export default connect(
     dispatch => ({
         dispatch,
         togglePopupLogin: function(boolean) {
-            dispatch(action.togglePopupLogin(boolean))
+            dispatch(action.togglePopupUserLogin(boolean))
         },
         togglePopupEventAdd: function(boolean) {
             dispatch(action.togglePopupEventAdd({ show: boolean }))

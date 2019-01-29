@@ -11,11 +11,11 @@ export default [
         },
         logout() {
             closePopup();
-            action.userLogout();
+            dispatch(action.userLogout());
         },
         login() {
             closePopup();
-            dispatch(action.togglePopupLogin(true))
+            dispatch(action.togglePopupUserLogin({ show: true }))
         }
     })
 ];

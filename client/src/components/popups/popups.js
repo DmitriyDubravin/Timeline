@@ -6,8 +6,8 @@ import MainNav from '../main-nav';
 import EventAdd from './../event-add';
 import EventEdit from './../event-edit';
 import UserNav from './../user-nav';
+import UserLogin from './../user-login';
 
-// import PopupLogin from '../popup-user-login';
 // import PopupDeleteEvent from '../popup-delete-event';
 // import PopupDatePicker from '../popup-datepicker';
 
@@ -17,13 +17,14 @@ const Popups = ({
     eventAdd,
     eventEdit,
     userNav,
+    login,
 
     closePopupMainNav,
     closePopupEventAdd,
     closePopupEventEdit,
     closePopupUserNav,
+    closePopupUserLogin,
 
-    // login,
     // deleteEvent,
     // datePicker,
 }) => (
@@ -34,7 +35,7 @@ const Popups = ({
         {eventEdit.show && <Popup close={closePopupEventEdit}><EventEdit /></Popup>}
         {/* {deleteEvent.show && <PopupDeleteEvent />} */}
         {userNav.show && <Popup close={closePopupUserNav}><UserNav closePopup={closePopupUserNav} /></Popup>}
-        {/* {login.show && <PopupLogin />} */}
+        {login.show && <Popup close={closePopupUserLogin}><UserLogin /></Popup>}
         {/* {datePicker.show && <PopupDatePicker />} */}
     </Fragment>
 );

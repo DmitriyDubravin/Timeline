@@ -1,17 +1,40 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import * as action from './../../store/actions';
-import FormGen from './../../support/formGen';
-import { loginFormData } from './../../data/formsData';
-import MM from './../../modules/MessageModule';
-import UM from './../../modules/UserModule';
-import QM from './../../modules/QueryModule';
+import FormGen from '../../support/formGen';
+import { loginFormData } from '../../data/formsData';
+import MM from '../../modules/MessageModule';
+import UM from '../../modules/UserModule';
+import QM from '../../modules/QueryModule';
 
-class LoginAccountForm extends Component {
+class UserLogin extends Component {
     constructor(props) {
         super(props);
 
-        this.form = new FormGen(loginFormData, this);
+        this.form = new FormGen([
+            {
+                component: TextField,
+                name: 'name',
+                placeholder: 'login',
+                required: true,
+                rules: {
+                    minLength: 5,
+                    maxLength: 10
+                }
+            },
+            {
+                component: PasswordField,
+                name: "password",
+                placeholder: "password",
+                required: true,
+                rules: {
+                    minLength: 6,
+                    maxLength: 10
+                }
+            },
+            {
+                component: SubmitField,
+                value: "Login"
+            }
+        ], this);
 
         this.state = {
             message: '',
@@ -56,12 +79,12 @@ class LoginAccountForm extends Component {
         this.setState({message, messageStatus: status})
 
         if (success) {
-            const {dispatch, togglePopupLogin} = this.props;
+            const {dispatch, redirect} = this.props;
 
             UM.setUser(dispatch, name, token)
             UM.setToken(token);
 
-            togglePopupLogin(false);
+            redirect();
         }
     }
 
@@ -81,12 +104,4 @@ class LoginAccountForm extends Component {
 
 
 
-export default connect(
-    null,
-    dispatch => ({
-        dispatch,
-        togglePopupLogin: function(boolean) {
-            dispatch(action.togglePopupLogin(boolean))
-        }
-    })
-)(LoginAccountForm)
+export default UserLogin;

@@ -17,11 +17,14 @@ export default [
         closePopupEventAdd() {
             dispatch(action.togglePopupEventAdd({ show: false }))
         },
+        closePopupEventEdit(id = null) {
+            dispatch(action.togglePopupEventAdd({ show: false, id }))
+        },
         closePopupUserNav() {
             dispatch(action.togglePopupUserNav({ show: false }))
         },
-        closePopupEventEdit(id = null) {
-            dispatch(action.togglePopupEventAdd({ show: false, id }))
+        closePopupUserLogin() {
+            dispatch(action.togglePopupUserLogin({ show: false }))
         }
     })
 ];

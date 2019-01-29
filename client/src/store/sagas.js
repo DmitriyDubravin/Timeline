@@ -144,11 +144,11 @@ export function* editEvent({payload}) {
     }
 }
 
-export function* userLogout({}) {
+export function* userLogout() {
     console.log('saga: userLogout');
 
     // TODO: check UM for unsetUser function
-    put(action.setUser({
+    yield put(action.setUser({
         name: false,
         token: false,
         isAuthorized: false
@@ -156,6 +156,29 @@ export function* userLogout({}) {
     UM.deleteToken();
 }
 
+export function* userLogin({payload}) {
+    console.log('saga: userLogin');
+
+    const queryData = {...payload};
+
+    const { success, cause, name, token } = yield call(QM.loginUser, queryData);
+    // TODO: check UM for unsetUser function
+    if (success) {
+        yield put(action.setUser({
+            name: name,
+            token: token,
+            isAuthorized: true
+        }));
+        UM.setToken(token);
+        yield put(action.togglePopupUserLogin({ show: false }));
+    } else {
+        if (cause === 'email') {
+            // TODO
+            // set global message about Email confirmation
+        }
+    }
+
+}
 
 
 
@@ -183,6 +206,9 @@ export function* editEventWatcher() {
 export function* userLogoutWatcher() {
     yield takeEvery("USER_LOGOUT", userLogout);
 }
+export function* userLoginWatcher() {
+    yield takeEvery("USER_LOGIN", userLogin);
+}
 
 
 
@@ -195,6 +221,7 @@ export function* rootSaga() {
         getSubcategoriesWatcher(),
         addEventWatcher(),
         editEventWatcher(),
-        userLogoutWatcher()
+        userLogoutWatcher(),
+        userLoginWatcher()
     ])
 }

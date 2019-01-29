@@ -48,32 +48,7 @@ export const registerFormData = [
     }
 ];
 
-export const loginFormData = [
-    {
-        component: TextField,
-        name: 'name',
-        placeholder: 'login',
-        required: true,
-        rules: {
-            minLength: 5,
-            maxLength: 10
-        }
-    },
-    {
-        component: PasswordField,
-        name: "password",
-        placeholder: "password",
-        required: true,
-        rules: {
-            minLength: 6,
-            maxLength: 10
-        }
-    },
-    {
-        component: SubmitField,
-        value: "Login"
-    }
-];
+
 
 export const changePasswordFormData = [
     {
