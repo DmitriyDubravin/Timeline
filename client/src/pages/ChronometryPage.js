@@ -17,14 +17,14 @@ class ChronometryPage extends Component {
                 <DateString />
                 <button
                     className="add-popup-opener icon"
-                    onClick={() => togglePopupEventAdd(true)}
+                    onClick={() => togglePopupEventAdd({ show: true })}
                 >
                     <FaPlus />
                 </button>
                 <DateSwitcher />
                 <button
                     className="tile"
-                    onClick={() => togglePopupDatePicker(true)}
+                    onClick={() => togglePopupDatePicker({ show: true })}
                 >
                     <FaCalendarAlt />
                 </button>

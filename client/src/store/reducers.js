@@ -59,15 +59,15 @@ export const popups = (state = {}, {payload, type, data}) => {
                 ...state,
                 login: {...state.login, show: payload.show}
             };
+        case "TOGGLE_POPUP_DATE_PICKER":
+            return {
+                ...state,
+                datePicker: {...state.datePicker, show: payload.show}
+            };
         case "TOGGLE_POPUP_DELETE_EVENT":
             return {
                 ...state,
                 deleteEvent: {...state.deleteEvent, show: data.boolean, id: data.id}
-            };
-        case "TOGGLE_POPUP_DATE_PICKER":
-            return {
-                ...state,
-                datePicker: {...state.datePicker, show: data}
             };
         default:
             return state;

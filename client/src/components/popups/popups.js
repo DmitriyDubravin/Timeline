@@ -7,9 +7,9 @@ import EventAdd from './../event-add';
 import EventEdit from './../event-edit';
 import UserNav from './../user-nav';
 import UserLogin from './../user-login';
+import DatePicker from './../datepicker';
 
 // import PopupDeleteEvent from '../popup-delete-event';
-// import PopupDatePicker from '../popup-datepicker';
 
 const Popups = ({
 
@@ -18,15 +18,16 @@ const Popups = ({
     eventEdit,
     userNav,
     login,
+    datePicker,
 
     closePopupMainNav,
     closePopupEventAdd,
     closePopupEventEdit,
     closePopupUserNav,
     closePopupUserLogin,
+    closePopupDatePicker,
 
     // deleteEvent,
-    // datePicker,
 }) => (
     // TODO: get rid of Fragment
     <Fragment>
@@ -36,7 +37,7 @@ const Popups = ({
         {/* {deleteEvent.show && <PopupDeleteEvent />} */}
         {userNav.show && <Popup close={closePopupUserNav}><UserNav closePopup={closePopupUserNav} /></Popup>}
         {login.show && <Popup close={closePopupUserLogin}><UserLogin /></Popup>}
-        {/* {datePicker.show && <PopupDatePicker />} */}
+        {datePicker.show && <Popup close={closePopupDatePicker}><DatePicker /></Popup>}
     </Fragment>
 );
 

@@ -25,6 +25,9 @@ export default [
         },
         closePopupUserLogin() {
             dispatch(action.togglePopupUserLogin({ show: false }))
+        },
+        closePopupDatePicker() {
+            dispatch(action.togglePopupDatePicker({ show: false }))
         }
     })
 ];

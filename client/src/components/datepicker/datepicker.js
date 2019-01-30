@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import * as action from './../store/actions';
 
+// TODO: refactor this one
 class DatePicker extends Component {
 
     constructor(props) {
@@ -55,7 +54,7 @@ class DatePicker extends Component {
             let d = i + 1;
             let onClick = () => {
                 this.setDay(d);
-                this.props.togglePopupDatePicker(false);
+                this.props.closePopup();
             };
             let cls = "day";
             if (
@@ -85,12 +84,12 @@ class DatePicker extends Component {
     switchMonth(modificator) {
         let newMonth = +this.state.showingMonth + modificator;
         let newYear = +this.state.showingYear;
-        if (newMonth === -1) {
-            newMonth = 12;
+        if (modificator < 0 && newMonth === -1) {
+            newMonth = 11;
             newYear -= 1;
         }
-        if (newMonth === 12) {
-            newMonth = 1;
+        if (modificator > 0 && newMonth === 12) {
+            newMonth = 0;
             newYear += 1;
         }
         this.setState({
@@ -127,16 +126,4 @@ class DatePicker extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        date: state.date
-    }),
-    dispatch => ({
-        setDate: function(date) {
-            dispatch(action.setDate(date))
-        },
-        togglePopupDatePicker: function(boolean) {
-            dispatch(action.togglePopupDatePicker(boolean))
-        }
-    })
-)(DatePicker)
+export default DatePicker;
