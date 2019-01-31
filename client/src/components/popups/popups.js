@@ -1,43 +1,38 @@
 import React, { Fragment } from 'react';
 
 import Popup from './../popup';
-
-import MainNav from '../main-nav';
+import NavMain from './../nav-main';
+import NavUser from './../nav-user';
 import EventAdd from './../event-add';
 import EventEdit from './../event-edit';
-import UserNav from './../user-nav';
+import EventDelete from './../event-delete';
 import UserLogin from './../user-login';
 import DatePicker from './../datepicker';
 
-// import PopupDeleteEvent from '../popup-delete-event';
-
 const Popups = ({
-
-    mainNav,
+    navMain,
+    navUser,
     eventAdd,
     eventEdit,
-    userNav,
-    login,
+    eventDelete,
+    userLogin,
     datePicker,
-
-    closePopupMainNav,
+    closePopupNavMain,
+    closePopupNavUser,
     closePopupEventAdd,
     closePopupEventEdit,
-    closePopupUserNav,
+    closePopupEventDelete,
     closePopupUserLogin,
     closePopupDatePicker,
-
-    // deleteEvent,
 }) => (
-    // TODO: get rid of Fragment
     <Fragment>
-        {mainNav.show && <Popup close={closePopupMainNav}><MainNav closePopup={closePopupMainNav} /></Popup>}
-        {eventAdd.show && <Popup close={closePopupEventAdd}><EventAdd /></Popup>}
-        {eventEdit.show && <Popup close={closePopupEventEdit}><EventEdit /></Popup>}
-        {/* {deleteEvent.show && <PopupDeleteEvent />} */}
-        {userNav.show && <Popup close={closePopupUserNav}><UserNav closePopup={closePopupUserNav} /></Popup>}
-        {login.show && <Popup close={closePopupUserLogin}><UserLogin /></Popup>}
-        {datePicker.show && <Popup close={closePopupDatePicker}><DatePicker /></Popup>}
+        {navMain.show && <Popup close={closePopupNavMain}><NavMain closePopup={closePopupNavMain} /></Popup>}
+        {navUser.show && <Popup close={closePopupNavUser}><NavUser closePopup={closePopupNavUser} /></Popup>}
+        {eventAdd.show && <Popup close={closePopupEventAdd}><EventAdd closePopup={closePopupEventAdd} /></Popup>}
+        {eventEdit.show && <Popup close={closePopupEventEdit}><EventEdit closePopup={closePopupEventEdit} /></Popup>}
+        {eventDelete.show && <Popup close={closePopupEventDelete}><EventDelete closePopup={closePopupEventDelete} /></Popup>}
+        {userLogin.show && <Popup close={closePopupUserLogin}><UserLogin closePopup={closePopupUserLogin} /></Popup>}
+        {datePicker.show && <Popup close={closePopupDatePicker}><DatePicker closePopup={closePopupDatePicker} /></Popup>}
     </Fragment>
 );
 

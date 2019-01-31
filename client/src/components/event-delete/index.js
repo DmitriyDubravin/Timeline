@@ -1,8 +1,8 @@
 import { compose } from './../../support/functions';
 import {connect as withProps} from 'react-redux';
 import connections from './connector';
-import PopupMainNav from './popup-main-nav';
+import EventDelete from './event-delete';
 
 export default compose(
     withProps(...connections)
-)(PopupMainNav);
+)(EventDelete);

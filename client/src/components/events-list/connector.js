@@ -1,6 +1,6 @@
 import {
     togglePopupEventEdit,
-    togglePopupDeleteEvent,
+    togglePopupEventDelete,
     getEvents
 } from './../../store/actions';
 import {extendEventWithHoursMinutes} from './../../support/functions';
@@ -27,7 +27,7 @@ export default [
             dispatch(togglePopupEventEdit({ show: true, id }))
         },
         openPopupDeleteEvent(id) {
-            dispatch(togglePopupDeleteEvent(true, id))
+            dispatch(togglePopupEventDelete({ show: true, id }))
         }
     })
 ];

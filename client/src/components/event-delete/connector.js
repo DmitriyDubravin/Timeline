@@ -4,10 +4,9 @@ export default [
     state => ({
         event: state.eventsData.events[state.popups.deleteEvent.id]
     }),
-    dispatch => ({
-        dispatch,
-        closePopup() {
-            dispatch(action.togglePopupDeleteEvent(false))
+    (dispatch, { closePopup }) => ({
+        redirect() {
+            closePopup();
         },
         deleteEvent(eventId) {
             dispatch(action.deleteEvent(eventId))

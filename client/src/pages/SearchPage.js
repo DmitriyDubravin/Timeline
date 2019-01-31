@@ -122,7 +122,7 @@ export default connect(
             dispatch(action.togglePopupEventEdit({ show: true, id }))
         },
         togglePopupDeleteEvent: function(boolean, id) {
-            dispatch(action.togglePopupDeleteEvent(boolean, id))
+            dispatch(action.togglePopupEventDelete(boolean, id))
         },
     })
 

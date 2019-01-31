@@ -35,14 +35,13 @@ export const userLogin = payload => ({type: 'USER_LOGIN', payload});
 export const setDate = date => ({type: "SET_DATE", data: date});
 
 // popups
-export const togglePopupMainNav = payload => ({type: "TOGGLE_POPUP_MAIN_NAV", payload});
+export const togglePopupNavMain = payload => ({type: "TOGGLE_POPUP_NAV_MAIN", payload});
+export const togglePopupNavUser = payload => ({type: "TOGGLE_POPUP_NAV_USER", payload});
 export const togglePopupEventAdd = payload => ({ type: "TOGGLE_POPUP_EVENT_ADD", payload });
 export const togglePopupEventEdit = payload => ({ type: "TOGGLE_POPUP_EVENT_EDIT", payload });
-export const togglePopupUserNav = payload => ({type: "TOGGLE_POPUP_USER_NAV", payload});
+export const togglePopupEventDelete = payload => ({type: "TOGGLE_POPUP_EVENT_DELETE", payload});
 export const togglePopupUserLogin = payload => ({type: "TOGGLE_POPUP_USER_LOGIN", payload});
 export const togglePopupDatePicker = payload => ({type: "TOGGLE_POPUP_DATE_PICKER", payload});
-
-export const togglePopupDeleteEvent = (boolean, id = null) => ({type: "TOGGLE_POPUP_DELETE_EVENT", data: {boolean, id}});
 
 // usersList
 

@@ -2,26 +2,29 @@ import * as action from '../../store/actions';
 
 export default [
     state => ({
-        mainNav: state.popups.mainNav,
+        navMain: state.popups.navMain,
+        navUser: state.popups.navUser,
         eventAdd: state.popups.eventAdd,
         eventEdit: state.popups.eventEdit,
-        login: state.popups.login,
-        userNav: state.popups.userNav,
-        deleteEvent: state.popups.deleteEvent,
+        eventDelete: state.popups.eventDelete,
+        userLogin: state.popups.userLogin,
         datePicker: state.popups.datePicker,
     }),
     dispatch => ({
-        closePopupMainNav() {
-            dispatch(action.togglePopupMainNav({ show: false }))
+        closePopupNavMain() {
+            dispatch(action.togglePopupNavMain({ show: false }))
+        },
+        closePopupNavUser() {
+            dispatch(action.togglePopupNavUser({ show: false }))
         },
         closePopupEventAdd() {
             dispatch(action.togglePopupEventAdd({ show: false }))
         },
         closePopupEventEdit(id = null) {
-            dispatch(action.togglePopupEventAdd({ show: false, id }))
+            dispatch(action.togglePopupEventEdit({ show: false, id }))
         },
-        closePopupUserNav() {
-            dispatch(action.togglePopupUserNav({ show: false }))
+        closePopupEventDelete(id = null) {
+            dispatch(action.togglePopupEventDelete({ show: false, id }))
         },
         closePopupUserLogin() {
             dispatch(action.togglePopupUserLogin({ show: false }))

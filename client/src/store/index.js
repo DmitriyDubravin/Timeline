@@ -41,7 +41,10 @@ const preloadedState = {
         day: null,
     },
     popups: {
-        mainNav: {
+        navMain: {
+            show: false
+        },
+        navUser: {
             show: false
         },
         eventAdd: {
@@ -51,14 +54,11 @@ const preloadedState = {
             show: false,
             id: null
         },
-        login: {
-            show: false
-        },
-        deleteEvent: {
+        eventDelete: {
             show: false,
             id: null
         },
-        userNav: {
+        userLogin: {
             show: false
         },
         datePicker: {

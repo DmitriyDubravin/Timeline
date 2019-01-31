@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import {Link} from 'react-router-dom';
 import { FaSignInAlt, FaSignOutAlt, FaUserPlus } from 'react-icons/fa';
 
-const UserNav = ({
+const NavUser = ({
     isAuthorized,
     name,
     redirect,
@@ -48,4 +48,4 @@ const UserNav = ({
     </div>
 );
 
-export default UserNav;
+export default NavUser;

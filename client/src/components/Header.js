@@ -13,15 +13,15 @@ class Header extends Component {
     // }
     render() {
         const {
-            openPopupMainNav,
-            openPopupUserNav
+            openPopupNavMain,
+            openPopupNavUser
         } = this.props;
 
         return (
             <Fragment>
-                <button className="tile" onClick={openPopupMainNav}><FaBars /></button>
+                <button className="tile" onClick={openPopupNavMain}><FaBars /></button>
                 <MainLogo />
-                <button className="tile" onClick={openPopupUserNav}><FaUser /></button>
+                <button className="tile" onClick={openPopupNavUser}><FaUser /></button>
             </Fragment>
         )
     }
@@ -35,11 +35,11 @@ export default connect(
         login: state.popups.login
     }),
     dispatch => ({
-        openPopupMainNav() {
-            dispatch(action.togglePopupMainNav({ show: true }))
+        openPopupNavMain() {
+            dispatch(action.togglePopupNavMain({ show: true }))
         },
-        openPopupUserNav() {
-            dispatch(action.togglePopupUserNav({ show: true}))
+        openPopupNavUser() {
+            dispatch(action.togglePopupNavUser({ show: true}))
         },
     })
 )(Header)

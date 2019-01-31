@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { FaHome, FaClock, FaUsers, FaSearch } from 'react-icons/fa';
 
-const MainNav = ({redirect}) => (
+const NavMain = ({redirect}) => (
     <ul className="main-nav">
         <li className="tile"><Link onClick={redirect} to="/"><FaHome /></Link></li>
         <li className="tile"><Link onClick={redirect} to="/chronometry"><FaClock /></Link></li>
@@ -11,4 +11,4 @@ const MainNav = ({redirect}) => (
     </ul>
 );
 
-export default MainNav;
+export default NavMain;
