@@ -24,6 +24,7 @@ export const eventEdited = payload => ({type: 'EVENT_EDITED', payload});
 export const userRegister = payload => ({type: 'USER_REGISTER', payload});
 export const userLogin = payload => ({type: 'USER_LOGIN', payload});
 export const userLogout = payload => ({type: 'USER_LOGOUT', payload});
+export const userRemove = payload => ({type: 'USER_REMOVE', payload});
 
 // end sagas
 

@@ -200,6 +200,28 @@ export function* userLogout() {
     UM.deleteToken();
 }
 
+export function* userRemove({payload}) {
+    console.log('saga: userRemove');
+
+    const { name } = yield select(getUser);
+
+    const queryData = {
+        login: name,
+        password: payload.password
+    }
+    const {success} = QM.deleteUser(queryData);
+
+    if (success) {
+        yield put(action.setUser({
+            name: false,
+            token: false,
+            isAuthorized: false
+        }));
+        UM.deleteToken();
+    }
+}
+
+
 
 
 
@@ -233,6 +255,9 @@ export function* userLoginWatcher() {
 export function* userLogoutWatcher() {
     yield takeEvery("USER_LOGOUT", userLogout);
 }
+export function* userRemoveWatcher() {
+    yield takeEvery("USER_REMOVE", userRemove);
+}
 
 
 
@@ -248,5 +273,6 @@ export function* rootSaga() {
         userRegisterWatcher(),
         userLoginWatcher(),
         userLogoutWatcher(),
+        userRemoveWatcher(),
     ])
 }

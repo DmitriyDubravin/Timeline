@@ -18,8 +18,8 @@ const UserLogin = ({
 
     return (
         <form className="login-form" onSubmit={submitHandler}>
-            <Input placeholder="Name" onChange={setName} />
-            <Input placeholder="Password" type="password" onChange={setPassword} />
+            <Input placeholder="Name" value={name} onChange={setName} />
+            <Input placeholder="Password" value={password} type="password" onChange={setPassword} />
             <Button value="Login" />
         </form>
     )
