@@ -7,6 +7,7 @@ export default [
         eventAdd: state.popups.eventAdd,
         eventEdit: state.popups.eventEdit,
         eventDelete: state.popups.eventDelete,
+        userRegister: state.popups.userRegister,
         userLogin: state.popups.userLogin,
         datePicker: state.popups.datePicker,
     }),
@@ -25,6 +26,9 @@ export default [
         },
         closePopupEventDelete(id = null) {
             dispatch(action.togglePopupEventDelete({ show: false, id }))
+        },
+        closePopupUserRegister() {
+            dispatch(action.togglePopupUserRegister({ show: false }))
         },
         closePopupUserLogin() {
             dispatch(action.togglePopupUserLogin({ show: false }))

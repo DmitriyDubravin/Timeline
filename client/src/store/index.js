@@ -58,6 +58,9 @@ const preloadedState = {
             show: false,
             id: null
         },
+        userRegister: {
+            show: false
+        },
         userLogin: {
             show: false
         },

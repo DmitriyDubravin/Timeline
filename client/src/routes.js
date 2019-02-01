@@ -2,7 +2,6 @@
 import App from './components/app';
 import HomePage from './pages/HomePage';
 import ChronometryPage from './pages/ChronometryPage';
-import RegisterPage from './pages/RegisterPage';
 import NoMatchPage from './pages/NoMatchPage';
 import UsersPage from './pages/UsersPage';
 import UserPage from './pages/UserPage';
@@ -18,11 +17,6 @@ export default [
                 path: "/",
                 exact: true,
                 component: HomePage
-            },
-            {
-                path: "/register",
-                exact: true,
-                component: RegisterPage
             },
             {
                 path: "/chronometry",

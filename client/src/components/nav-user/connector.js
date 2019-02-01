@@ -9,13 +9,17 @@ export default [
         redirect() {
             closePopup();
         },
-        logout() {
+        register() {
             closePopup();
-            dispatch(action.userLogout());
+            dispatch(action.togglePopupUserRegister({ show: true }))
         },
         login() {
             closePopup();
             dispatch(action.togglePopupUserLogin({ show: true }))
-        }
+        },
+        logout() {
+            closePopup();
+            dispatch(action.userLogout());
+        },
     })
 ];

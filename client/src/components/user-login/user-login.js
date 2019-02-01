@@ -8,21 +8,18 @@ const UserLogin = ({
     const [ name, setName ] = useState('');
     const [ password, setPassword ] = useState('');
 
-    function submitHandler(e) {
+    const submitHandler = e => {
         e.preventDefault();
         const isValid = true; // TODO: create local validation logic
         if (isValid) {
-            login({
-                login: name,
-                password: password
-            });
+            login({ name, password });
         }
     }
 
     return (
         <form className="login-form" onSubmit={submitHandler}>
-            <Input placeholder="login" onChange={setName} />
-            <Input placeholder="password" type="password" onChange={setPassword} />
+            <Input placeholder="Name" onChange={setName} />
+            <Input placeholder="Password" type="password" onChange={setPassword} />
             <Button value="Login" />
         </form>
     )

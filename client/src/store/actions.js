@@ -21,8 +21,9 @@ export const eventAdded = payload => ({type: 'EVENT_ADDED', payload});
 export const editEvent = payload => ({type: "EDIT_EVENT", payload});
 export const eventEdited = payload => ({type: 'EVENT_EDITED', payload});
 
-export const userLogout = payload => ({type: 'USER_LOGOUT', payload});
+export const userRegister = payload => ({type: 'USER_REGISTER', payload});
 export const userLogin = payload => ({type: 'USER_LOGIN', payload});
+export const userLogout = payload => ({type: 'USER_LOGOUT', payload});
 
 // end sagas
 
@@ -40,6 +41,7 @@ export const togglePopupNavUser = payload => ({type: "TOGGLE_POPUP_NAV_USER", pa
 export const togglePopupEventAdd = payload => ({ type: "TOGGLE_POPUP_EVENT_ADD", payload });
 export const togglePopupEventEdit = payload => ({ type: "TOGGLE_POPUP_EVENT_EDIT", payload });
 export const togglePopupEventDelete = payload => ({type: "TOGGLE_POPUP_EVENT_DELETE", payload});
+export const togglePopupUserRegister = payload => ({type: "TOGGLE_POPUP_USER_REGISTER", payload});
 export const togglePopupUserLogin = payload => ({type: "TOGGLE_POPUP_USER_LOGIN", payload});
 export const togglePopupDatePicker = payload => ({type: "TOGGLE_POPUP_DATE_PICKER", payload});
 

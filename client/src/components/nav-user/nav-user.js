@@ -6,6 +6,7 @@ const NavUser = ({
     isAuthorized,
     name,
     redirect,
+    register,
     login,
     logout
 }) => (
@@ -29,13 +30,12 @@ const NavUser = ({
                 </Fragment>
             ):(
                 <Fragment>
-                    <Link
+                    <button
                         className="tile"
-                        onClick={redirect}
-                        to="/register"
+                        onClick={register}
                     >
                         <FaUserPlus />
-                    </Link>
+                    </button>
                     <button
                         className="tile"
                         onClick={login}

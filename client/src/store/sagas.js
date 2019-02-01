@@ -144,22 +144,30 @@ export function* editEvent({payload}) {
     }
 }
 
-export function* userLogout() {
-    console.log('saga: userLogout');
+export function* userRegister({payload}) {
+    console.log('saga: userRegister');
 
-    // TODO: check UM for unsetUser function
-    yield put(action.setUser({
-        name: false,
-        token: false,
-        isAuthorized: false
-    }));
-    UM.deleteToken();
+    const queryData = {
+        login: payload.name,
+        email: payload.email,
+        password: payload.password
+    };
+
+    const {success} = yield call(QM.registerUser, queryData);
+    if (success) {
+        // TODO: handle global messages
+    }
+
+    yield put(action.togglePopupUserRegister({ show: false }));
+
 }
-
 export function* userLogin({payload}) {
     console.log('saga: userLogin');
 
-    const queryData = {...payload};
+    const queryData = {
+        login: payload.name,
+        password: payload.password
+    };
 
     const { success, cause, name, token } = yield call(QM.loginUser, queryData);
     // TODO: check UM for unsetUser function
@@ -179,6 +187,19 @@ export function* userLogin({payload}) {
     }
 
 }
+
+export function* userLogout() {
+    console.log('saga: userLogout');
+
+    // TODO: check UM for unsetUser function
+    yield put(action.setUser({
+        name: false,
+        token: false,
+        isAuthorized: false
+    }));
+    UM.deleteToken();
+}
+
 
 
 
@@ -203,11 +224,14 @@ export function* addEventWatcher() {
 export function* editEventWatcher() {
     yield takeEvery("EDIT_EVENT", editEvent);
 }
-export function* userLogoutWatcher() {
-    yield takeEvery("USER_LOGOUT", userLogout);
+export function* userRegisterWatcher() {
+    yield takeEvery("USER_REGISTER", userRegister);
 }
 export function* userLoginWatcher() {
     yield takeEvery("USER_LOGIN", userLogin);
+}
+export function* userLogoutWatcher() {
+    yield takeEvery("USER_LOGOUT", userLogout);
 }
 
 
@@ -221,7 +245,8 @@ export function* rootSaga() {
         getSubcategoriesWatcher(),
         addEventWatcher(),
         editEventWatcher(),
+        userRegisterWatcher(),
+        userLoginWatcher(),
         userLogoutWatcher(),
-        userLoginWatcher()
     ])
 }
