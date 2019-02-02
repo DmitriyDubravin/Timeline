@@ -188,6 +188,29 @@ export function* userLogin({payload}) {
 
 }
 
+export function* userPasswordChange({payload}) {
+    console.log('saga: userPasswordChange');
+    
+    const { name } = yield select(getUser);
+
+    const queryData = {
+        login: name,
+        currentPassword: payload.password,
+        newPassword: payload.newPassword
+    };
+    const {success} = yield call(QM.changeUserPassword, queryData);
+
+    if (success) {
+        // TODO: reconsider logout after password changing
+        yield put(action.setUser({
+            name: false,
+            token: false,
+            isAuthorized: false
+        }));
+        UM.deleteToken();
+    }
+}
+
 export function* userLogout() {
     console.log('saga: userLogout');
 
@@ -209,7 +232,7 @@ export function* userRemove({payload}) {
         login: name,
         password: payload.password
     }
-    const {success} = QM.deleteUser(queryData);
+    const {success} = yield call(QM.deleteUser, queryData);
 
     if (success) {
         yield put(action.setUser({
@@ -252,6 +275,9 @@ export function* userRegisterWatcher() {
 export function* userLoginWatcher() {
     yield takeEvery("USER_LOGIN", userLogin);
 }
+export function* userPasswordChangeWatcher() {
+    yield takeEvery("USER_PASSWORD_CHANGE", userPasswordChange);
+}
 export function* userLogoutWatcher() {
     yield takeEvery("USER_LOGOUT", userLogout);
 }
@@ -272,6 +298,7 @@ export function* rootSaga() {
         editEventWatcher(),
         userRegisterWatcher(),
         userLoginWatcher(),
+        userPasswordChangeWatcher(),
         userLogoutWatcher(),
         userRemoveWatcher(),
     ])

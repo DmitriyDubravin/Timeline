@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ChangePasswordForm from './../components/forms/ChangePasswordForm';
+import UserPasswordChange from './../components/user-password-change';
 import UserRemove from './../components/user-remove';
 
 class UserPage extends Component {
@@ -16,7 +16,7 @@ class UserPage extends Component {
                 <h2>{pathName}'s page</h2>
                 {!owner && <h4>{pathName}'s public data</h4>}
                 {owner && <h4>{username}'s secured data</h4>}
-                {owner && <ChangePasswordForm x={333} />}
+                {owner && <UserPasswordChange x={333} />}
                 {owner && <UserRemove />}
             </div>
         )
