@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {renderRoutes} from 'react-router-config';
-import Header from '../Header';
+import Header from './../header';
 import Popups from './../popups';
 
 import UM from './../../modules/UserModule';
