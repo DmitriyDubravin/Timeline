@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import EventsList from '../components/EventsList';
-import * as action from './../store/actions';
-import QM from './../modules/QueryModule';
+import EventsList from './../../components/EventsList';
+import QM from './../../modules/QueryModule';
 import QS from 'query-string';
-import {extendEventWithHoursMinutes, removeEmptyKeys, checkEventModel} from './../support/functions';
+import {extendEventWithHoursMinutes, removeEmptyKeys, checkEventModel} from './../../support/functions';
 
-class SearchPage extends Component {
+
+// TODO: rebuild it
+class PageSearch extends Component {
     constructor(props) {
         super(props);
         const queryString = props.location.search;
@@ -107,23 +107,4 @@ class SearchPage extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        name: state.user.name,
-        // date: state.date,
-        events: state.eventsData.events,
-        ranges: state.eventsData.ranges
-    }),
-    dispatch => ({
-        addRangeEvents(range, events) {
-            dispatch(action.addRangeEvents(range, events));
-        },
-        togglePopupEditEvent(id) {
-            dispatch(action.togglePopupEventEdit({ show: true, id }))
-        },
-        togglePopupDeleteEvent: function(boolean, id) {
-            dispatch(action.togglePopupEventDelete(boolean, id))
-        },
-    })
-
-)(SearchPage)
+export default PageSearch;

@@ -1,12 +1,12 @@
 
 import App from './components/app';
-import HomePage from './pages/HomePage';
-import ChronometryPage from './pages/ChronometryPage';
-import NoMatchPage from './pages/NoMatchPage';
-import UsersPage from './pages/UsersPage';
-import UserPage from './pages/UserPage';
-import EmailConfirmedPage from './pages/EmailConfirmedPage';
-import SearchPage from './pages/SearchPage';
+import PageHome from './components/page-home';
+import PageChronometry from './components/page-chronometry';
+import PageNoMatch from './components/page-no-match';
+import PageUsers from './components/page-users';
+import PageUser from './components/page-user';
+import PageUserEmail from './components/page-user-email';
+import PageSearch from './components/page-search';
 
 
 export default [
@@ -16,40 +16,40 @@ export default [
             {
                 path: "/",
                 exact: true,
-                component: HomePage
+                component: PageHome
             },
             {
                 path: "/chronometry",
                 exact: true,
-                component: ChronometryPage
+                component: PageChronometry
             },
             {
                 path: "/users",
                 exact: true,
-                component: UsersPage,
+                component: PageUsers,
             },
             {
                 path: "/users/:user",
                 exact: true,
-                component: UserPage,
+                component: PageUser,
             },
             {
                 path: "/search",
                 exact: true,
-                component: SearchPage
+                component: PageSearch
             },
             {
                 path: "/email-confirmation/:hash",
                 exact: true,
-                component: EmailConfirmedPage,
+                component: PageUserEmail,
             },
             {
                 path: "/404",
                 exact: true,
-                component: NoMatchPage
+                component: PageNoMatch
             },
             {
-                component: NoMatchPage
+                component: PageNoMatch
             }
         ]
     }
