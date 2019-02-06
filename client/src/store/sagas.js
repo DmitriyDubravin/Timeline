@@ -244,6 +244,43 @@ export function* userRemove({payload}) {
     }
 }
 
+export function* search({payload}) {
+    console.log('saga: search');
+
+    const { name } = yield select(getUser);
+
+    // const queryData = {
+    //     login: name,
+    //     password: payload.password
+    // }
+    // const {success} = yield call(QM.deleteUser, queryData);
+
+    // if (success) {
+    //     yield put(action.setUser({
+    //         name: false,
+    //         token: false,
+    //         isAuthorized: false
+    //     }));
+    //     UM.deleteToken();
+    // }
+
+    const queryData = {
+        author: name,
+        queries: payload.queryObj
+    };
+    const {success, eventsList} = yield call(QM.search, search, queryData);
+    if (success) {
+        const events = {};
+        eventsList.forEach(event => {
+            events[event._id] = event;
+        });
+        yield put(action.addRangeEvents(search, events));
+    }
+
+
+}
+
+
 
 
 
@@ -284,7 +321,9 @@ export function* userLogoutWatcher() {
 export function* userRemoveWatcher() {
     yield takeEvery("USER_REMOVE", userRemove);
 }
-
+export function* searchWatcher() {
+    yield takeEvery("SEARCH", search);
+}
 
 
 export function* rootSaga() {
@@ -301,5 +340,6 @@ export function* rootSaga() {
         userPasswordChangeWatcher(),
         userLogoutWatcher(),
         userRemoveWatcher(),
+        searchWatcher()
     ])
 }

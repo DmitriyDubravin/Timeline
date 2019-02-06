@@ -7,8 +7,8 @@ export default [
         ranges: state.eventsData.ranges
     }),
     dispatch => ({
-        addRangeEvents(range, events) {
-            dispatch(action.addRangeEvents(range, events));
+        search1(search, queryObj) {
+            dispatch(action.search(search, queryObj));
         },
         openPopupEditEvent(id) {
             dispatch(action.togglePopupEventEdit({ show: true, id }))

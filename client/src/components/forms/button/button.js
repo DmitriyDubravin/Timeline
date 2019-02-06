@@ -1,18 +1,18 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Button = ({
   value = 'Button',
   type = 'submit',
-  className,
+  className = 'button',
+  to,
   onClick
 }) => {
-  return (
-    <input
-      value={value}
-      type={type}
-      className={className}
-      onClick={onClick}
-    />
+  const props = { type, className, to, onClick };
+  return type !== 'link' ? (
+    <input {...props} value={value} />
+  ) : (
+    <Link {...props}>{value}</Link>
   );
 };
 
