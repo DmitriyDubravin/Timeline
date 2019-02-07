@@ -266,8 +266,9 @@ export function* search({payload}) {
 
     const queryData = {
         author: name,
-        queries: payload.queryObj
+        queries: payload
     };
+
     const {success, eventsList} = yield call(QM.search, search, queryData);
     if (success) {
         const events = {};
@@ -276,7 +277,6 @@ export function* search({payload}) {
         });
         yield put(action.addRangeEvents(search, events));
     }
-
 
 }
 

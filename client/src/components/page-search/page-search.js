@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import EventsList from './../../components/EventsList';
-import QM from './../../modules/QueryModule';
 import QS from 'query-string';
 import {extendEventWithHoursMinutes, removeEmptyKeys, checkEventModel} from './../../support/functions';
 import { Input, Button } from './../forms';
@@ -9,6 +8,7 @@ import { Input, Button } from './../forms';
 
 const PageSearch = ({
     location: { search },
+    user,
     events,
     ranges,
     search1,
@@ -28,10 +28,10 @@ const PageSearch = ({
     const searchStr = sStr.length > 1 ? "?" + sStr : '';
 
     useEffect(() => {
-        if (search.length > 0) {
+        if (user.isAuthorized && search.length > 0) {
             search1(search, queryObj);
         }
-    }, [search]);
+    }, [search, user]);
 
     const editEvent = id => {
         openPopupEventEdit(id);

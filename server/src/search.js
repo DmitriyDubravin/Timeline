@@ -10,17 +10,19 @@ module.exports = async function(req, res) {
         user: author
     };
 
-    for (var key in query) {
-        if (query.hasOwnProperty(key) && !!query[key]) {
-            searchOptions[key] = {$regex: query[key], $options: "i"};
-        }
-    }
+    console.log(searchOptions, query);
 
-    const {data, err} = await f.tryCatch(f.search(searchOptions));
-    err && e.searchError(res);
+    // for (var key in query) {
+    //     if (query.hasOwnProperty(key) && !!query[key]) {
+    //         searchOptions[key] = {$regex: query[key], $options: "i"};
+    //     }
+    // }
 
-    f.success(res, {
-        eventsList: data
-    });
+    // const {data, err} = await f.tryCatch(f.search(searchOptions));
+    // err && e.searchError(res);
+
+    // f.success(res, {
+    //     eventsList: data
+    // });
 
 }
