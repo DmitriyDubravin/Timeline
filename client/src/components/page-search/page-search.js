@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import EventsList from './../../components/EventsList';
-import QS from 'query-string';
-import {extendEventWithHoursMinutes, removeEmptyKeys, checkEventModel} from './../../support/functions';
+import {
+    extendEventWithHoursMinutes,
+    removeEmptyKeys,
+    checkEventModel,
+    objectify,
+    querify
+} from './../../support/functions';
 import { Input, Button } from './../forms';
 
 
 
 const PageSearch = ({
-    location: { search },
+    location: { search: queryLocation },
     user,
     events,
     ranges,
@@ -16,7 +21,7 @@ const PageSearch = ({
     openPopupEventDelete
 }) => {
 
-    const initial = {type: '', category: '', subcategory: '', comment: '', ...QS.parse(search)};
+    const initial = {type: '', category: '', subcategory: '', comment: '', ...objectify(queryLocation)};
 
     const [ type, setType ] = useState(initial.type);
     const [ category, setCategory ] = useState(initial.category);
@@ -24,14 +29,15 @@ const PageSearch = ({
     const [ comment, setComment ] = useState(initial.comment);
 
     const queryObj = removeEmptyKeys({type, category, subcategory, comment});
-    const sStr = QS.stringify(queryObj);
-    const searchStr = sStr.length > 1 ? "?" + sStr : '';
+    const queryStr = querify(queryObj);
+
 
     useEffect(() => {
-        if (user.isAuthorized && search.length > 0) {
-            search1(search, queryObj);
+        // TODO: remove user
+        if (user.isAuthorized && queryLocation.length > 0) {
+            search1(queryLocation);
         }
-    }, [search, user]);
+    }, [queryLocation, user]);
 
     const editEvent = id => {
         openPopupEventEdit(id);
@@ -42,7 +48,7 @@ const PageSearch = ({
 
 
 
-    const rangeIds = ranges[search];
+    const rangeIds = ranges[queryLocation];
     const eventsList = rangeIds === undefined
         ? []
         : rangeIds.map(id => {
@@ -78,7 +84,7 @@ const PageSearch = ({
                     type="link"
                     to={{
                         pathname: "/search",
-                        search: searchStr
+                        search: queryStr
                     }}
                 />
             </form>

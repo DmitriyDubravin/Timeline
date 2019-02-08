@@ -1,5 +1,6 @@
 import React from 'react';
 import queryServer from './../queryServer';
+import QS from 'query-string';
 
 // export const convertNumToTwoDigits = n => ('0' + n).slice(-2);
 export const convertNumToTwoDigits = n => n < 10 ? '0' + n : '' + n;
@@ -125,3 +126,19 @@ export const compose = (...fns) =>
     (...args) => nextFn(prevFn(...args)),
     value => value
   );
+
+export const objectify = str => {
+  return QS.parse(str);
+}
+
+export const stringify = obj => {
+  return QS.stringify(obj);
+}
+
+export const querify = obj => {
+  const str = stringify(obj);
+  return str.length > 1 ? "?" + str : '';
+}
+
+
+

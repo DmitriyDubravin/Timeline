@@ -248,34 +248,18 @@ export function* search({payload}) {
     console.log('saga: search');
 
     const { name } = yield select(getUser);
-
-    // const queryData = {
-    //     login: name,
-    //     password: payload.password
-    // }
-    // const {success} = yield call(QM.deleteUser, queryData);
-
-    // if (success) {
-    //     yield put(action.setUser({
-    //         name: false,
-    //         token: false,
-    //         isAuthorized: false
-    //     }));
-    //     UM.deleteToken();
-    // }
-
     const queryData = {
         author: name,
-        queries: payload
     };
 
-    const {success, eventsList} = yield call(QM.search, search, queryData);
+    const {success, eventsList} = yield call(QM.search, payload, queryData);
     if (success) {
         const events = {};
         eventsList.forEach(event => {
             events[event._id] = event;
         });
-        yield put(action.addRangeEvents(search, events));
+        // TODO: rename payload (generalize approach with payload throug all sagas)
+        yield put(action.addRangeEvents(payload, events));
     }
 
 }
