@@ -9,6 +9,7 @@ import {extendEventWithHoursMinutes} from './../../support/functions';
 function gatherEventsList(range, ranges, events) {
     const rangeData = ranges[range];
     if (rangeData !== undefined) {
+        // TODO: remove to connector
         return rangeData.map(id => extendEventWithHoursMinutes(events[id]));
     }
     return [];

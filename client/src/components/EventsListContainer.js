@@ -24,6 +24,7 @@ const EventsListContainer = ({date, ranges, events, getEvents}) => {
     const rangeIds = ranges[date.dateStr];
     const eventsList = rangeIds === undefined
         ? []
+        // TODO: remove to connector
         : rangeIds.map(id => extendEventWithHoursMinutes(events[id]));
 
     return <EventsList eventsListData={eventsList} editCb={editEvent} deleteCb={deleteEvent} />

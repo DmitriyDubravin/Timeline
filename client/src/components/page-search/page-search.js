@@ -52,6 +52,7 @@ const PageSearch = ({
     const eventsList = rangeIds === undefined
         ? []
         : rangeIds.map(id => {
+            // TODO: remove to connector
             return extendEventWithHoursMinutes(checkEventModel(events[id]))
         });
 

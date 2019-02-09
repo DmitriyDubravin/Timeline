@@ -1,8 +1,9 @@
 import * as action from '../../store/actions';
+import {extendEventWithHoursMinutes} from '../../support/functions';
 
 export default [
     state => ({
-        event: state.eventsData.events[state.popups.eventDelete.id]
+        event: extendEventWithHoursMinutes(state.eventsData.events[state.popups.eventDelete.id])
     }),
     (dispatch, { closePopup }) => ({
         deleteEvent() {
