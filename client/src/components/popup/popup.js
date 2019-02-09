@@ -4,13 +4,16 @@ import { FaTimes } from 'react-icons/fa';
 const Popup = ({
     close,
     children
-}) => (
-    <div className="popup">
-        <button className="tile btn-close" onClick={close}><FaTimes /></button>
-        <div className="inner">
-            {children}
+}) => {
+    const handleClose = () => close();
+    return (
+        <div className="popup">
+            <button className="tile btn-close" onClick={handleClose}><FaTimes /></button>
+            <div className="inner">
+                {children}
+            </div>
         </div>
-    </div>
-);
+    )
+};
 
 export default Popup;

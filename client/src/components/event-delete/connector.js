@@ -2,14 +2,12 @@ import * as action from '../../store/actions';
 
 export default [
     state => ({
-        event: state.eventsData.events[state.popups.deleteEvent.id]
+        event: state.eventsData.events[state.popups.eventDelete.id]
     }),
     (dispatch, { closePopup }) => ({
-        redirect() {
+        deleteEvent() {
             closePopup();
-        },
-        deleteEvent(eventId) {
-            dispatch(action.deleteEvent(eventId))
+            dispatch(action.deleteEvent())
         }
     })
 ];
