@@ -16,9 +16,9 @@ const PageSearch = ({
     user,
     events,
     ranges,
-    search1,
+    search,
     openPopupEventEdit,
-    openPopupEventDelete
+    openPopupEventRemove
 }) => {
 
     const initial = {type: '', category: '', subcategory: '', comment: '', ...objectify(queryLocation)};
@@ -35,15 +35,15 @@ const PageSearch = ({
     useEffect(() => {
         // TODO: remove user
         if (user.isAuthorized && queryLocation.length > 0) {
-            search1(queryLocation);
+            search({query: queryLocation});
         }
     }, [queryLocation, user]);
 
     const editEvent = id => {
         openPopupEventEdit(id);
     }
-    const deleteEvent = id => {
-        openPopupEventDelete(id);
+    const removeEvent = id => {
+        openPopupEventRemove(id);
     }
 
 
@@ -89,7 +89,7 @@ const PageSearch = ({
                     }}
                 />
             </form>
-            <EventsList eventsListData={eventsList} editCb={editEvent} deleteCb={deleteEvent} />
+            <EventsList eventsListData={eventsList} editCb={editEvent} removeCb={removeEvent} />
         </div>
     );
 }

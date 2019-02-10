@@ -4,12 +4,12 @@ import Event from './Event';
 export default ({
         eventsListData,
         editCb,
-        deleteCb
+        removeCb
     }) => (
         <div className="events-list">
             {
                 eventsListData.map(eventData => (
-                    <Event {...eventData} key={eventData._id} editCb={editCb} deleteCb={deleteCb} />
+                    <Event {...eventData} key={eventData._id} editCb={editCb} removeCb={removeCb} />
                 ))
             }
         </div>

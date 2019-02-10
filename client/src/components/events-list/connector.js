@@ -1,8 +1,4 @@
-import {
-    togglePopupEventEdit,
-    togglePopupEventDelete,
-    getEvents
-} from './../../store/actions';
+import * as actions from './../../store/actions';
 import {extendEventWithHoursMinutes} from './../../services/event.service';
 
 // TODO reselect
@@ -25,14 +21,14 @@ export default [
         range: state.date.dateStr
     }),
     dispatch => ({
-        getEvents(data) {
-            dispatch(getEvents(data));
+        getEvents(payload) {
+            dispatch(actions.eventsAddTask(payload));
         },
-        openPopupEditEvent(id) {
-            dispatch(togglePopupEventEdit({ show: true, id }))
+        openPopupEventEdit(id) {
+            dispatch(actions.togglePopupEventEdit({ show: true, id }))
         },
-        openPopupDeleteEvent(id) {
-            dispatch(togglePopupEventDelete({ show: true, id }))
+        openPopupEventRemove(id) {
+            dispatch(actions.togglePopupEventRemove({ show: true, id }))
         }
     })
 ];

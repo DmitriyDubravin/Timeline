@@ -5,7 +5,7 @@ const initialState = {
     events: {}
 };
 
-export default (state = initialState, {type, data, payload}) => {
+export default (state = initialState, {type, payload}) => {
     switch(type) {
 
         case AT.EVENT_ADD: {
@@ -38,10 +38,8 @@ export default (state = initialState, {type, data, payload}) => {
         };
 
         case AT.EVENT_REMOVE: {
-
             const { range, eventId } = payload;
             const { [eventId]: id, ...restEvents } = state.events;
-
             return {
                 ...state,
                 ranges: {
@@ -52,36 +50,29 @@ export default (state = initialState, {type, data, payload}) => {
             };
         };
 
-        case "ADD_RANGE_EVENTS":
-        console.log(6);
+        case AT.EVENTS_ADD: {
+            const { range, events } = payload;
+            const newEvents = Object.assign({},...events.map(event => ({[event._id]: event})));
+            const newEventsIds = Object.keys(newEvents);
             return {
                 ...state,
                 ranges: {
                     ...state.ranges,
-                    [data.range]: Object.keys(data.events)
+                    [range]: newEventsIds
                 },
                 events: {
                     ...state.events,
-                    ...data.events
+                    ...newEvents
                 }
             };
-        case "ADD_EVENTS":
-        console.log(7);
-            return {
-                ...state,
-                events: {
-                    ...state.events,
-                    ...data.events
-                }
-            };
+        };
+
         case "SET_TYPES":
-        console.log(8);
             return {
                 ...state,
                 types: payload
             };
         case "SET_CATEGORIES":
-        console.log(9);
             return {
                 ...state,
                 categories: payload

@@ -5,8 +5,8 @@ const EventsList = ({
     range,
     eventsList,
     getEvents,
-    openPopupEditEvent,
-    openPopupDeleteEvent
+    openPopupEventEdit,
+    openPopupEventRemove
 }) => {
 
     useEffect(() => {
@@ -21,8 +21,8 @@ const EventsList = ({
                 eventsList.map(event => (
                     <Event
                         key={event._id}
-                        editCb={openPopupEditEvent}
-                        deleteCb={openPopupDeleteEvent}
+                        editCb={openPopupEventEdit}
+                        removeCb={openPopupEventRemove}
                         {...event}
                     />
                 ))

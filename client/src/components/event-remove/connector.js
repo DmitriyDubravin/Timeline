@@ -3,10 +3,10 @@ import {extendEventWithHoursMinutes} from './../../services/event.service';
 
 export default [
     state => ({
-        event: extendEventWithHoursMinutes(state.eventsData.events[state.popups.eventDelete.id])
+        event: extendEventWithHoursMinutes(state.eventsData.events[state.popups.eventRemove.id])
     }),
     (dispatch, { closePopup }) => ({
-        deleteEvent(payload) {
+        removeEvent(payload) {
             closePopup();
             dispatch(action.eventRemoveTask(payload));
         }

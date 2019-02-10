@@ -6,7 +6,7 @@ export default [
         navUser: state.popups.navUser,
         eventAdd: state.popups.eventAdd,
         eventEdit: state.popups.eventEdit,
-        eventDelete: state.popups.eventDelete,
+        eventRemove: state.popups.eventRemove,
         userRegister: state.popups.userRegister,
         userLogin: state.popups.userLogin,
         datePicker: state.popups.datePicker,
@@ -24,8 +24,8 @@ export default [
         closePopupEventEdit(id = null) {
             dispatch(action.togglePopupEventEdit({ show: false, id }))
         },
-        closePopupEventDelete(id = null) {
-            dispatch(action.togglePopupEventDelete({ show: false, id }))
+        closePopupEventRemove(id = null) {
+            dispatch(action.togglePopupEventRemove({ show: false, id }))
         },
         closePopupUserRegister() {
             dispatch(action.togglePopupUserRegister({ show: false }))

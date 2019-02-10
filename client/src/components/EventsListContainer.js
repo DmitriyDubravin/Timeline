@@ -17,8 +17,8 @@ const EventsListContainer = ({date, ranges, events, getEvents}) => {
         this.props.togglePopupEditEvent(true, id);
     }
 
-    const deleteEvent = id => {
-        this.props.togglePopupDeleteEvent(true, id);
+    const removeEvent = id => {
+        this.props.togglePopupEventRemove(true, id);
     }
 
     const rangeIds = ranges[date.dateStr];
@@ -27,7 +27,7 @@ const EventsListContainer = ({date, ranges, events, getEvents}) => {
         // TODO: remove to connector
         : rangeIds.map(id => extendEventWithHoursMinutes(events[id]));
 
-    return <EventsList eventsListData={eventsList} editCb={editEvent} deleteCb={deleteEvent} />
+    return <EventsList eventsListData={eventsList} editCb={editEvent} removeCb={removeEvent} />
 }
 
 export default connect(
@@ -42,8 +42,8 @@ export default connect(
         togglePopupEditEvent: function(boolean, id) {
             dispatch(action.togglePopupEditEvent(boolean, id))
         },
-        togglePopupDeleteEvent: function(boolean, id) {
-            dispatch(action.togglePopupDeleteEvent(boolean, id))
+        togglePopupEventRemove: function(boolean, id) {
+            dispatch(action.togglePopupEventRemove(boolean, id))
         },
         // test() {
         //     dispatch(action.action())

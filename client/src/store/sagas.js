@@ -9,34 +9,12 @@ import UM from './../modules/UserModule';
 import { eventAddTask } from './sagas/event-add';
 import { eventEditTask } from './sagas/event-edit';
 import { eventRemoveTask } from './sagas/event-remove';
+import { eventsAddTask } from './sagas/events-add';
+import { eventsSearchTask } from './sagas/events-search';
 
 export const getUser = state => state.user;
 export const getDate = state => state.date;
 
-export function* getEvents() {
-    console.log('saga: getEvents');
-
-    const {name} = yield select(getUser);
-    const { dateStr, rangeStart, rangeFinish } = yield select(getDate);
-
-    const queryData = {
-        author: name,
-        rangeName: dateStr,
-        start: rangeStart,
-        finish: rangeFinish
-    };
-    const { success, eventsList } = yield call(QM.getEvents, queryData);
-
-    if (success) {
-        const events = {};
-        eventsList.forEach(event => {
-            events[event._id] = event;
-        });
-        yield put(action.addRangeEvents(dateStr, events));
-    } else {
-        // TODO: no errors handling
-    }
-}
 
 export function* getTypes() {
     console.log('saga: getTypes');
@@ -194,25 +172,6 @@ export function* userRemove({payload}) {
     }
 }
 
-export function* search({payload}) {
-    console.log('saga: search');
-
-    const { name } = yield select(getUser);
-    const queryData = {
-        author: name,
-    };
-
-    const {success, eventsList} = yield call(QM.search, payload, queryData);
-    if (success) {
-        const events = {};
-        eventsList.forEach(event => {
-            events[event._id] = event;
-        });
-        // TODO: rename payload (generalize approach with payload throug all sagas)
-        yield put(action.addRangeEvents(payload, events));
-    }
-
-}
 
 
 
@@ -225,12 +184,15 @@ export function* eventEditWatcher() {
 export function* eventRemoveWatcher() {
     yield takeEvery(AT.EVENT_REMOVE_TASK, eventRemoveTask);
 }
-
-
-
-export function* getEventsWatcher() {
-    yield takeEvery("GET_EVENTS", getEvents);
+export function* eventsAddWatcher() {
+    yield takeEvery(AT.EVENTS_ADD_TASK, eventsAddTask);
 }
+export function* eventsSearchWatcher() {
+    yield takeEvery(AT.EVENTS_SEARCH_TASK, eventsSearchTask);
+}
+
+
+
 export function* getTypesWatcher() {
     yield takeEvery("GET_TYPES", getTypes);
 }
@@ -255,9 +217,7 @@ export function* userLogoutWatcher() {
 export function* userRemoveWatcher() {
     yield takeEvery("USER_REMOVE", userRemove);
 }
-export function* searchWatcher() {
-    yield takeEvery("SEARCH", search);
-}
+
 
 
 export function* rootSaga() {
@@ -265,8 +225,9 @@ export function* rootSaga() {
         eventAddWatcher(),
         eventEditWatcher(),
         eventRemoveWatcher(),
+        eventsAddWatcher(),
+        eventsSearchWatcher(),
 
-        getEventsWatcher(),
         getTypesWatcher(),
         getCategoriesWatcher(),
         getSubcategoriesWatcher(),
@@ -275,6 +236,6 @@ export function* rootSaga() {
         userPasswordChangeWatcher(),
         userLogoutWatcher(),
         userRemoveWatcher(),
-        searchWatcher()
+
     ])
 }

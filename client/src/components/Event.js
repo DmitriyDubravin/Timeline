@@ -12,12 +12,12 @@ export default ({
     subcategory,
     comment,
     editCb,
-    deleteCb
+    removeCb
 }) => (
     <div className="event">
         <div className="time">
             {editCb && <button className="icon" onClick={() => editCb(_id)}><FaPencilAlt /></button>}
-            {deleteCb && <button className="icon" onClick={() => deleteCb(_id)}><FaTrashAlt /></button>}
+            {removeCb && <button className="icon" onClick={() => removeCb(_id)}><FaTrashAlt /></button>}
             {startHour}:{startMinute} - {finishHour}:{finishMinute}
         </div>
         {type && <div className="line">{type}</div>}

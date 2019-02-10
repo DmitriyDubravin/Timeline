@@ -1,4 +1,4 @@
-import * as action from './../../store/actions';
+import * as actions from './../../store/actions';
 
 export default [
     state => ({
@@ -7,14 +7,14 @@ export default [
         ranges: state.eventsData.ranges
     }),
     dispatch => ({
-        search1(payload) {
-            dispatch(action.search(payload));
+        search(payload) {
+            dispatch(actions.eventsSearchTask(payload));
         },
-        openPopupEditEvent(id) {
-            dispatch(action.togglePopupEventEdit({ show: true, id }))
+        openPopupEventEdit(id) {
+            dispatch(actions.togglePopupEventEdit({ show: true, id }))
         },
-        openPopupDeleteEvent(id) {
-            dispatch(action.togglePopupEventDelete({ show: true, id }))
+        openPopupEventRemove(id) {
+            dispatch(actions.togglePopupEventRemove({ show: true, id }))
         },
     })
 ];
