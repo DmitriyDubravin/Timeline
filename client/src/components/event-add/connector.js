@@ -17,8 +17,8 @@ export default [
         getSubcategories(category) {
             dispatch(action.getSubcategories(category));
         },
-        addEvent(eventData) {
-            dispatch(action.addEvent(eventData))
+        addEvent(payload) {
+            dispatch(action.eventAddTask(payload))
         }
     })
 ];

@@ -9,9 +9,10 @@ import {
     user,
     date,
     popups,
-    usersList,
-    eventsData
+    usersList
 } from './reducers';
+
+import eventsData from './reducers/events-data';
 
 const reducers = combineReducers({
     user,
@@ -69,10 +70,6 @@ const preloadedState = {
         },
     },
     usersList: null,
-    eventsData: {
-        ranges: {},
-        events: {}
-    }
 }
 
 const store = createStore(

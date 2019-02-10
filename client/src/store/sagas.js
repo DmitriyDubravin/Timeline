@@ -1,8 +1,12 @@
 
 import { all, call, put, takeEvery, select } from 'redux-saga/effects';
+import AT from './actions-types';
 import * as action from './actions';
 import QM from './../modules/QueryModule';
 import UM from './../modules/UserModule';
+
+
+import { eventAddTask } from './sagas/event-add';
 
 export const getUser = state => state.user;
 export const getDate = state => state.date;
@@ -103,26 +107,6 @@ export function* getSubcategories({payload}) {
         yield put(action.setSubcategories(sortedDataList));
     } else {
         // TODO: no errors handling
-    }
-}
-
-export function* addEvent({payload}) {
-    console.log('saga: addEvent');
-
-    const { name } = yield select(getUser);
-    const { dateStr } = yield select(getDate);
-
-    const queryData = {...payload, author: name};
-
-
-    const {success, addedEvent} = yield call(QM.addEvent, queryData);
-    if (success) {
-        const { _id } = addedEvent;
-        yield put(action.togglePopupEventAdd({ show: false }));
-        yield put(action.eventAdded(dateStr, {[_id]: addedEvent}));
-    } else {
-        // TODO!
-        console.log('c%Adding Error', 'color: red');
     }
 }
 
@@ -266,6 +250,9 @@ export function* search({payload}) {
 
 
 
+export function* eventAddWatcher() {
+    yield takeEvery(AT.EVENT_ADD_TASK, eventAddTask);
+}
 
 
 
@@ -283,9 +270,6 @@ export function* getCategoriesWatcher() {
 }
 export function* getSubcategoriesWatcher() {
     yield takeEvery("GET_SUBCATEGORIES", getSubcategories);
-}
-export function* addEventWatcher() {
-    yield takeEvery("ADD_EVENT", addEvent);
 }
 export function* editEventWatcher() {
     yield takeEvery("EDIT_EVENT", editEvent);
@@ -312,12 +296,12 @@ export function* searchWatcher() {
 
 export function* rootSaga() {
     yield all([
+        eventAddWatcher(),
         getEventsWatcher(),
         deleteEventWatcher(),
         getTypesWatcher(),
         getCategoriesWatcher(),
         getSubcategoriesWatcher(),
-        addEventWatcher(),
         editEventWatcher(),
         userRegisterWatcher(),
         userLoginWatcher(),
