@@ -4,7 +4,7 @@ import { extendEventWithHoursMinutes } from './../../services/event.service';
 export default [
     state => ({
         date: state.date,
-        event: extendEventWithHoursMinutes(state.eventsData.events[state.popups.editEvent.id]),
+        event: extendEventWithHoursMinutes(state.eventsData.events[state.popups.eventEdit.id]),
         types: state.eventsData.types,
         categories: state.eventsData.categories,
         subCategories: state.eventsData.subCategories
@@ -19,8 +19,8 @@ export default [
         getSubcategories(category) {
             dispatch(action.getSubcategories(category));
         },
-        editEvent(event) {
-            dispatch(action.editEvent(event))
+        editEvent(payload) {
+            dispatch(action.eventEditTask(payload))
         }
     })
 ];

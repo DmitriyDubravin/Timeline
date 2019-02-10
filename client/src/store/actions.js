@@ -6,9 +6,11 @@ export const setUser = data => ({type: "SET_USER", data: data});
 
 // tasks
 export const eventAddTask = payload => ({type: AT.EVENT_ADD_TASK, payload});
+export const eventEditTask = payload => ({type: AT.EVENT_EDIT_TASK, payload});
 
 // event
 export const eventAdd = payload => ({type: AT.EVENT_ADD, payload});
+export const eventEdit = payload => ({type: AT.EVENT_EDIT, payload});
 
 // popups
 export const togglePopupNavMain = payload => ({type: AT.TOGGLE_POPUP_NAV_MAIN, payload});
@@ -32,8 +34,6 @@ export const setTypes = payload => ({type: "SET_TYPES", payload});
 export const setCategories = payload => ({type: "SET_CATEGORIES", payload});
 export const setSubcategories = payload => ({type: "SET_SUBCATEGORIES", payload});
 
-export const editEvent = payload => ({type: "EDIT_EVENT", payload});
-export const eventEdited = payload => ({type: 'EVENT_EDITED', payload});
 
 export const userRegister = payload => ({type: 'USER_REGISTER', payload});
 export const userLogin = payload => ({type: 'USER_LOGIN', payload});

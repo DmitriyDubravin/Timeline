@@ -7,6 +7,7 @@ import UM from './../modules/UserModule';
 
 
 import { eventAddTask } from './sagas/event-add';
+import { eventEditTask, eventEdit } from './sagas/event-edit';
 
 export const getUser = state => state.user;
 export const getDate = state => state.date;
@@ -107,24 +108,6 @@ export function* getSubcategories({payload}) {
         yield put(action.setSubcategories(sortedDataList));
     } else {
         // TODO: no errors handling
-    }
-}
-
-export function* editEvent({payload}) {
-    console.log('saga: editEvent');
-
-    const { name } = yield select(getUser);
-
-    const queryData = {...payload, author: name};
-
-    const {success, updatedEvent} = yield call(QM.editEvent, queryData);
-    if (success) {
-        const { _id } = updatedEvent;
-        yield put(action.togglePopupEventEdit({ show: false }));
-        yield put(action.eventEdited({[_id]: updatedEvent}));
-    } else {
-        // TODO!
-        console.log('c%Editing Error', 'color: red');
     }
 }
 
@@ -253,6 +236,9 @@ export function* search({payload}) {
 export function* eventAddWatcher() {
     yield takeEvery(AT.EVENT_ADD_TASK, eventAddTask);
 }
+export function* editEventWatcher() {
+    yield takeEvery(AT.EVENT_EDIT_TASK, eventEditTask);
+}
 
 
 
@@ -270,9 +256,6 @@ export function* getCategoriesWatcher() {
 }
 export function* getSubcategoriesWatcher() {
     yield takeEvery("GET_SUBCATEGORIES", getSubcategories);
-}
-export function* editEventWatcher() {
-    yield takeEvery("EDIT_EVENT", editEvent);
 }
 export function* userRegisterWatcher() {
     yield takeEvery("USER_REGISTER", userRegister);

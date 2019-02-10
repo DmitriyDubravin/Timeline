@@ -8,7 +8,7 @@ const initialState = {
 export default (state = initialState, {type, data, payload}) => {
     switch(type) {
 
-        case AT.EVENT_ADD:
+        case AT.EVENT_ADD: {
             const { range, event } = payload;
             const eventId = event._id;
             const currentRangeIds = state.ranges[range] || [];
@@ -22,26 +22,19 @@ export default (state = initialState, {type, data, payload}) => {
                     ...state.events,
                     [eventId]: event
                 }
-            };
-
-        case "OLD_EDIT_EVENT": // TODO: remove
-        console.log(3);
+            }
+        }
+        case AT.EVENT_EDIT: {
+            const { event } = payload;
+            const eventId = event._id;
             return {
                 ...state,
                 events: {
                     ...state.events,
-                    ...data
+                    [eventId]: event
                 }
-            };
-        case "EVENT_EDITED":
-        console.log(4);
-            return {
-                ...state,
-                events: {
-                    ...state.events,
-                    ...payload
-                }
-            };
+            }
+        };
         case "REMOVE_EVENT":
         console.log(5);
             delete state.events[data.eventId];

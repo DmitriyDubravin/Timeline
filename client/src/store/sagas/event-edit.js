@@ -5,22 +5,20 @@ import QM from './../../modules/QueryModule';
 export const getUser = state => state.user;
 export const getDate = state => state.date;
 
-export function* eventAddTask({payload}) {
+export function* eventEditTask({payload}) {
 
     const { name } = yield select(getUser);
-    const { dateStr } = yield select(getDate);
 
     const queryData = {...payload, author: name};
 
-    const {success, addedEvent} = yield call(QM.addEvent, queryData);
+    const {success, updatedEvent} = yield call(QM.editEvent, queryData);
     if (success) {
-        yield put(actions.togglePopupEventAdd({ show: false }));
-        yield put(actions.eventAdd({
-            range: dateStr,
-            event: addedEvent
+        yield put(actions.togglePopupEventEdit({ show: false }));
+        yield put(actions.eventEdit({
+            event: updatedEvent
         }));
     } else {
         // TODO!
-        console.log('c%Adding Error', 'color: red');
+        console.log('c%Editing Error', 'color: red');
     }
 }
