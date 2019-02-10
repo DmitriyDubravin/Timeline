@@ -6,9 +6,9 @@ export default [
         event: extendEventWithHoursMinutes(state.eventsData.events[state.popups.eventDelete.id])
     }),
     (dispatch, { closePopup }) => ({
-        deleteEvent() {
+        deleteEvent(payload) {
             closePopup();
-            dispatch(action.deleteEvent())
+            dispatch(action.eventRemoveTask(payload));
         }
     })
 ];

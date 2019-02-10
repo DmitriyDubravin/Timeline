@@ -23,7 +23,8 @@ export default (state = initialState, {type, data, payload}) => {
                     [eventId]: event
                 }
             }
-        }
+        };
+
         case AT.EVENT_EDIT: {
             const { event } = payload;
             const eventId = event._id;
@@ -35,22 +36,22 @@ export default (state = initialState, {type, data, payload}) => {
                 }
             }
         };
-        case "REMOVE_EVENT":
-        console.log(5);
-            delete state.events[data.eventId];
 
-            let ranges = {};
-            for (let key in state.ranges) {
-                ranges[key] = state.ranges[key].filter(id => id === data.eventId);
-            }
+        case AT.EVENT_REMOVE: {
+
+            const { range, eventId } = payload;
+            const { [eventId]: id, ...restEvents } = state.events;
 
             return {
                 ...state,
-                ranges: ranges,
-                events: {
-                    ...state.events
-                }
+                ranges: {
+                    ...state.ranges,
+                    [range]: state.ranges[range].filter(id => id !== eventId)
+                },
+                events: restEvents
             };
+        };
+
         case "ADD_RANGE_EVENTS":
         console.log(6);
             return {
