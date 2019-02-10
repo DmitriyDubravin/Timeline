@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import EventsList from './../../components/EventsList';
 import {
-    extendEventWithHoursMinutes,
     removeEmptyKeys,
     checkEventModel,
     objectify,
     querify
 } from './../../support/functions';
+import { extendEventWithHoursMinutes } from './../../services/event.service';
 import { Input, Button } from './../forms';
 
 

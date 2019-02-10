@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {convertNumToTwoDigits} from '../../support/functions';
+import {convertNumToTwoDigits} from '../../services/math.service';
 
 const EventAdd = ({
     date,

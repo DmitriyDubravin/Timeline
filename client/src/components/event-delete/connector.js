@@ -1,5 +1,5 @@
 import * as action from '../../store/actions';
-import {extendEventWithHoursMinutes} from '../../support/functions';
+import {extendEventWithHoursMinutes} from './../../services/event.service';
 
 export default [
     state => ({

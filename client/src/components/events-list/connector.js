@@ -3,7 +3,7 @@ import {
     togglePopupEventDelete,
     getEvents
 } from './../../store/actions';
-import {extendEventWithHoursMinutes} from './../../support/functions';
+import {extendEventWithHoursMinutes} from './../../services/event.service';
 
 // TODO reselect
 function gatherEventsList(range, ranges, events) {
@@ -17,7 +17,11 @@ function gatherEventsList(range, ranges, events) {
 
 export default [
     state => ({
-        eventsList: gatherEventsList(state.date.dateStr, state.eventsData.ranges, state.eventsData.events),
+        eventsList: gatherEventsList(
+            state.date.dateStr,
+            state.eventsData.ranges,
+            state.eventsData.events
+        ),
         range: state.date.dateStr
     }),
     dispatch => ({
