@@ -1,26 +1,25 @@
-import * as action from './../../store/actions';
-import { extendEventWithHoursMinutes } from './../../services/event.service';
+import * as actions from './../../store/actions';
 
 export default [
     state => ({
         date: state.date,
-        event: extendEventWithHoursMinutes(state.eventsData.events[state.popups.eventEdit.id]),
+        event: state.eventsData.events[state.popups.eventEdit.id],
         types: state.eventsData.types,
         categories: state.eventsData.categories,
         subCategories: state.eventsData.subCategories
     }),
     dispatch => ({
         getTypes() {
-            dispatch(action.getTypes());
+            dispatch(actions.getTypes());
         },
         getCategories(type) {
-            dispatch(action.getCategories(type));
+            dispatch(actions.getCategories(type));
         },
         getSubcategories(category) {
-            dispatch(action.getSubcategories(category));
+            dispatch(actions.getSubcategories(category));
         },
         editEvent(payload) {
-            dispatch(action.eventEditTask(payload))
+            dispatch(actions.eventEditTask(payload))
         }
     })
 ];

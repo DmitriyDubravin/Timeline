@@ -6,7 +6,6 @@ import {
     objectify,
     querify
 } from './../../support/functions';
-import { extendEventWithHoursMinutes } from './../../services/event.service';
 import { Input, Button } from './../forms';
 
 
@@ -52,8 +51,7 @@ const PageSearch = ({
     const eventsList = rangeIds === undefined
         ? []
         : rangeIds.map(id => {
-            // TODO: remove to connector
-            return extendEventWithHoursMinutes(checkEventModel(events[id]))
+            return checkEventModel(events[id])
         });
 
     return (

@@ -1,5 +1,7 @@
 import AT from './../actions-types';
 
+import { extendEventWithHoursMinutes } from './../../services/event.service';
+
 const initialState = {
     ranges: {},
     events: {}
@@ -20,10 +22,10 @@ export default (state = initialState, {type, payload}) => {
                 },
                 events: {
                     ...state.events,
-                    [eventId]: event
+                    [eventId]: extendEventWithHoursMinutes(event)
                 }
             }
-        };
+        }
 
         case AT.EVENT_EDIT: {
             const { event } = payload;
@@ -32,10 +34,10 @@ export default (state = initialState, {type, payload}) => {
                 ...state,
                 events: {
                     ...state.events,
-                    [eventId]: event
+                    [eventId]: extendEventWithHoursMinutes(event)
                 }
             }
-        };
+        }
 
         case AT.EVENT_REMOVE: {
             const { range, eventId } = payload;
@@ -48,11 +50,11 @@ export default (state = initialState, {type, payload}) => {
                 },
                 events: restEvents
             };
-        };
+        }
 
         case AT.EVENTS_ADD: {
             const { range, events } = payload;
-            const newEvents = Object.assign({},...events.map(event => ({[event._id]: event})));
+            const newEvents = Object.assign({},...events.map(event => ({[event._id]: extendEventWithHoursMinutes(event)})));
             const newEventsIds = Object.keys(newEvents);
             return {
                 ...state,
@@ -65,7 +67,7 @@ export default (state = initialState, {type, payload}) => {
                     ...newEvents
                 }
             };
-        };
+        }
 
         case "SET_TYPES":
             return {

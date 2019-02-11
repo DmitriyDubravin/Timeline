@@ -1,14 +1,11 @@
 import * as actions from './../../store/actions';
-import {extendEventWithHoursMinutes} from './../../services/event.service';
 
 // TODO reselect
 function gatherEventsList(range, ranges, events) {
     const rangeData = ranges[range];
-    if (rangeData !== undefined) {
-        // TODO: remove to connector
-        return rangeData.map(id => extendEventWithHoursMinutes(events[id]));
-    }
-    return [];
+    return (rangeData !== undefined) 
+        ? rangeData.map(id => events[id])
+        : [];
 }
 
 export default [

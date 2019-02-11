@@ -13,6 +13,7 @@ export function* eventsSearchTask({payload}) {
     };
 
     const {success, eventsList} = yield call(QM.search, payload.query, queryData);
+
     if (success) {
         yield put(actions.eventsAdd({
             range: payload.query,
