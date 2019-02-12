@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "validator": "^10.11.0"
+  }
+}
