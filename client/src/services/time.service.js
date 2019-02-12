@@ -1,6 +1,4 @@
-import fp from 'lodash/fp';
 import { convertNumToTwoDigits } from './math.service';
-import { isTimestamp } from './logic.service';
 import { compose } from 'redux';
 
 export const getDateYear = date => date.getUTCFullYear();
