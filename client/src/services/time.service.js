@@ -9,24 +9,27 @@ export const getDateMinute = date => date.getUTCMinutes();
 export const getDateSecond = date => date.getUTCSeconds();
 export const getDateMillisecond = date => date.getUTCMilliseconds();
 
-export const extendDateWithYear = obj => ({...obj, year: getDateYear(obj.date)});
-export const extendDateWithMonth = obj => ({...obj, month: getDateMonth(obj.date)});
-export const extendDateWithDay = obj => ({...obj, day: getDateDay(obj.date)});
-export const extendDateWithHour = obj => ({...obj, hour: convertNumToTwoDigits(getDateHour(obj.date))});
-export const extendDateWithMinute = obj => ({...obj, minute: convertNumToTwoDigits(getDateMinute(obj.date))});
-export const extendDateWithSecond = obj => ({...obj, second: getDateSecond(obj.date)});
-export const extendDateWithMillisecond = obj => ({...obj, millisecond: getDateMillisecond(obj.date)});
+export const extendDateObjWithYear = obj => ({...obj, year: getDateYear(obj.date)});
+export const extendDateObjWithMonth = obj => ({...obj, month: getDateMonth(obj.date)});
+export const extendDateObjWithDay = obj => ({...obj, day: getDateDay(obj.date)});
+export const extendDateObjWithHour = obj => ({...obj, hour: convertNumToTwoDigits(getDateHour(obj.date))});
+export const extendDateObjWithMinute = obj => ({...obj, minute: convertNumToTwoDigits(getDateMinute(obj.date))});
+export const extendDateObjWithSecond = obj => ({...obj, second: getDateSecond(obj.date)});
+export const extendDateObjWithMillisecond = obj => ({...obj, millisecond: getDateMillisecond(obj.date)});
+
 
 export const stringify = value => value.toString();
 export const timestampToMS = value => value * 1000;
 export const timestampMSToDateObj = value => ({date: new Date(value)});
 
+export const extendObjWithDate = key => obj => ({...obj, date: new Date(timestampToMS(obj[key]))});
+
 export const timestampToTimeObj = compose(
-    extendDateWithMinute,
-    extendDateWithHour,
-    extendDateWithDay,
-    extendDateWithMonth,
-    extendDateWithYear,
+    extendDateObjWithMinute,
+    extendDateObjWithHour,
+    extendDateObjWithDay,
+    extendDateObjWithMonth,
+    extendDateObjWithYear,
     timestampMSToDateObj,
     timestampToMS
 );
