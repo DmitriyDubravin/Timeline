@@ -7,9 +7,6 @@ export default [
     dispatch => ({
         openPopupEventAdd() {
             dispatch(action.togglePopupEventAdd({ show: true }))
-        },
-        openPopupDatePicker() {
-            dispatch(action.togglePopupDatePicker({ show: true }))
-        },
+        }
     })
 ];

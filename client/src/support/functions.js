@@ -79,7 +79,7 @@ export const getType = value => {
 }
 
 export const checkModel = model => data => {
-    let result = Object.keys(model).every(key => {
+    const result = Object.keys(model).every(key => {
         return data[key] && model[key].some(modelType => {
             return getType(data[key]) === modelType
         })

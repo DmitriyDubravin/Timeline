@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {convertNumToTwoDigits} from '../../services/math.service';
+import {getTS} from '../../services/time.service';
 // import { bool } from 'prop-types';
 
 const EventEdit = ({
@@ -144,26 +145,18 @@ const EventEdit = ({
     }
 
 
-    function calcSeconds(hour, minute) {
-        let {day, month, year} = date;
-        return Math.floor(+new Date(Date.UTC(year, month, day, hour, minute)) / 1000)
-    }
-
     async function submitHandler(e) {
         e.preventDefault();
-        const {_id } = event;
         
-        let start = calcSeconds(startHour, startMinute);
-        let finish = calcSeconds(finishHour, finishMinute);
+        let start = getTS({...date, hour: startHour, minte: startMinute});
+        let finish = getTS({...date, hour: finishHour, minute: finishMinute});
         // check if event ends on next day
-        const startTotalMinutes = startHour * 60 + startMinute * 1;
-        const finishTotalMinutes = finishHour * 60 + finishMinute * 1;
-        if (finishTotalMinutes <= startTotalMinutes) {
+        if (finish <= start) {
             finish += 86400
         }
 
         editEvent({
-            _id,
+            _id: event._id,
             start,
             finish,
             type,
