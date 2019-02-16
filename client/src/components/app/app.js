@@ -9,6 +9,9 @@ import MM from './../../modules/MessageModule';
 
 // TODO needs more protection agains unauthorized users
 
+import { createTodayDateObj } from './../../services/time.service';
+
+
 
 const App = ({
     route,
@@ -20,11 +23,7 @@ const App = ({
 }) => {
 
     const calcDate = () => {
-        const date = new Date();
-        const day = date.getDate();
-        const month = date.getMonth();
-        const year = date.getFullYear();
-        setDate({day, month, year});
+        setDate(createTodayDateObj());
     }
     const checkUser = async () => {
 

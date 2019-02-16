@@ -1,5 +1,5 @@
 
-export const extendObj = fn => newKey => valKey => obj =>({...obj, [newKey]: fn(obj[valKey])});
+export const extendObj = newKey => fn => valKey => (obj = {}) =>({...obj, [newKey]: fn(obj[valKey])});
 
 export const removeObjKey = key => obj => {
     const {[key]: any, ...rest} = obj;

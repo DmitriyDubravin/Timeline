@@ -5,32 +5,22 @@ import {
     FaBullseye,
     FaCalendarAlt
 } from 'react-icons/fa';
+import { createTodayDateObj, createPropsDateObj, propsToDate } from './../../services/time.service';
 
 const DateSwitcher = ({
     date,
     setDate,
-    openPopupDatePicker
+    openPopupDatePicker,
+    getDateDayStartTSMS
 }) => {
 
-    console.log(date);
 
     const switchDay = modificator => {
         const {day, month, year} = date;
-        let date1 = new Date(year, month, day + modificator);
-        let newDay = date1.getDate();
-        let newMonth = date1.getMonth();
-        let newYear = date1.getFullYear();
-        setDate({day: newDay, month: newMonth, year: newYear});
+        setDate(createPropsDateObj({initial: propsToDate(year, month, day + modificator)}));
     }
     const switchToToday = () => {
-        const {day, month, year} = date;
-        let date1 = new Date();
-        let newDay = date1.getDate();
-        let newMonth = date1.getMonth();
-        let newYear = date1.getFullYear();
-        if (day !== newDay || month !== newMonth || year !== newYear) {
-            setDate({day: newDay, month: newMonth, year: newYear});
-        }
+        setDate(createTodayDateObj());
     }
     const goPrev = () => {
         switchDay(-1);
