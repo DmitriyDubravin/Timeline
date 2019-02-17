@@ -5,7 +5,7 @@ export default [
         date: state.date
     }),
     dispatch => ({
-        setDate: function(date) {
+        setDate(date) {
             dispatch(action.setDate(date))
         },
         openPopupDatePicker() {

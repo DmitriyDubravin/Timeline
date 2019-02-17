@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import { FaPlus } from 'react-icons/fa';
-import DateString from './../DateString';
+import DateString from './../date-string';
 import DateSwitcher from './../date-switcher';
 import PageChronometryDefault from './../page-chronometry-default';
 import EventsList from './../events-list';

@@ -11,11 +11,11 @@ function gatherEventsList(range, ranges, events) {
 export default [
     state => ({
         eventsList: gatherEventsList(
-            state.date.dateStr,
+            state.date.format,
             state.eventsData.ranges,
             state.eventsData.events
         ),
-        range: state.date.dateStr
+        range: state.date.format
     }),
     dispatch => ({
         getEvents(payload) {

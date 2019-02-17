@@ -10,14 +10,12 @@ import { createTodayDateObj, createPropsDateObj, propsToDate } from './../../ser
 const DateSwitcher = ({
     date,
     setDate,
-    openPopupDatePicker,
-    getDateDayStartTSMS
+    openPopupDatePicker
 }) => {
-
 
     const switchDay = modificator => {
         const {day, month, year} = date;
-        setDate(createPropsDateObj({initial: propsToDate(year, month, day + modificator)}));
+        setDate(createPropsDateObj(propsToDate(year, month, day + modificator)));
     }
     const switchToToday = () => {
         setDate(createTodayDateObj());

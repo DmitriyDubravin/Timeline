@@ -8,7 +8,7 @@ export const getDate = state => state.date;
 export function* eventAddTask({payload}) {
 
     const { name } = yield select(getUser);
-    const { dateStr } = yield select(getDate);
+    const { format } = yield select(getDate);
 
     const queryData = {...payload, author: name};
 
@@ -16,7 +16,7 @@ export function* eventAddTask({payload}) {
     if (success) {
         yield put(actions.togglePopupEventAdd({ show: false }));
         yield put(actions.eventAdd({
-            range: dateStr,
+            range: format,
             event: addedEvent
         }));
     } else {

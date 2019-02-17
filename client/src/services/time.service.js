@@ -1,7 +1,7 @@
 import { convertNumToTwoDigits } from './math.service';
-import { extendObj } from './object.service';
+import { extendObj, extendObjFromProp } from './object.service';
 import { compose } from 'redux'; // TODO: not from redux
-import { log } from './common.service';
+import { log, forward } from './common.service';
 
 export const getDateYear = date => date.getFullYear();
 export const getDateMonth = date => date.getMonth();
@@ -14,8 +14,7 @@ export const getDateMinute = date => date.getMinutes();
 export const getDateMinuteTwoDigits = date => convertNumToTwoDigits(getDateMinute(date));
 export const getDateSecond = date => date.getSeconds();
 export const getDateMillisecond = date => date.getMilliseconds();
-export const getDateStr = date => `${getDateDayTwoDigits(date)}.${getDateMonthTwoDigits(date)}.${getDateYear(date)}`; // TODO: get rid of this one
-export const formatDate = date => getDateStr(date);
+export const formatDate = date => `${getDateDayTwoDigits(date)}.${getDateMonthTwoDigits(date)}.${getDateYear(date)}`;
 
 export const setDateHour = (...args) => date => {
     date.setHours(...args);
@@ -59,24 +58,23 @@ export const getDateDayFinishTSMS = compose(
     cloneDate
 );
 
-export const createObjWithTodayDate = extendObj('date')(getDateStart)();
+export const createObjWithTodayDate = extendObjFromProp('date')(getDateStart)();
 
-export const createObjWithPropsDate = extendObj('date')(propsToDate)('initial');
+export const createObjWithPropsDate = extendObj('date')(forward)();
 
-export const extendDateObjWithDayStartTSMS = extendObj('start')(getDateDayStartTSMS)('date');
-export const extendDateObjWithDayFinishTSMS = extendObj('finish')(getDateDayFinishTSMS)('date');
+export const extendDateObjWithDayStartTSMS = extendObjFromProp('start')(getDateDayStartTSMS)('date');
+export const extendDateObjWithDayFinishTSMS = extendObjFromProp('finish')(getDateDayFinishTSMS)('date');
 
-export const extendDateObjWithYear = extendObj('year')(getDateYear)('date');
-export const extendDateObjWithMonth = extendObj('month')(getDateMonth)('date');
-export const extendDateObjWithDay = extendObj('day')(getDateDay)('date');
-export const extendDateObjWithHour = extendObj('hour')(getDateHourTwoDigits)('date');
-export const extendDateObjWithMinute = extendObj('minute')(getDateMinuteTwoDigits)('date');
-export const extendDateObjWithSecond = extendObj('second')(getDateSecond)('date');
-export const extendDateObjWithMillisecond = extendObj('millisecond')(getDateMillisecond)('date');
-export const extendDateObjWithDateStr = extendObj('dateStr')(getDateStr)('date');
-export const extendDateObjWithFormat = extendObj('format')(formatDate)('date');
+export const extendDateObjWithYear = extendObjFromProp('year')(getDateYear)('date');
+export const extendDateObjWithMonth = extendObjFromProp('month')(getDateMonth)('date');
+export const extendDateObjWithDay = extendObjFromProp('day')(getDateDay)('date');
+export const extendDateObjWithHour = extendObjFromProp('hour')(getDateHourTwoDigits)('date');
+export const extendDateObjWithMinute = extendObjFromProp('minute')(getDateMinuteTwoDigits)('date');
+export const extendDateObjWithSecond = extendObjFromProp('second')(getDateSecond)('date');
+export const extendDateObjWithMillisecond = extendObjFromProp('millisecond')(getDateMillisecond)('date');
+export const extendDateObjWithFormat = extendObjFromProp('format')(formatDate)('date');
 
-export const extendObjWithDate = extendObj('date')(TSMSToDate);
+export const extendObjWithDate = extendObjFromProp('date')(TSMSToDate);
 
 export const getTS = compose(
     TSMSToTS,
@@ -88,7 +86,6 @@ export const createDateObj = compose(
     extendDateObjWithDayFinishTSMS,
     extendDateObjWithDayStartTSMS,
     extendDateObjWithFormat,
-    extendDateObjWithDateStr,
     extendDateObjWithDay,
     extendDateObjWithMonth,
     extendDateObjWithYear
@@ -100,6 +97,5 @@ export const createTodayDateObj = compose(
 );
 export const createPropsDateObj = compose(
     createDateObj,
-    createObjWithPropsDate,
-    log
+    createObjWithPropsDate
 );

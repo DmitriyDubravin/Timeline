@@ -8,19 +8,20 @@ export const getDate = state => state.date;
 export function* eventsAddTask() {
 
     const {name} = yield select(getUser);
-    const { dateStr, rangeStart, rangeFinish } = yield select(getDate);
+    const { format, start, finish } = yield select(getDate);
 
     const queryData = {
         author: name,
-        rangeName: dateStr,
-        start: rangeStart,
-        finish: rangeFinish
+        rangeName: format,
+        start,
+        finish
     };
+
     const { success, eventsList } = yield call(QM.getEvents, queryData);
 
     if (success) {
         yield put(actions.eventsAdd({
-            range: dateStr,
+            range: format,
             events: eventsList
         }));
     } else {
