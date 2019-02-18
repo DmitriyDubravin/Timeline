@@ -1,5 +1,6 @@
 import { compose } from 'redux';
 import { changeObjKey, removeObjKey } from './object.service';
+import { log } from './common.service';
 import {
     extendDateObjWithHour,
     extendDateObjWithMinute,

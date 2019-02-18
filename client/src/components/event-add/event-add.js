@@ -147,14 +147,14 @@ const EventAdd = ({
             finish += 86400
         }
 
-        addEvent({
-            start,
-            finish,
-            type,
-            category,
-            subcategory,
-            comment
-        })
+        // console.log({
+        //     start,
+        //     finish,
+        //     type,
+        //     category,
+        //     subcategory,
+        //     comment
+        // })
     }
 
 

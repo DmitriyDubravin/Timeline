@@ -27,6 +27,7 @@ export const setDateDayFinish = setDateHour(23,59,59,999);
 export const TSMSToTS = TSMS => Math.floor(TSMS / 1000);
 export const TSToTSMS = TS => TS * 1000;
 export const TSMSToDate = TSMS => new Date(TSMS);
+export const TSToDate = TS => new Date(TSToTSMS(TS));
 export const dateToTSMS = date => +date;
 export const getDate = () => new Date();
 export const propsToDate = (...args) => new Date(...args);
@@ -74,12 +75,13 @@ export const extendDateObjWithSecond = extendObjFromProp('second')(getDateSecond
 export const extendDateObjWithMillisecond = extendObjFromProp('millisecond')(getDateMillisecond)('date');
 export const extendDateObjWithFormat = extendObjFromProp('format')(formatDate)('date');
 
-export const extendObjWithDate = extendObjFromProp('date')(TSMSToDate);
+export const extendObjWithDate = extendObjFromProp('date')(TSToDate);
 
 export const getTS = compose(
     TSMSToTS,
     dateToTSMS,
-    getDate
+    getDate,
+    log,
 );
 
 export const createDateObj = compose(
