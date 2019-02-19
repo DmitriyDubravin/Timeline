@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import DateString from './../date-string';
 import DateSwitcher from './../date-switcher';
@@ -7,10 +7,19 @@ import EventsList from './../events-list';
 
 const PageChronometry = ({
     user,
+    eventsList,
+    range,
+    getEvents,
     openPopupEventAdd,
 }) => {
 
     if (!user.isAuthorized) return <PageChronometryDefault />;
+
+    useEffect(() => {
+        if (!eventsList.length) {
+            getEvents();
+        }
+    }, [range]);
 
     return (
         <Fragment>
@@ -23,7 +32,7 @@ const PageChronometry = ({
             <DateString />
             <DateSwitcher />
             <h2 className="tile main-title">Chronometry page</h2>
-            <EventsList />
+            <EventsList eventsList={eventsList} />
         </Fragment>
     )
 };

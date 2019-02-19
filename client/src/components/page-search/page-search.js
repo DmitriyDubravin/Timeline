@@ -15,9 +15,7 @@ const PageSearch = ({
     user,
     events,
     ranges,
-    search,
-    openPopupEventEdit,
-    openPopupEventRemove
+    search
 }) => {
 
     const initial = {type: '', category: '', subcategory: '', comment: '', ...objectify(queryLocation)};
@@ -38,15 +36,8 @@ const PageSearch = ({
         }
     }, [queryLocation, user]);
 
-    const editEvent = id => {
-        openPopupEventEdit(id);
-    }
-    const removeEvent = id => {
-        openPopupEventRemove(id);
-    }
 
-
-
+    // generalize approach (with page-chronometry)
     const rangeIds = ranges[queryLocation];
     const eventsList = rangeIds === undefined
         ? []
@@ -87,8 +78,7 @@ const PageSearch = ({
                     }}
                 />
             </form>
-            {/* <EventsList eventsListData={eventsList} editCb={editEvent} removeCb={removeEvent} /> */}
-            <EventsList />
+            <EventsList eventsList={eventsList} />
         </div>
     );
 }

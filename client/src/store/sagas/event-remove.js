@@ -8,7 +8,7 @@ export const getDate = state => state.date;
 export function* eventRemoveTask({payload}) {
 
     const { name } = yield select(getUser);
-    const { dateStr } = yield select(getDate);
+    const { format } = yield select(getDate);
 
     const queryData = {
         author: name,
@@ -17,7 +17,7 @@ export function* eventRemoveTask({payload}) {
     const { success } = yield call(QM.removeEvent, queryData);
     if (success) {
         yield put(actions.eventRemove({
-            range: dateStr,
+            range: format,
             eventId: payload.eventId
         }));
     } else {

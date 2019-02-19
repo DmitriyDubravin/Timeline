@@ -9,12 +9,6 @@ export default [
     dispatch => ({
         search(payload) {
             dispatch(actions.eventsSearchTask(payload));
-        },
-        openPopupEventEdit(id) {
-            dispatch(actions.togglePopupEventEdit({ show: true, id }))
-        },
-        openPopupEventRemove(id) {
-            dispatch(actions.togglePopupEventRemove({ show: true, id }))
-        },
+        }
     })
 ];

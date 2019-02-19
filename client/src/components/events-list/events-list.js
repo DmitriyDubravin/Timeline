@@ -1,34 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Event from './../../components/event';
 
 const EventsList = ({
-    range,
-    eventsList,
-    getEvents,
-    openPopupEventEdit,
-    openPopupEventRemove
-}) => {
-
-    useEffect(() => {
-        if (!eventsList.length) {
-            getEvents();
-        }
-    }, [range]);
-
-    return (
-        <div className="events-list">
-            {
-                eventsList.map(event => (
-                    <Event
-                        key={event._id}
-                        editCb={openPopupEventEdit}
-                        removeCb={openPopupEventRemove}
-                        {...event}
-                    />
-                ))
-            }
-        </div>
-    );
-};
+    eventsList
+}) => (
+    <div className="events-list">
+        {eventsList.map(event => <Event key={event._id} {...event} />)}
+    </div>
+);
 
 export default EventsList;
