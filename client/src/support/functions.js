@@ -101,11 +101,11 @@ const eventModel = {
 export const checkEventModel = checkModel(eventModel);
 
 
-export const compose = (...fns) =>
-  fns.reduceRight((prevFn, nextFn) =>
-    (...args) => nextFn(prevFn(...args)),
-    value => value
-  );
+// export const compose = (...fns) =>
+//   fns.reduceRight((prevFn, nextFn) =>
+//     (...args) => nextFn(prevFn(...args)),
+//     value => value
+//   );
 
 export const objectify = str => {
   return QS.parse(str);

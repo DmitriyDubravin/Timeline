@@ -1,6 +1,6 @@
 import { convertNumToTwoDigits } from './math.service';
 import { extendObj, extendObjFromProp } from './object.service';
-import { compose } from 'redux'; // TODO: not from redux
+import { compose } from './functional.service';
 import { log, forward } from './common.service';
 
 export const getDateYear = date => date.getFullYear();
@@ -80,8 +80,7 @@ export const extendObjWithDate = extendObjFromProp('date')(TSToDate);
 export const getTS = compose(
     TSMSToTS,
     dateToTSMS,
-    getDate,
-    log,
+    objToDate,
 );
 
 export const createDateObj = compose(

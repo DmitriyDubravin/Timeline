@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Event from '../Event';
+import Event from './../../components/event';
 
 const EventsList = ({
     range,

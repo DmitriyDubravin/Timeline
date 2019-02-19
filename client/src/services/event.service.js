@@ -1,4 +1,4 @@
-import { compose } from 'redux';
+import { compose } from './functional.service';
 import { changeObjKey, removeObjKey } from './object.service';
 import { log } from './common.service';
 import {

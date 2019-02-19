@@ -147,8 +147,8 @@ const EventEdit = ({
 
     async function submitHandler(e) {
         e.preventDefault();
-        
-        let start = getTS({...date, hour: startHour, minte: startMinute});
+
+        let start = getTS({...date, hour: startHour, minute: startMinute});
         let finish = getTS({...date, hour: finishHour, minute: finishMinute});
         // check if event ends on next day
         if (finish <= start) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import EventsList from './../../components/EventsList';
+import EventsList from './../../components/events-list';
 import {
     removeEmptyKeys,
     checkEventModel,
@@ -87,7 +87,8 @@ const PageSearch = ({
                     }}
                 />
             </form>
-            <EventsList eventsListData={eventsList} editCb={editEvent} removeCb={removeEvent} />
+            {/* <EventsList eventsListData={eventsList} editCb={editEvent} removeCb={removeEvent} /> */}
+            <EventsList />
         </div>
     );
 }

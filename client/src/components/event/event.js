@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 
-export default ({
+const Event = ({
     _id,
     startHour,
     startMinute,
@@ -26,3 +26,5 @@ export default ({
         {comment && <div className="line">{comment}</div>}
     </div>
 );
+
+export default Event;

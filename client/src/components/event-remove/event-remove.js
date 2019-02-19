@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
-import Event from '../Event';
+import Event from './../../components/event';
 
 const EventRemove = ({event, removeEvent}) => {
     const handleRemoveEvent = () => removeEvent({eventId: event._id});
