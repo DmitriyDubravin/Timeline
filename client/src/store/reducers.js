@@ -72,13 +72,3 @@ export const popups = (state = {}, {type, payload}) => {
     }
 }
 
-
-
-export const usersList = (state = {}, {type, data}) => {
-    switch (type) {
-        case "ADD_USERS_LIST":
-            return data;
-        default:
-            return state;
-    }
-}

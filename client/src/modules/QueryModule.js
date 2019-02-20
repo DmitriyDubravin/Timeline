@@ -59,6 +59,12 @@ export default (function() {
                     data
                 })
             },
+            getUsers(data) {
+                return queryServer({
+                    path: paths.getUsersList,
+                    data: {}
+                });
+            },
             confirmEmail(data) {
                 return queryServer({
                     path: paths.emailConfirmation,

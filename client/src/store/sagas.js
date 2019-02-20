@@ -11,6 +11,7 @@ import { eventEditTask } from './sagas/event-edit';
 import { eventRemoveTask } from './sagas/event-remove';
 import { eventsAddTask } from './sagas/events-add';
 import { eventsSearchTask } from './sagas/events-search';
+import { usersAddTask } from './sagas/users-add';
 
 export const getUser = state => state.user;
 export const getDate = state => state.date;
@@ -190,6 +191,9 @@ export function* eventsAddWatcher() {
 export function* eventsSearchWatcher() {
     yield takeEvery(AT.EVENTS_SEARCH_TASK, eventsSearchTask);
 }
+export function* usersAddWatcher() {
+    yield takeEvery(AT.USERS_ADD_TASK, usersAddTask);
+}
 
 
 
@@ -227,6 +231,7 @@ export function* rootSaga() {
         eventRemoveWatcher(),
         eventsAddWatcher(),
         eventsSearchWatcher(),
+        usersAddWatcher(),
 
         getTypesWatcher(),
         getCategoriesWatcher(),

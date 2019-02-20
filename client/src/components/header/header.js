@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import MainLogo from '../main-logo';
+import MainLogo from './../main-logo/main-logo';
 import { FaBars, FaUser } from 'react-icons/fa';
 
 const Header = ({

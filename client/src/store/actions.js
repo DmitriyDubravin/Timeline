@@ -7,6 +7,8 @@ export const eventRemoveTask = payload => ({type: AT.EVENT_REMOVE_TASK, payload}
 export const eventsAddTask = payload => ({type: AT.EVENTS_ADD_TASK, payload});
 export const eventsSearchTask = payload => ({type: AT.EVENTS_SEARCH_TASK, payload});
 
+export const usersAddTask = payload => ({type: AT.USERS_ADD_TASK, payload});
+
 // event
 export const eventAdd = payload => ({type: AT.EVENT_ADD, payload});
 export const eventEdit = payload => ({type: AT.EVENT_EDIT, payload});
@@ -23,11 +25,12 @@ export const togglePopupUserRegister = payload => ({type: AT.TOGGLE_POPUP_USER_R
 export const togglePopupUserLogin = payload => ({type: AT.TOGGLE_POPUP_USER_LOGIN, payload});
 export const togglePopupDatePicker = payload => ({type: AT.TOGGLE_POPUP_DATE_PICKER, payload});
 
+// users
+export const usersAdd = payload => ({type: AT.USERS_ADD, payload});
 
 // --- --- ---
 
 // sagas
-
 
 export const getTypes = payload => ({type: "GET_TYPES", payload});
 export const getCategories = payload => ({type: "GET_CATEGORIES", payload});
@@ -57,8 +60,3 @@ export const setUser = data => ({type: "SET_USER", data: data});
 
 // date
 export const setDate = date => ({type: "SET_DATE", data: date});
-
-
-// usersList
-
-export const addUsersList = usersList => ({type: "ADD_USERS_LIST", data: usersList});

@@ -8,18 +8,18 @@ import { rootSaga } from './sagas';
 import {
     user,
     date,
-    popups,
-    usersList
+    popups
 } from './reducers';
 
 import eventsData from './reducers/events-data';
+import usersList from './reducers/users-data';
 
 const reducers = combineReducers({
     user,
     date,
     popups,
-    usersList,
-    eventsData
+    eventsData,
+    usersList
 });
 
 const logger = createLogger({
@@ -68,8 +68,7 @@ const preloadedState = {
         datePicker: {
             show: false
         },
-    },
-    usersList: null,
+    }
 }
 
 const store = createStore(
