@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import UsersList from './../users-list';
+import UsersList from 'components/users-list';
 
 const PageUsers = ({
     user,

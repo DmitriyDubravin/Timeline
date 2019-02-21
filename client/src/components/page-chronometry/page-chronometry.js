@@ -1,9 +1,9 @@
 import React, { useEffect, Fragment } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import DateString from './../date-string';
-import DateSwitcher from './../date-switcher';
-import PageChronometryDefault from './../page-chronometry-default';
-import EventsList from './../events-list';
+import DateString from 'components/date-string';
+import DateSwitcher from 'components/date-switcher';
+import PageChronometryDefault from 'components/page-chronometry-default';
+import EventsList from 'components/events-list';
 
 const PageChronometry = ({
     user,

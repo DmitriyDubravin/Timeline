@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 
-import Popup from './../popup';
-import NavMain from './../nav-main';
-import NavUser from './../nav-user';
-import EventAdd from './../event-add';
-import EventEdit from './../event-edit';
-import EventRemove from './../event-remove';
-import UserRegister from './../user-register';
-import UserLogin from './../user-login';
-import DatePicker from './../datepicker';
+import Popup from 'components/popup';
+import NavMain from 'components/nav-main';
+import NavUser from 'components/nav-user';
+import EventAdd from 'components/event-add';
+import EventEdit from 'components/event-edit';
+import EventRemove from 'components/event-remove';
+import UserRegister from 'components/user-register';
+import UserLogin from 'components/user-login';
+import DatePicker from 'components/datepicker';
 
 const Popups = ({
     navMain,

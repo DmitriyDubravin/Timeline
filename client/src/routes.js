@@ -1,13 +1,12 @@
 
-import App from './components/app';
-import PageHome from './components/page-home';
-import PageChronometry from './components/page-chronometry';
-import PageNoMatch from './components/page-no-match';
-import PageUsers from './components/page-users';
-import PageUser from './components/page-user';
-import PageUserEmail from './components/page-user-email';
-import PageSearch from './components/page-search';
-
+import App from 'components/app';
+import PageHome from 'components/page-home';
+import PageChronometry from 'components/page-chronometry';
+import PageNoMatch from 'components/page-no-match';
+import PageUsers from 'components/page-users';
+import PageUser from 'components/page-user';
+import PageUserEmail from 'components/page-user-email';
+import PageSearch from 'components/page-search';
 
 export default [
     {

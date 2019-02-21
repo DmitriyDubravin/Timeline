@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {convertNumToTwoDigits} from '../../services/math.service';
-import {getTS} from '../../services/time.service';
+import {convertNumToTwoDigits} from 'services/math.service';
+import {getTS} from 'services/time.service';
 
 const EventAdd = ({
     date,

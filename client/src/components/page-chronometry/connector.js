@@ -1,4 +1,4 @@
-import * as actions from './../../store/actions';
+import * as actions from 'store/actions';
 
 // TODO reselect
 function gatherEventsList(range, ranges, events) {

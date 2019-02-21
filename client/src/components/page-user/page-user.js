@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import UserPasswordChange from './../user-password-change';
-import UserRemove from './../user-remove';
+import UserPasswordChange from 'components/user-password-change';
+import UserRemove from 'components/user-remove';
 
 const PageUser = ({
     match,

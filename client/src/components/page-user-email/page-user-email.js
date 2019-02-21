@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
-import MM from './../../modules/MessageModule';
-import QM from './../../modules/QueryModule';
+import MM from 'modules/MessageModule';
+import QM from 'modules/QueryModule';
 
 const PageUserEmail = () => {
 

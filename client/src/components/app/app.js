@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import {renderRoutes} from 'react-router-config';
-import Header from './../header';
-import Popups from './../popups';
+import Header from 'components/header';
+import Popups from 'components/popups';
 
-import UM from './../../modules/UserModule';
-import QM from './../../modules/QueryModule';
-import MM from './../../modules/MessageModule';
+import UM from 'modules/UserModule';
+import QM from 'modules/QueryModule';
+import MM from 'modules/MessageModule';
 
 // TODO needs more protection agains unauthorized users
 
-import { createTodayDateObj } from './../../services/time.service';
+import { createTodayDateObj } from 'services/time.service';
 
 
 

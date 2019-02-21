@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import EventsList from './../../components/events-list';
+import EventsList from 'components/events-list';
 import {
     removeEmptyKeys,
     checkEventModel,
     objectify,
     querify
-} from './../../support/functions';
-import { Input, Button } from './../forms';
+} from 'support/functions';
+import { Input, Button } from 'components/forms';
 
 
 

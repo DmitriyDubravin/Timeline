@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import PageHomeDefault from './../page-home-default';
-import Donut from './../D3Donut';
+import PageHomeDefault from 'components/page-home-default';
+import Donut from 'components/D3Donut';
 
 const PageHome = ({
     user

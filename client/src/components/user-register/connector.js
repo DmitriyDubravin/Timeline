@@ -1,4 +1,4 @@
-import * as action from './../../store/actions';
+import * as action from 'store/actions';
 
 
 export default [

@@ -1,4 +1,4 @@
-import * as action from './../../store/actions';
+import * as action from 'store/actions';
 
 //TODO: remove this example
 const customProps = customProps => (stateProps, dispatchProps, ownProps) => ({ ...ownProps, ...stateProps, ...dispatchProps, ...customProps });

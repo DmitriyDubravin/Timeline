@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button } from './../forms';
+import { Input, Button } from 'components/forms';
 
 const UserPasswordChange = ({
     change
