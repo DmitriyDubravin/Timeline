@@ -10,6 +10,7 @@ const PageUserEmail = () => {
 
     async function confirmEmail() {
 
+        // TODO
         const queryData = {
             hash: this.props.match.params.hash
         };

@@ -1,12 +1,5 @@
 import * as actions from 'store/actions';
-
-// TODO reselect
-function gatherEventsList(range, ranges, events) {
-    const rangeData = ranges[range];
-    return (rangeData === undefined) 
-        ? []
-        : rangeData.map(id => events[id]);
-}
+import { gatherEventsList } from 'support/functions';
 
 export default [
     state => ({

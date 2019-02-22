@@ -45,6 +45,16 @@ export const withQuery = queryFn => Component => class extends React.Component {
     }
 }
 
+
+export const gatherEventsList = (range, ranges, events) => {
+    const rangeData = ranges[range];
+    return rangeData === undefined
+        ? []
+        : rangeData.map(id => events[id]);
+}
+
+
+
 export const tryCatch = promise => promise
     .then(data => ({...data}))
     .catch(err => ({err}));

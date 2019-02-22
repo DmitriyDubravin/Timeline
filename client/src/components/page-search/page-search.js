@@ -7,6 +7,7 @@ import {
     querify
 } from 'support/functions';
 import { Input, Button } from 'components/forms';
+import { gatherEventsList } from 'support/functions';
 
 
 
@@ -36,14 +37,7 @@ const PageSearch = ({
         }
     }, [queryLocation, user]);
 
-
-    // generalize approach (with page-chronometry)
-    const rangeIds = ranges[queryLocation];
-    const eventsList = rangeIds === undefined
-        ? []
-        : rangeIds.map(id => {
-            return checkEventModel(events[id])
-        });
+    const eventsList = gatherEventsList(queryLocation, ranges, events);
 
     return (
         <div>
