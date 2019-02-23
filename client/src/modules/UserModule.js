@@ -3,15 +3,14 @@ import {
     checkCookie,
     getCookie,
     deleteCookie
-} from './../support/cookies';
-import * as action from './../store/actions';
+} from 'support/cookies';
 
 export default (function() {
     var instance = null;
     if (!instance) {
         instance = {
-            setToken(token) {
-                setCookie(token);
+            setToken(payload) {
+                setCookie('token', payload);
             },
             checkToken() {
                 return checkCookie('token');
@@ -21,21 +20,7 @@ export default (function() {
             },
             deleteToken() {
                 deleteCookie('token');
-            },
-            setUser(dispatch, name, token) {
-                dispatch(action.setUser({
-                    name: name,
-                    token: token,
-                    isAuthorized: true
-                }))
-            },
-            unsetUser(dispatch) {
-                dispatch(action.setUser({
-                    name: false,
-                    token: false,
-                    isAuthorized: false
-                }));
-            },
+            }
         }
     }
     return instance;

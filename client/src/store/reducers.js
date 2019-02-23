@@ -1,28 +1,4 @@
 
-export const user = (state = {}, {type, data}) => {
-    switch (type) {
-        case "SET_USER":
-            return {...state, ...data}
-        // case "SET_USER_NAME":
-        //     return {...state, name: data}
-        // case "SET_USER_TOKEN":
-        //     return {...state, token: data}
-        // case "SET_USER_AUTHORIZATION":
-        //     return {...state, isAuthorized: data}
-        default:
-            return state;
-    }
-}
-
-export const date = (state = {}, {type, data}) => {
-    switch (type) {
-        case "SET_DATE":
-            return data;
-        default:
-            return state;
-    }
-}
-
 
 
 export const popups = (state = {}, {type, payload}) => {

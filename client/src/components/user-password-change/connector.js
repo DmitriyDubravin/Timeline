@@ -1,10 +1,10 @@
-import * as action from 'store/actions';
+import * as actions from 'store/actions';
 
 export default [
     null,
     dispatch => ({
         change(payload) {
-            dispatch(action.userPasswordChange(payload))
+            dispatch(actions.userPasswordChange(payload))
         }
     })
 ];

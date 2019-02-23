@@ -1,8 +1,8 @@
 
-export function setCookie(token) {
+export function setCookie(name, payload) {
     let expires = new Date();
     expires.setDate(expires.getDate() + 30);
-    document.cookie = `token=${token}; expires=${expires.toUTCString()}; path=/`;
+    document.cookie = `${name}=${payload}; expires=${expires.toUTCString()}; path=/`;
 }
 
 export function checkCookie(name) {

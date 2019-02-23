@@ -1,4 +1,4 @@
-import * as action from 'store/actions';
+import * as actions from 'store/actions';
 
 export default [
     state => ({
@@ -6,10 +6,10 @@ export default [
     }),
     dispatch => ({
         setDate(date) {
-            dispatch(action.setDate(date))
+            dispatch(actions.setDate(date))
         },
         openPopupDatePicker() {
-            dispatch(action.togglePopupDatePicker({ show: true }))
+            dispatch(actions.togglePopupDatePicker({ show: true }))
         }
     })
 ];

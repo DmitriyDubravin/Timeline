@@ -1,4 +1,4 @@
-import * as action from 'store/actions';
+import * as actions from 'store/actions';
 
 export default [
     state => ({
@@ -13,28 +13,28 @@ export default [
     }),
     dispatch => ({
         closePopupNavMain() {
-            dispatch(action.togglePopupNavMain({ show: false }))
+            dispatch(actions.togglePopupNavMain({ show: false }))
         },
         closePopupNavUser() {
-            dispatch(action.togglePopupNavUser({ show: false }))
+            dispatch(actions.togglePopupNavUser({ show: false }))
         },
         closePopupEventAdd() {
-            dispatch(action.togglePopupEventAdd({ show: false }))
+            dispatch(actions.togglePopupEventAdd({ show: false }))
         },
         closePopupEventEdit(id = null) {
-            dispatch(action.togglePopupEventEdit({ show: false, id }))
+            dispatch(actions.togglePopupEventEdit({ show: false, id }))
         },
         closePopupEventRemove(id = null) {
-            dispatch(action.togglePopupEventRemove({ show: false, id }))
+            dispatch(actions.togglePopupEventRemove({ show: false, id }))
         },
         closePopupUserRegister() {
-            dispatch(action.togglePopupUserRegister({ show: false }))
+            dispatch(actions.togglePopupUserRegister({ show: false }))
         },
         closePopupUserLogin() {
-            dispatch(action.togglePopupUserLogin({ show: false }))
+            dispatch(actions.togglePopupUserLogin({ show: false }))
         },
         closePopupDatePicker() {
-            dispatch(action.togglePopupDatePicker({ show: false }))
+            dispatch(actions.togglePopupDatePicker({ show: false }))
         }
     })
 ];

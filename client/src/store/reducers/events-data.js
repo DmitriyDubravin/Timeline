@@ -1,6 +1,6 @@
-import AT from './../actions-types';
+import AT from 'store/actions-types';
 
-import { extendEventWithHoursMinutes } from './../../services/event.service';
+import { extendEventWithHoursMinutes } from 'services/event.service';
 
 const initialState = {
     ranges: {},

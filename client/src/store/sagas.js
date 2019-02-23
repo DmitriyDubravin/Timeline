@@ -1,7 +1,7 @@
 
 import { all, call, put, takeEvery, select } from 'redux-saga/effects';
 import AT from './actions-types';
-import * as action from './actions';
+import * as actions from './actions';
 import QM from './../modules/QueryModule';
 import UM from './../modules/UserModule';
 
@@ -11,11 +11,10 @@ import { eventEditTask } from './sagas/event-edit';
 import { eventRemoveTask } from './sagas/event-remove';
 import { eventsAddTask } from './sagas/events-add';
 import { eventsSearchTask } from './sagas/events-search';
+import { userAddTask } from './sagas/user-add';
 import { usersAddTask } from './sagas/users-add';
-
 export const getUser = state => state.user;
 export const getDate = state => state.date;
-
 
 export function* getTypes() {
     console.log('saga: getTypes');
@@ -29,7 +28,7 @@ export function* getTypes() {
     if (success) {
         const sortedDataList = typesList.filter(item => item.length !== 0).sort();
         // console.log(sortedDataList);
-        yield put(action.setTypes(sortedDataList));
+        yield put(actions.setTypes(sortedDataList));
     } else {
         // TODO: no errors handling
     }
@@ -48,7 +47,7 @@ export function* getCategories({payload}) {
     if (success) {
         const sortedDataList = categoriesList.filter(item => item.length !== 0).sort();
         // console.log(sortedDataList);
-        yield put(action.setCategories(sortedDataList));
+        yield put(actions.setCategories(sortedDataList));
     } else {
         // TODO: no errors handling
     }
@@ -67,7 +66,7 @@ export function* getSubcategories({payload}) {
     if (success) {
         const sortedDataList = subcategoriesList.filter(item => item.length !== 0).sort();
         // console.log(sortedDataList);
-        yield put(action.setSubcategories(sortedDataList));
+        yield put(actions.setSubcategories(sortedDataList));
     } else {
         // TODO: no errors handling
     }
@@ -87,9 +86,11 @@ export function* userRegister({payload}) {
         // TODO: handle global messages
     }
 
-    yield put(action.togglePopupUserRegister({ show: false }));
+    yield put(actions.togglePopupUserRegister({ show: false }));
 
 }
+
+
 export function* userLogin({payload}) {
     console.log('saga: userLogin');
 
@@ -101,13 +102,13 @@ export function* userLogin({payload}) {
     const { success, cause, name, token } = yield call(QM.loginUser, queryData);
     // TODO: check UM for unsetUser function
     if (success) {
-        yield put(action.setUser({
+        yield put(actions.userAdd({
             name: name,
             token: token,
             isAuthorized: true
         }));
         UM.setToken(token);
-        yield put(action.togglePopupUserLogin({ show: false }));
+        yield put(actions.togglePopupUserLogin({ show: false }));
     } else {
         if (cause === 'email') {
             // TODO
@@ -131,7 +132,7 @@ export function* userPasswordChange({payload}) {
 
     if (success) {
         // TODO: reconsider logout after password changing
-        yield put(action.setUser({
+        yield put(actions.userAdd({
             name: false,
             token: false,
             isAuthorized: false
@@ -144,7 +145,7 @@ export function* userLogout() {
     console.log('saga: userLogout');
 
     // TODO: check UM for unsetUser function
-    yield put(action.setUser({
+    yield put(actions.userAdd({
         name: false,
         token: false,
         isAuthorized: false
@@ -164,7 +165,7 @@ export function* userRemove({payload}) {
     const {success} = yield call(QM.deleteUser, queryData);
 
     if (success) {
-        yield put(action.setUser({
+        yield put(actions.userAdd({
             name: false,
             token: false,
             isAuthorized: false
@@ -193,6 +194,9 @@ export function* eventsSearchWatcher() {
 }
 export function* usersAddWatcher() {
     yield takeEvery(AT.USERS_ADD_TASK, usersAddTask);
+}
+export function* userAddWatcher() {
+    yield takeEvery(AT.USER_ADD_TASK, userAddTask)
 }
 
 
@@ -232,6 +236,9 @@ export function* rootSaga() {
         eventsAddWatcher(),
         eventsSearchWatcher(),
         usersAddWatcher(),
+
+        userAddWatcher(),
+
 
         getTypesWatcher(),
         getCategoriesWatcher(),

@@ -1,4 +1,4 @@
-import * as action from 'store/actions';
+import * as actions from 'store/actions';
 
 export default [
     state => ({
@@ -11,15 +11,15 @@ export default [
         },
         register() {
             closePopup();
-            dispatch(action.togglePopupUserRegister({ show: true }))
+            dispatch(actions.togglePopupUserRegister({ show: true }))
         },
         login() {
             closePopup();
-            dispatch(action.togglePopupUserLogin({ show: true }))
+            dispatch(actions.togglePopupUserLogin({ show: true }))
         },
         logout() {
             closePopup();
-            dispatch(action.userLogout());
+            dispatch(actions.userLogout());
         },
     })
 ];

@@ -1,4 +1,4 @@
-import * as action from 'store/actions';
+import * as actions from 'store/actions';
 
 export default [
     state => ({
@@ -7,7 +7,7 @@ export default [
     (dispatch, { closePopup }) => ({
         removeEvent(payload) {
             closePopup();
-            dispatch(action.eventRemoveTask(payload));
+            dispatch(actions.eventRemoveTask(payload));
         }
     })
 ];

@@ -1,5 +1,4 @@
 import React from 'react';
-// import {render} from 'react-dom';
 import {render} from 'react-snapshot';
 import {Provider} from 'react-redux';
 import BrowserRouter from 'react-router-dom/BrowserRouter';

@@ -6,20 +6,20 @@ import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from './sagas';
 
 import {
-    user,
-    date,
     popups
 } from './reducers';
 
+import date from './reducers/date-data';
 import eventsData from './reducers/events-data';
 import usersList from './reducers/users-data';
+import user from './reducers/user-data';
 
 const reducers = combineReducers({
-    user,
     date,
     popups,
     eventsData,
-    usersList
+    usersList,
+    user
 });
 
 const logger = createLogger({

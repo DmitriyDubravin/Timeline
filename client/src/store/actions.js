@@ -1,32 +1,49 @@
 import AT from './actions-types';
 
+const action = type => payload => ({type, payload});
+
+let a = {};
+for (const key in AT) {
+    const type = AT[key].split('_').map((name, index) => {
+        return index !== 0
+            ? name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+            : name.toLowerCase();
+    }).join('');
+    a[type] = payload => ({type, payload});
+};
+
+export {a};
+
+
 // tasks
-export const eventAddTask = payload => ({type: AT.EVENT_ADD_TASK, payload});
-export const eventEditTask = payload => ({type: AT.EVENT_EDIT_TASK, payload});
-export const eventRemoveTask = payload => ({type: AT.EVENT_REMOVE_TASK, payload});
-export const eventsAddTask = payload => ({type: AT.EVENTS_ADD_TASK, payload});
-export const eventsSearchTask = payload => ({type: AT.EVENTS_SEARCH_TASK, payload});
-
-export const usersAddTask = payload => ({type: AT.USERS_ADD_TASK, payload});
-
+export const eventAddTask = action(AT.EVENT_ADD_TASK);
+export const eventEditTask = action(AT.EVENT_EDIT_TASK);
+export const eventRemoveTask = action(AT.EVENT_REMOVE_TASK);
+export const eventsAddTask = action(AT.EVENTS_ADD_TASK);
+export const eventsSearchTask = action(AT.EVENTS_SEARCH_TASK);
+export const userAddTask = action(AT.USER_ADD_TASK);
+export const usersAddTask = action(AT.USERS_ADD_TASK);
+// date
+export const setDate = action(AT.DATE_ADD);
 // event
-export const eventAdd = payload => ({type: AT.EVENT_ADD, payload});
-export const eventEdit = payload => ({type: AT.EVENT_EDIT, payload});
-export const eventRemove = payload => ({type: AT.EVENT_REMOVE, payload});
-export const eventsAdd = payload => ({type: AT.EVENTS_ADD, payload});
-
+export const eventAdd = action(AT.EVENT_ADD);
+export const eventEdit = action(AT.EVENT_EDIT);
+export const eventRemove = action(AT.EVENT_REMOVE);
+// events
+export const eventsAdd = action(AT.EVENTS_ADD);
 // popups
-export const togglePopupNavMain = payload => ({type: AT.TOGGLE_POPUP_NAV_MAIN, payload});
-export const togglePopupNavUser = payload => ({type: AT.TOGGLE_POPUP_NAV_USER, payload});
-export const togglePopupEventAdd = payload => ({ type: AT.TOGGLE_POPUP_EVENT_ADD, payload });
-export const togglePopupEventEdit = payload => ({ type: AT.TOGGLE_POPUP_EVENT_EDIT, payload });
-export const togglePopupEventRemove = payload => ({type: AT.TOGGLE_POPUP_EVENT_REMOVE, payload});
-export const togglePopupUserRegister = payload => ({type: AT.TOGGLE_POPUP_USER_REGISTER, payload});
-export const togglePopupUserLogin = payload => ({type: AT.TOGGLE_POPUP_USER_LOGIN, payload});
-export const togglePopupDatePicker = payload => ({type: AT.TOGGLE_POPUP_DATE_PICKER, payload});
-
+export const togglePopupNavMain = action(AT.TOGGLE_POPUP_NAV_MAIN);
+export const togglePopupNavUser = action(AT.TOGGLE_POPUP_NAV_USER);
+export const togglePopupEventAdd = action(AT.TOGGLE_POPUP_EVENT_ADD);
+export const togglePopupEventEdit = action(AT.TOGGLE_POPUP_EVENT_EDIT);
+export const togglePopupEventRemove = action(AT.TOGGLE_POPUP_EVENT_REMOVE);
+export const togglePopupUserRegister = action(AT.TOGGLE_POPUP_USER_REGISTER);
+export const togglePopupUserLogin = action(AT.TOGGLE_POPUP_USER_LOGIN);
+export const togglePopupDatePicker = action(AT.TOGGLE_POPUP_DATE_PICKER);
+// user
+export const usersAdd = action(AT.USERS_ADD);
 // users
-export const usersAdd = payload => ({type: AT.USERS_ADD, payload});
+export const userAdd = action(AT.USER_ADD);
 
 // --- --- ---
 
@@ -49,14 +66,3 @@ export const userPasswordChange = payload => ({type: 'USER_PASSWORD_CHANGE', pay
 
 // end sagas
 
-// user
-export const setUser = data => ({type: "SET_USER", data: data});
-
-
-
-// export const setUserName = name => ({type: "SET_USER_NAME", data: name});
-// export const setUserToken = token => ({type: "SET_USER_TOKEN", data: token});
-// export const setUserAuthorization = boolean => ({type: "SET_USER_AUTHORIZATION", data: boolean});
-
-// date
-export const setDate = date => ({type: "SET_DATE", data: date});

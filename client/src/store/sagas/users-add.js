@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects';
-import * as actions from './../actions';
-import QM from './../../modules/QueryModule';
+import * as actions from 'store/actions';
+import QM from 'modules/QueryModule';
 
 export function* usersAddTask() {
 

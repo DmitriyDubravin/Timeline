@@ -1,4 +1,4 @@
-import * as action from 'store/actions';
+import * as actions from 'store/actions';
 
 export default [
     state => ({
@@ -7,10 +7,10 @@ export default [
     }),
     dispatch => ({
         openPopupNavMain() {
-            dispatch(action.togglePopupNavMain({ show: true }))
+            dispatch(actions.togglePopupNavMain({ show: true }))
         },
         openPopupNavUser() {
-            dispatch(action.togglePopupNavUser({ show: true}))
+            dispatch(actions.togglePopupNavUser({ show: true}))
         },
     })
 ];
