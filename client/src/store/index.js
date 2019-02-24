@@ -5,14 +5,11 @@ import createSagaMiddleware from 'redux-saga';
 
 import { rootSaga } from './sagas';
 
-import {
-    popups
-} from './reducers';
-
-import date from './reducers/date-data';
-import eventsData from './reducers/events-data';
-import usersList from './reducers/users-data';
-import user from './reducers/user-data';
+import date from './reducers/date';
+import eventsData from './reducers/events';
+import usersList from './reducers/users';
+import user from './reducers/user';
+import popups from './reducers/popups';
 
 const reducers = combineReducers({
     date,
@@ -30,50 +27,10 @@ const logger = createLogger({
 
 const sagaMiddleware = createSagaMiddleware();
 
-const preloadedState = {
-    user: {
-        name: undefined,
-        token: undefined,
-        isAuthorized: undefined
-    },
-    date: {
-        year: null,
-        month: null,
-        day: null,
-    },
-    popups: {
-        navMain: {
-            show: false
-        },
-        navUser: {
-            show: false
-        },
-        eventAdd: {
-            show: false
-        },
-        eventEdit: {
-            show: false,
-            id: null
-        },
-        eventRemove: {
-            show: false,
-            id: null
-        },
-        userRegister: {
-            show: false
-        },
-        userLogin: {
-            show: false
-        },
-        datePicker: {
-            show: false
-        },
-    }
-}
 
 const store = createStore(
     reducers,
-    preloadedState,
+    {},
     applyMiddleware(thunk, logger, sagaMiddleware)
 );
 
@@ -82,4 +39,3 @@ sagaMiddleware.run(rootSaga);
 // const action = type => store.dispatch({type})
 
 export default store;
-

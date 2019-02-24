@@ -1,10 +1,10 @@
 import { call, put } from 'redux-saga/effects';
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 import UM from 'modules/UserModule';
 import MM from 'modules/MessageModule';
 
-export function* userAddTask({}) {
+export function* userAddTask() {
 
     console.log('saga: setUser');
 

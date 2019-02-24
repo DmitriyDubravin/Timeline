@@ -1,6 +1,6 @@
 import { compose } from './functional.service';
 import { changeObjKey, removeObjKey } from './object.service';
-import { log } from './common.service';
+// import { log } from './common.service';
 import {
     extendDateObjWithHour,
     extendDateObjWithMinute,

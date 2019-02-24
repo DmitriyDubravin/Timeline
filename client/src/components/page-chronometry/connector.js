@@ -1,4 +1,4 @@
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 import { gatherEventsList } from 'support/functions';
 
 export default [

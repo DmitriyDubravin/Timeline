@@ -1,10 +1,14 @@
 import AT from 'store/actions-types';
 
-const initialState = {};
+const initialState = {
+    year: null,
+    month: null,
+    day: null
+};
 
 export default (state = initialState, {type, payload}) => {
     switch (type) {
-        case AT.USER_ADD:
+        case AT.DATE_ADD:
             return payload;
         default:
             return state;

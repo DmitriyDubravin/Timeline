@@ -1,5 +1,5 @@
 import { call, put, select } from 'redux-saga/effects';
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 
 export const getUser = state => state.user;

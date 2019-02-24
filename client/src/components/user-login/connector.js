@@ -1,10 +1,10 @@
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 
 export default [
     null,
     dispatch => ({
         login(payload) {
-            dispatch(actions.userLogin(payload))
+            dispatch(actions.userLoginTask(payload))
         }
     })
 ];

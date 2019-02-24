@@ -1,17 +1,13 @@
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 import { createTodayDateObj } from 'services/time.service';
-
-
-console.log(actions);
 
 export default [
     state => ({
         user: state.user
     }),
     dispatch => ({
-        dispatch,
         setDate() {
-            dispatch(actions.setDate(createTodayDateObj()))
+            dispatch(actions.dateAdd(createTodayDateObj()))
         },
         setUser() {
             dispatch(actions.userAddTask());

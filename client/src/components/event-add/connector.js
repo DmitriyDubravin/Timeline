@@ -1,4 +1,4 @@
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 
 export default [
     state => ({
@@ -9,13 +9,13 @@ export default [
     }),
     dispatch => ({
         getTypes() {
-            dispatch(actions.getTypes());
+            dispatch(actions.typesAddTask());
         },
-        getCategories(type) {
-            dispatch(actions.getCategories(type));
+        getCategories(payload) {
+            dispatch(actions.categoriesAddTask(payload));
         },
-        getSubcategories(category) {
-            dispatch(actions.getSubcategories(category));
+        getSubcategories(payload) {
+            dispatch(actions.subcategoriesAddTask(payload));
         },
         addEvent(payload) {
             dispatch(actions.eventAddTask(payload))

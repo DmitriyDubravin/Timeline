@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import EventsList from 'components/events-list';
 import {
     removeEmptyKeys,
-    checkEventModel,
     objectify,
     querify
 } from 'support/functions';

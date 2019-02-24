@@ -1,4 +1,4 @@
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 
 export default [
     state => ({
@@ -19,7 +19,7 @@ export default [
         },
         logout() {
             closePopup();
-            dispatch(actions.userLogout());
+            dispatch(actions.userLogoutTask());
         },
     })
 ];

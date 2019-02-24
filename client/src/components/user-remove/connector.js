@@ -1,10 +1,10 @@
-import * as actions from 'store/actions';
+import actions from 'store/actions';
 
 export default [
     null,
     dispatch => ({
         remove(payload) {
-            dispatch(actions.userRemove(payload))
+            dispatch(actions.userRemoveTask(payload))
         }
     })
 ];

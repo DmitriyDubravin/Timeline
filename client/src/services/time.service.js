@@ -1,7 +1,7 @@
 import { convertNumToTwoDigits } from './math.service';
 import { extendObj, extendObjFromProp } from './object.service';
 import { compose } from './functional.service';
-import { log, forward } from './common.service';
+import { forward } from './common.service';
 
 export const getDateYear = date => date.getFullYear();
 export const getDateMonth = date => date.getMonth();
