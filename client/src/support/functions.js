@@ -1,6 +1,12 @@
 import React from 'react';
 import queryServer from './../queryServer';
 import QS from 'query-string';
+import {connect} from 'react-redux';
+
+export default function ConditionalRender(condition, COMPONENT) {
+    let mapState = condition => state => ({mount: condition(state)});
+    return connect(mapState(condition))(props => props.mount ? <COMPONENT {...props} /> : null);
+}
 
 
 export const getRange = (start, finish) => {
