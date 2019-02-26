@@ -1,23 +1,10 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
-import { rootSaga } from './sagas';
-
-import date from './reducers/date';
-import eventsData from './reducers/events';
-import usersList from './reducers/users';
-import user from './reducers/user';
-import popups from './reducers/popups';
-
-const reducers = combineReducers({
-    date,
-    popups,
-    eventsData,
-    usersList,
-    user
-});
+import reducers from 'store/reducers';
+import { rootSaga } from 'store/sagas';
 
 const logger = createLogger({
     collapsed: true,
@@ -27,7 +14,6 @@ const logger = createLogger({
 
 const sagaMiddleware = createSagaMiddleware();
 
-
 const store = createStore(
     reducers,
     {},
@@ -35,7 +21,5 @@ const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
-
-// const action = type => store.dispatch({type})
 
 export default store;
