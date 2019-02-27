@@ -1,5 +1,6 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import actions from 'store/actions';
+import AT from 'store/actions-types';
 import QM from 'modules/QueryModule';
 import UM from 'modules/UserModule';
 import MM from 'modules/MessageModule';
@@ -44,4 +45,8 @@ export function* userAddTask() {
         }))
         MM.userIsGuest().log();
     }
+}
+
+export function* userAddWatcher() {
+    yield takeEvery(AT.USER_ADD_TASK, userAddTask)
 }

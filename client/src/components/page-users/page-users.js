@@ -8,11 +8,10 @@ const PageUsers = ({
 }) => {
 
     useEffect(() => {
-        // TODO: remove user
-        if (user.isAuthorized && !usersList.length) {
+        if (!usersList.length) {
             getUsers();
         }
-    }, [usersList, user]);
+    }, [usersList]);
 
     return (
         <Fragment>

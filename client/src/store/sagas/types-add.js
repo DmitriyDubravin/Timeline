@@ -1,4 +1,5 @@
-import { call, put, select } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import AT from 'store/actions-types';
 import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 
@@ -20,4 +21,8 @@ export function* typesAddTask() {
     } else {
         // TODO: no errors handling
     }
+}
+
+export function* typesAddWatcher() {
+    yield takeEvery(AT.TYPES_ADD_TASK, typesAddTask);
 }

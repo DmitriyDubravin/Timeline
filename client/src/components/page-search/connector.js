@@ -2,7 +2,6 @@ import actions from 'store/actions';
 
 export default [
     state => ({
-        user: state.user,
         events: state.eventsData.events,
         ranges: state.eventsData.ranges
     }),

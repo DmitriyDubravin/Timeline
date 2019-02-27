@@ -1,4 +1,5 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import AT from 'store/actions-types';
 import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 import UM from 'modules/UserModule';
@@ -27,5 +28,8 @@ export function* userLoginTask({payload}) {
             // set global message about Email confirmation
         }
     }
+}
 
+export function* userLoginWatcher() {
+    yield takeEvery(AT.USER_LOGIN_TASK, userLoginTask);
 }

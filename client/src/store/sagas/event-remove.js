@@ -1,4 +1,5 @@
-import { call, put, select } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import AT from 'store/actions-types';
 import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 
@@ -23,5 +24,8 @@ export function* eventRemoveTask({payload}) {
     } else {
         // TODO: no errors handling
     }
+}
 
+export function* eventRemoveWatcher() {
+    yield takeEvery(AT.EVENT_REMOVE_TASK, eventRemoveTask);
 }

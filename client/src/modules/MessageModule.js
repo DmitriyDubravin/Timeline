@@ -1,4 +1,4 @@
-
+// TODO: refactoring maybe?
 const messages = {
     loginSuccess: "You've been logged in",
     loginFailure: "Wrong login / password",

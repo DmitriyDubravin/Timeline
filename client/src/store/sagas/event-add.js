@@ -1,4 +1,5 @@
-import { call, put, select } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import AT from 'store/actions-types';
 import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 
@@ -23,4 +24,8 @@ export function* eventAddTask({payload}) {
         // TODO!
         console.log('c%Adding Error', 'color: red');
     }
+}
+
+export function* eventAddWatcher() {
+    yield takeEvery(AT.EVENT_ADD_TASK, eventAddTask);
 }

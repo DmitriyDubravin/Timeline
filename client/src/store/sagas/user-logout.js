@@ -1,4 +1,5 @@
-import { put } from 'redux-saga/effects';
+import { put, takeEvery } from 'redux-saga/effects';
+import AT from 'store/actions-types';
 import actions from 'store/actions';
 import UM from 'modules/UserModule';
 
@@ -14,3 +15,6 @@ export function* userLogoutTask() {
     UM.deleteToken();
 }
 
+export function* userLogoutWatcher() {
+    yield takeEvery(AT.USER_LOGOUT_TASK, userLogoutTask);
+}

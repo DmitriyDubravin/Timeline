@@ -1,4 +1,5 @@
-import { call, put, select } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import AT from 'store/actions-types';
 import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 import UM from 'modules/UserModule';
@@ -24,4 +25,8 @@ export function* userRemoveTask({payload}) {
         }));
         UM.deleteToken();
     }
+}
+
+export function* userRemoveWatcher() {
+    yield takeEvery(AT.USER_REMOVE_TASK, userRemoveTask);
 }

@@ -30,11 +30,10 @@ const PageSearch = ({
 
 
     useEffect(() => {
-        // TODO: remove user
-        if (user.isAuthorized && queryLocation.length > 0) {
+        if (queryLocation.length > 0) {
             search({query: queryLocation});
         }
-    }, [queryLocation, user]);
+    }, [queryLocation]);
 
     const eventsList = gatherEventsList(queryLocation, ranges, events);
 
