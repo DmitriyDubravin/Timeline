@@ -1,5 +1,8 @@
 
 module.exports = {
+
+    userCreate: "/user-create",
+
     getTypes: "/get-types",
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",
@@ -12,7 +15,6 @@ module.exports = {
     getUsersList: "/get-users-list",
     tokenAcknowledge: "/token-acknowledge",
 
-    registerUser: "/register-user",
     loginUser: "/login-user",
     changeUserPassword: "/change-user-password",
     deleteUser: "/delete-user",

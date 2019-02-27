@@ -13,7 +13,6 @@ export function* userLoginTask({payload}) {
     };
 
     const { success, cause, name, token } = yield call(QM.loginUser, queryData);
-    // TODO: check UM for unsetUser function
     if (success) {
         yield put(actions.userAdd({
             name: name,
@@ -27,6 +26,11 @@ export function* userLoginTask({payload}) {
             // TODO
             // set global message about Email confirmation
         }
+        yield put(actions.userAdd({
+            name: false,
+            token: false,
+            isAuthorized: false
+        }))
     }
 }
 

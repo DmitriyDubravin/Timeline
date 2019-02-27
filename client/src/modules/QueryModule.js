@@ -79,7 +79,7 @@ export default (function() {
             },
             registerUser(data) {
                 return queryServer({
-                    path: paths.registerUser,
+                    path: paths.userCreate,
                     data
                 })
             },

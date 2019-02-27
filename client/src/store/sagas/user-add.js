@@ -25,7 +25,6 @@ export function* userAddTask() {
                 token: token,
                 isAuthorized: true
             }))
-            // TODO: reconsider
             MM.tokenAcknowledgeSuccess().log();
 
         } else {
