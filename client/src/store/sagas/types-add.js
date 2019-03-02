@@ -16,7 +16,6 @@ export function* typesAddTask() {
     const {success, typesList} = yield call(QM.getTypes, queryData);
     if (success) {
         const sortedDataList = typesList.filter(item => item.length !== 0).sort();
-        // console.log(sortedDataList);
         yield put(actions.typesAdd(sortedDataList));
     } else {
         // TODO: no errors handling

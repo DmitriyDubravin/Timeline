@@ -1,5 +1,8 @@
 const f = require('./support/functions');
 const e = require('./support/errors');
+const F = require('./support/ff');
+
+const { send, setStatus500 } = F;
 
 const composePromise = (...functions) =>
     initialValue =>
@@ -25,7 +28,11 @@ const log = data => {
 
 module.exports = async function(req, res) {
 
-    
+    composePromise(
+        send,
+        e.findEventsError,
+        setStatus500
+    )(res);
 
     console.log('\n\n\nGET EVENTS LIST QUERY\n\n\n');
 
@@ -40,8 +47,6 @@ module.exports = async function(req, res) {
         tC,
         f.findEvents,
     )(findEventsOptions);
-
-    console.log(data);
 
 
     // const {data, err} = await f.tryCatch(f.findEvents(findEventsOptions));

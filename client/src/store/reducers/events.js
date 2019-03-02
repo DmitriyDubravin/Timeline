@@ -69,12 +69,12 @@ export default (state = initialState, {type, payload}) => {
             };
         }
 
-        case "SET_TYPES":
+        case AT.TYPES_ADD:
             return {
                 ...state,
                 types: payload
             };
-        case "SET_CATEGORIES":
+        case AT.CATEGORIES_ADD:
             return {
                 ...state,
                 categories: payload
