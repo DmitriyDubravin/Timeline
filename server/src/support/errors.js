@@ -4,10 +4,6 @@ const setErrorMessage = message => res => res.send({});
 
 module.exports = {
 
-    findEventsError: res => res.status(500).send({
-        message: '\nServer error while searching for events\n\n'
-    }),
-
     findUserNameError: res => res.status(500).send({
         message: '\nServer error while searching for user by name\n\n'
     }),
