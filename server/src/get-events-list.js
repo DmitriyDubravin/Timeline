@@ -11,11 +11,7 @@ const composePromise = (...functions) =>
             initialValue
     );
 
-// const tryCatch = promise => {
-//     console.log('sss', promise);
-//     return promise.then(data => ({data}))
-//     .catch(err => ({err}));
-// }
+const tryCatch = promise => promise.then(data => ({data})).catch(err => ({err}));
 
 // const tC = data => Promise.resolve(data)
 //     .then(data => ({data}))
