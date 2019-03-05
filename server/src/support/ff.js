@@ -1,6 +1,5 @@
 
 
-// const setStatus = status => res => res.status(status);
 const setShellStatus = status => shell => ({...shell, status: status});
 
 module.exports = {
