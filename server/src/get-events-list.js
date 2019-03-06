@@ -17,10 +17,6 @@ const tryCatch = promise => promise.then(data => ({data})).catch(err => ({err}))
 //     .then(data => ({data}))
 //     .catch(err => ({err}));
 
-const tC = (onSuccess, onError) => data => shell => Promise.resolve(data)
-    .then(data => onSuccess(data))
-    .catch(err => onError(err));
-
 const log = data => {
     console.log('log:', data);
     return data;
@@ -28,8 +24,16 @@ const log = data => {
 
 const getEventsErrorMessage = {message: '\nServer error while searching for events\n\n'};
 const extendShellBody = data => shell => ({ ...shell, body: { ...shell.body, ...data } });
-const setShell = res => ({res, body: {}});
+const setShell = res => ({ res, body: {}});
 
+
+const tC = (onSuccess, onError) => data => async shell => {
+    try {
+        onSuccess({...shell, body: {eventsList: await Promise.resolve(data)}});
+    } catch(error) {
+        onError({...shell, body: getEventsErrorMessage});
+    }
+}
 
 module.exports = async function(req, res) {
 
@@ -37,13 +41,11 @@ module.exports = async function(req, res) {
 
     const sendSuccess = composePromise(
         send,
-        extendShellBody({test: 'test'}),
         setShellStatus(200)
     );
 
     const sendError = composePromise(
         send,
-        extendShellBody(getEventsErrorMessage),
         setShellStatus(500)
     );
 
@@ -63,6 +65,7 @@ module.exports = async function(req, res) {
     // const {data, err} = await f.tryCatch(f.findEvents(findEventsOptions));
     // err && e.findEventsError(res);
 
-    f.success(res, {eventsList: data});
+    // f.success(res, {eventsList: data});
+    // f.success(res);
 
 }
