@@ -10,7 +10,10 @@ module.exports = {
     findUser: user => Users.find(user).exec(),
 
     findUsers: users => Users.find(users).sort({name: 1}).exec(),
-    findEvents: queryData => Events.find(queryData).sort({start: 1}).exec(),
+    findEvents: queryData => {
+        // throw 'errrrrrrrrrrrrror';
+        return Events.find(queryData).sort({start: 1}).exec()
+    },
 
     isUserFound: response => response.length > 0,
     isEventFound: response => response.length > 0,

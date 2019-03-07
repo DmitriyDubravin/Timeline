@@ -12,7 +12,7 @@ export default ({path, data, callback, method = 'post'}) => {
         })
         .catch(error => {
             console.log('%cError', 'color: red');
-            console.log(error.response); // TODO! data leak to console
-            console.log(error);
+            console.log(error.response.data); // TODO! data leak to console
+            // console.log(error);
         });
 }

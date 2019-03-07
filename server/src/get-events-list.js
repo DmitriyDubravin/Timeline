@@ -2,7 +2,15 @@ const f = require('./support/functions');
 const e = require('./support/errors');
 const F = require('./support/ff');
 
-const { send, setShellStatus } = F;
+const setShellStatus = status => shell => ({
+    ...shell,
+    status: status,
+    body: {
+        ...shell.body,
+        status: status
+    }
+});
+const send = shell => shell.res.status(shell.status).send(shell.body)
 
 const composePromise = (...functions) =>
     initialValue =>
@@ -23,31 +31,43 @@ const log = data => {
 }
 
 const getEventsErrorMessage = {message: '\nServer error while searching for events\n\n'};
-const extendShellBody = data => shell => ({ ...shell, body: { ...shell.body, ...data } });
+
+const extendShellBody = data => shell => ({
+    ...shell,
+    body: {
+        ...shell.body,
+        ...data
+    }});
 const setShell = res => ({ res, body: {}});
 
 
 const tC = (onSuccess, onError) => data => async shell => {
     try {
-        onSuccess({...shell, body: {eventsList: await Promise.resolve(data)}});
+        onSuccess({
+            ...shell,
+            body: {
+                ...shell.body,
+                response: {eventsList: await Promise.resolve(data)}
+            }
+        });
     } catch(error) {
         onError({...shell, body: getEventsErrorMessage});
     }
 }
+const sendSuccess = composePromise(
+    send,
+    setShellStatus(200)
+);
+
+const sendError = composePromise(
+    send,
+    setShellStatus(500)
+);
+
 
 module.exports = async function(req, res) {
 
     console.log('\n\n\nGET EVENTS LIST QUERY\n\n\n');
-
-    const sendSuccess = composePromise(
-        send,
-        setShellStatus(200)
-    );
-
-    const sendError = composePromise(
-        send,
-        setShellStatus(500)
-    );
 
     const {author, start, finish} = req.body;
     const findEventsOptions = {
