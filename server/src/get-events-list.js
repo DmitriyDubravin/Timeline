@@ -81,11 +81,4 @@ module.exports = async function(req, res) {
         setShell
     )(res);
 
-
-    // const {data, err} = await f.tryCatch(f.findEvents(findEventsOptions));
-    // err && e.findEventsError(res);
-
-    // f.success(res, {eventsList: data});
-    // f.success(res);
-
 }
