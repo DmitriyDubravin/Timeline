@@ -1,6 +1,10 @@
 const f = require('./support/functions');
 const e = require('./support/errors');
 const F = require('./support/ff');
+const log = data => {
+    console.log('log:', data);
+    return data;
+}
 
 const setShellStatus = status => shell => ({
     ...shell,
@@ -10,7 +14,7 @@ const setShellStatus = status => shell => ({
         status: status
     }
 });
-const send = shell => shell.res.status(shell.status).send(shell.body)
+const send = shell => shell.res.status(shell.status).send(shell.body);
 
 const composePromise = (...functions) =>
     initialValue =>
@@ -18,52 +22,46 @@ const composePromise = (...functions) =>
             (sum, fn) => Promise.resolve(sum).then(fn),
             initialValue
     );
-
-const tryCatch = promise => promise.then(data => ({data})).catch(err => ({err}));
-
-// const tC = data => Promise.resolve(data)
-//     .then(data => ({data}))
-//     .catch(err => ({err}));
-
-const log = data => {
-    console.log('log:', data);
-    return data;
-}
-
 const getEventsErrorMessage = {message: '\nServer error while searching for events\n\n'};
 
-const extendShellBody = data => shell => ({
-    ...shell,
-    body: {
-        ...shell.body,
-        ...data
-    }});
-const setShell = res => ({ res, body: {}});
+const setShell = res => ({ res, success: true, body: {}});
 
-
-const tC = (onSuccess, onError) => data => async shell => {
+const tC = fn => data => async shell => {
     try {
-        onSuccess({
+        return ({
             ...shell,
+            status: 200,
             body: {
                 ...shell.body,
-                response: {eventsList: await Promise.resolve(data)}
+                status: 200,
+                data: await fn(data)
             }
         });
     } catch(error) {
-        onError({...shell, body: getEventsErrorMessage});
+        return ({
+            ...shell,
+            success: false,
+            error: {
+                ...shell.error,
+                status: 500,
+                message: error
+            }
+        });
     }
-}
-const sendSuccess = composePromise(
-    send,
-    setShellStatus(200)
-);
+};
 
-const sendError = composePromise(
-    send,
-    setShellStatus(500)
-);
+const onSuccess = status => {};
+const onError = (message, status) => shell => {
+    if(shell.success) return shell;
 
+    return {
+        ...shell,
+        error: {
+            message: message ? message : shell.error.message,
+            status: status ? status : shell.error.status
+        }
+    }
+};
 
 module.exports = async function(req, res) {
 
@@ -77,8 +75,26 @@ module.exports = async function(req, res) {
     }
 
     await composePromise(
-        tC(sendSuccess, sendError)(f.findEvents(findEventsOptions)),
+        send,
+        log,
+        onError(getEventsErrorMessage),
+        tC(f.findEvents)(findEventsOptions),
         setShell
     )(res);
 
 }
+
+
+
+// const tryCatch = promise => promise.then(data => ({data})).catch(err => ({err}));
+
+// const tC = data => Promise.resolve(data)
+//     .then(data => ({data}))
+//     .catch(err => ({err}));
+
+// const extendShellBody = data => shell => ({
+//     ...shell,
+//     body: {
+//         ...shell.body,
+//         ...data
+//     }});

@@ -11,7 +11,7 @@ module.exports = {
 
     findUsers: users => Users.find(users).sort({name: 1}).exec(),
     findEvents: queryData => {
-        // throw 'errrrrrrrrrrrrror';
+        // throw 'Errrooor';
         return Events.find(queryData).sort({start: 1}).exec()
     },
 

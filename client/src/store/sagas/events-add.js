@@ -22,12 +22,12 @@ export function* eventsAddTask() {
 
     console.log(resp);
 
-    const {status, response: {eventsList}} = resp;
+    const {status, data} = resp;
 
     if (status === 200) {
         yield put(actions.eventsAdd({
             range: format,
-            events: eventsList
+            events: data
         }));
     } else {
         // TODO: no errors handling
