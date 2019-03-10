@@ -22,6 +22,7 @@ const composePromise = (...functions) =>
             (sum, fn) => Promise.resolve(sum).then(fn),
             initialValue
     );
+
 const getEventsErrorMessage = {message: '\nServer error while searching for events\n\n'};
 
 const setShell = res => ({ res, success: true, body: {}});
@@ -84,6 +85,16 @@ module.exports = async function(req, res) {
 
 }
 
+/*
+CONTRACT:
+on success:
+
+{
+    status: Integer,
+    data: Object, Array, String
+}
+
+*/
 
 
 // const tryCatch = promise => promise.then(data => ({data})).catch(err => ({err}));
