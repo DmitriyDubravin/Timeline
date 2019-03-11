@@ -1,35 +1,21 @@
 
-// const setShellStatus = status => shell => ({
-//     ...shell,
-//     body: {
-//         ...shell.body,
-//         status: status
-//     }
-// });
+const setShellStatus = (shell, status) => ({
+    ...shell,
+    body: {
+        ...shell.body,
+        status: status
+    }
+});
 
 module.exports = {
     sendResponse: shell => shell.res.status(shell.body.status).send(shell.body),
     onSuccessStatus: status => shell => {
         if(!shell.success) return shell;
-    
-        return {
-            ...shell,
-            body: {
-                ...shell.body,
-                status: status
-            }
-        }
+        return setShellStatus(shell, status);
     },
     onErrorStatus: status => shell => {
         if(shell.success) return shell;
-    
-        return {
-            ...shell,
-            body: {
-                ...shell.body,
-                status: status
-            }
-        }
+        return setShellStatus(shell, status);
     },
     onErrorMessage: message => shell => {
         if(shell.success) return shell;

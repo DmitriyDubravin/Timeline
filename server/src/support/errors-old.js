@@ -4,9 +4,9 @@ module.exports = {
     findUserNameError: res => res.status(500).send({
         message: '\nServer error while searching for user by name\n\n'
     }),
-    findUserTokenError: res => res.status(500).send({
-        message: '\nServer error while searching for user by token\n\n'
-    }),
+    // findUserTokenError: res => res.status(500).send({
+    //     message: '\nServer error while searching for user by token\n\n'
+    // }),
     updateUserPasswordError: res => res.status(500).send({
         message: '\nServer error while updating user password\n\n'
     }),

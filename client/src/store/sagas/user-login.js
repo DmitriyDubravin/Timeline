@@ -12,7 +12,7 @@ export function* userLoginTask({payload}) {
         password: payload.password
     };
 
-    const { success, cause, name, token } = yield call(QM.loginUser, queryData);
+    const { success, cause, name, token } = yield call(QM.userLogin, queryData);
     if (success) {
         yield put(actions.userAdd({
             name: name,

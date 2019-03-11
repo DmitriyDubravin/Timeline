@@ -1,4 +1,5 @@
-const f = require('./support/functions');
+const s = require('../support/support');
+const f = require('../support/functions');
 const e = require('./support/errors');
 
 module.exports = async function(req, res) {

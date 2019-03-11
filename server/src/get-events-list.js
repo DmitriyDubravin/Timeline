@@ -4,7 +4,7 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
-    console.log('\n\n\nGET EVENTS LIST QUERY\n\n\n');
+    console.log('\n\nGET EVENTS\n\n');
 
     const {author, start, finish} = req.body;
     const findEventsOptions = {

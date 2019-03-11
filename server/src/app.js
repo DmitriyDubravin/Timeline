@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const paths = require('./support/paths');
+const pathsOld = require('./support/paths-old');
 mongoose.connect('mongodb://localhost/timeline');
 let db = mongoose.connection;
 
@@ -21,8 +22,13 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 
-for (var key in paths) {
+for (const key in paths) {
     let path = paths[key];
+    let file = './queries' + path;
+    app.post(path, require(file));
+}
+for (const key in pathsOld) {
+    let path = pathsOld[key];
     let file = '.' + path;
     app.post(path, require(file));
 }

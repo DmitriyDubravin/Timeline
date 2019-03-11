@@ -1,3 +1,4 @@
 {
-    "getEventsError": "\nServer error while searching for events\n\n"
+    "userTokenCheckError": "\nServer error while searching for user by token\n\n",
+    "getEventsError": "\nServer error while searching for events\n\n",
 }

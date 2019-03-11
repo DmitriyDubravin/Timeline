@@ -1,8 +1,5 @@
 
-export default {
-
-    userTokenCheck: "/user-token-check",
-    userLogin: "/user-login",
+module.exports = {
 
     userCreate: "/user-create",
     getTypes: "/get-types",

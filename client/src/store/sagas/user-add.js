@@ -17,7 +17,7 @@ export function* userAddTask() {
         const queryData = {
             token: token
         }
-        const {success, name} = yield call(QM.verifyToken, queryData);
+        const {success, name} = yield call(QM.userTokenCheck, queryData);
 
         if (success) {
             yield put(actions.userAdd({

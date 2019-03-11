@@ -5,6 +5,21 @@ export default (function() {
     var instance = null;
     if (!instance) {
         instance = {
+            userTokenCheck(data) {
+                return queryServer({
+                    path: paths.userTokenCheck,
+                    data
+                })
+            },
+            userLogin(data) {
+                return queryServer({
+                    path: paths.userLogin,
+                    data
+                })
+            },
+
+
+
             getTypes(data) {
                 return queryServer({
                     path: paths.getTypes,
@@ -20,12 +35,6 @@ export default (function() {
             getSubcategories(data) {
                 return queryServer({
                     path: paths.getSubcategories,
-                    data
-                })
-            },
-            verifyToken(data) {
-                return queryServer({
-                    path: paths.tokenAcknowledge,
                     data
                 })
             },
@@ -80,12 +89,6 @@ export default (function() {
             registerUser(data) {
                 return queryServer({
                     path: paths.userCreate,
-                    data
-                })
-            },
-            loginUser(data) {
-                return queryServer({
-                    path: paths.loginUser,
                     data
                 })
             },
