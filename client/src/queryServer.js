@@ -16,3 +16,14 @@ export default ({path, data, callback, method = 'post'}) => {
             // console.log(error);
         });
 }
+
+/*
+
+RESPONSE CONTRACT:
+
+{
+    status: Integer,
+    data: Object, Array, String
+}
+
+*/

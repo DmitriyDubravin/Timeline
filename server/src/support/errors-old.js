@@ -1,7 +1,4 @@
 
-const setErrorMessage = message => res => res.send({});
-
-
 module.exports = {
 
     findUserNameError: res => res.status(500).send({
