@@ -4,6 +4,8 @@ const e = require('./support/errors');
 
 module.exports = async function(req, res) {
 
+    console.log('\n\nUSER LOGIN \n\n');
+
     const {login, password} = req.body;
     const findUserNameOptions = {name: login}
 
@@ -17,7 +19,8 @@ module.exports = async function(req, res) {
             const token = f.generateToken(login + password);
             const updateUserTokenOptions = {token: token}
 
-            const updatedUser = await f.tryCatch(f.updateUser(findUserNameOptions, updateUserTokenOptions));
+            const updatedUser = await f.tryCatch(f.updateUser(findUserNameOptions,
+                updateUserTokenOptions));
             updatedUser.err && e.updateUserTokenError(res);
 
             f.success(res, {
