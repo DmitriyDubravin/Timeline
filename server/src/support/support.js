@@ -1,25 +1,34 @@
 
-const setShellStatus = (shell, status) => ({
-    ...shell,
-    body: {
-        ...shell.body,
-        status: status
-    }
-});
+// const shell = {
+//     res: res,
+//     error: false,
+//     body: {}
+// };
 
 module.exports = {
     sendResponse: shell => shell.res.status(shell.body.status).send(shell.body),
     onSuccessStatus: status => shell => {
-        if(!shell.success) return shell;
-        return setShellStatus(shell, status);
+        if (shell.error) return shell;
+        return {
+            ...shell,
+            body: {
+                ...shell.body,
+                status: status
+            }
+        };
     },
     onErrorStatus: status => shell => {
-        if(shell.success) return shell;
-        return setShellStatus(shell, status);
+        if (!shell.error) return shell;
+        return {
+            ...shell,
+            body: {
+                ...shell.body,
+                status: status
+            }
+        };
     },
     onErrorMessage: message => shell => {
-        if(shell.success) return shell;
-    
+        if(!shell.error) return shell;
         return {
             ...shell,
             body: {
@@ -29,9 +38,12 @@ module.exports = {
         }
     },
     fireQuery: fn => async shell => {
+        if (shell.error) return shell;
+        // TODO: check for 'query' existance
         try {
             return ({
                 ...shell,
+                error: false,
                 body: {
                     ...shell.body,
                     status: 200,
@@ -41,7 +53,7 @@ module.exports = {
         } catch(error) {
             return ({
                 ...shell,
-                success: false,
+                error: true,
                 body: {
                     ...shell.body,
                     status: 500,
@@ -50,8 +62,11 @@ module.exports = {
             });
         }
     },
-    setQuery: query => shell => ({...shell, query}),
-    createShell: res => ({ res, success: true, body: {}}),
+    setQuery: query => shell => {
+        if (shell.error) return shell;
+        return {...shell, query}
+    },
+    createShell: res => ({ res, error: false, body: {}}),
     log: data => {
         console.log('log:', data);
         return data;

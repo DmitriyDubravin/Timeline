@@ -17,11 +17,11 @@ export function* userAddTask() {
         const queryData = {
             token: token
         }
-        const {success, name} = yield call(QM.userTokenCheck, queryData);
+        const {status, data} = yield call(QM.userTokenCheck, queryData);
 
-        if (success) {
+        if (status === 200) {
             yield put(actions.userAdd({
-                name: name,
+                name: data,
                 token: token,
                 isAuthorized: true
             }))
