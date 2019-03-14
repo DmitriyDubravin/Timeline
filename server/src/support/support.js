@@ -6,6 +6,11 @@
 // };
 
 module.exports = {
+
+    skipIfError: shell => {
+        if (shell.error) return shell;
+    },
+
     sendResponse: shell => shell.res.status(shell.body.status).send(shell.body),
     onSuccessStatus: status => shell => {
         if (shell.error) return shell;

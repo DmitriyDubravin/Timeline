@@ -1,6 +1,7 @@
 {
     "userTokenCheckError": "\nServer error while searching for user by token\n\n",
     "findUserNameError": "\nServer error while searching for user by name\n\n",
-
+    "userPasswordError": "\nWrong user password\n\n",
+    "userEmailError": "\nUser with unconfirmed email\n\n",
     "getEventsError": "\nServer error while searching for events\n\n"
 }
