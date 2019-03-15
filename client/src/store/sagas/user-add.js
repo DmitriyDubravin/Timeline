@@ -21,7 +21,7 @@ export function* userAddTask() {
 
         if (status === 200) {
             yield put(actions.userAdd({
-                name: data,
+                name: data[0].name, // TODO: temp! unsafe!
                 token: token,
                 isAuthorized: true
             }))

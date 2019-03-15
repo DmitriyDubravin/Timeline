@@ -17,8 +17,8 @@ module.exports = {
 
     isUserFound: response => response.length > 0,
     isEventFound: response => response.length > 0,
-    isUserEmailConfirmed: user => user.role.length < 10,
-    isPasswordMatches: (password, insertedPassword) => bcrypt.compareSync(password, insertedPassword),
+    isUserEmailConfirmed: role => role.length < 10,
+    isPasswordMatches: (insertedPassword, password) => bcrypt.compareSync(insertedPassword, password),
     hashPassword: password => bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
     generateToken: secret => bcrypt.hashSync(secret , bcrypt.genSaltSync(10)),
     generateVerificationHash: secret => bcrypt.hashSync(secret , bcrypt.genSaltSync(10)).slice(-12),

@@ -7,13 +7,13 @@
 
 module.exports = {
 
-    skipIfError: shell => {
+    skipIfError: fn => shell => {
         if (shell.error) return shell;
+        return fn(shell);
     },
 
     sendResponse: shell => shell.res.status(shell.body.status).send(shell.body),
     onSuccessStatus: status => shell => {
-        if (shell.error) return shell;
         return {
             ...shell,
             body: {
@@ -43,7 +43,6 @@ module.exports = {
         }
     },
     fireQuery: fn => async shell => {
-        if (shell.error) return shell;
         // TODO: check for 'query' existance
         try {
             return ({
@@ -68,12 +67,12 @@ module.exports = {
         }
     },
     setQuery: query => shell => {
-        if (shell.error) return shell;
         return {...shell, query}
     },
     createShell: res => ({ res, error: false, body: {}}),
     log: data => {
-        console.log('log:', data);
+        const { res, ...rest} = data;
+        console.log('log:', rest);
         return data;
     },
     composePromise: (...functions) => initialValue => functions.reduceRight(

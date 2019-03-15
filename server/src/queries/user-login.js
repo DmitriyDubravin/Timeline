@@ -11,16 +11,16 @@ module.exports = async function(req, res) {
 
 
     const checkPassword = shell => {
-        if (shell.error) return shell;
-        if (!f.isPasswordMatches(password, shell.data[0].password)) {
+        if (!f.isPasswordMatches(password, shell.body.data[0].password)) {
             return ({...shell, error: true});
         }
         return shell;
     }
 
     const checkEmailConfirmed = shell => {
-        if (shell.error) return shell;
-        if (!f.isUserEmailConfirmed(foundUser.data[0])) {
+        // TODO: manualy set role 'user' to pass this check !
+        if (!f.isUserEmailConfirmed(shell.body.data[0]).role) {
+            console.log(1);
             return ({...shell, error: true});
         }
         return shell;
@@ -29,13 +29,14 @@ module.exports = async function(req, res) {
     const a = () => {};
 
     return await s.composePromise(
-        s.onErrorMessage(e.userEmailError),
-        checkEmailConfirmed,
-        s.onErrorMessage(e.userPasswordError),
-        checkPassword,
-        s.onErrorMessage(e.findUserNameError),
-        s.fireQuery(f.findUser),
-        s.setQuery(findUserNameOptions),
+        s.skipIfError(s.onErrorMessage(e.userEmailError)),
+        s.log,
+        s.skipIfError(checkEmailConfirmed),
+        s.skipIfError(s.onErrorMessage(e.userPasswordError)),
+        s.skipIfError(checkPassword),
+        s.skipIfError(s.onErrorMessage(e.findUserNameError)),
+        s.skipIfError(s.fireQuery(f.findUser)),
+        s.skipIfError(s.setQuery(findUserNameOptions)),
         s.createShell
     )(res);
 
