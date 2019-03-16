@@ -7,11 +7,13 @@ module.exports = {
     addUser: userData => new Users(userData).save(),
     updateUser: (user, data) => Users.update(user, data),
     removeUser: user => Users.remove(user),
-    findUser: user => Users.find(user).exec(),
+    findUser: user => {
+        // throw 'Errrooor';
+        return Users.find(user).exec()
+    },
 
     findUsers: users => Users.find(users).sort({name: 1}).exec(),
     findEvents: queryData => {
-        // throw 'Errrooor';
         return Events.find(queryData).sort({start: 1}).exec()
     },
 

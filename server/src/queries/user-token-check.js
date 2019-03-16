@@ -9,9 +9,19 @@ module.exports = async function(req, res) {
     const {token} = req.body;
     const userTokenCheckOptions = { token: token };
 
+    const checkUserFound = shell => {
+        if (!shell.body.data.length) {
+            return s.composePromise(
+                s.setStatus(500),
+                s.setData(e.userTokenCheckError),
+            )(shell);
+        }
+        return shell;
+    }
+
     return await s.composePromise(
         s.sendResponse,
-        s.onErrorMessage(e.userTokenCheckError),
+        checkUserFound,
         s.fireQuery(f.findUser),
         s.setQuery(userTokenCheckOptions),
         s.createShell
