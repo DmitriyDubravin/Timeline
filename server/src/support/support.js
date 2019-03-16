@@ -1,18 +1,44 @@
+const f = require('./functions');
 
 // const shell = {
-//     res: res,
-//     error: false,
-//     body: {}
+//     res: Object,
+//     error: Boolean,
+//     query: Object
+//     body: {
+//         status: Int,
+//         data: Any
+//     }
 // };
 
 module.exports = {
 
+    checkPassword: password => shell => {
+        if (!f.isPasswordMatches(password, shell.body.data[0].password)) {
+            return ({...shell, error: true});
+        }
+        return shell;
+    },
+    checkEmailConfirmed: shell => {
+        if (!f.isUserEmailConfirmed(shell.body.data[0].role)) {
+            return ({...shell, error: true});
+        }
+        return shell;
+    },
     skipIfError: fn => shell => {
         if (shell.error) return shell;
         return fn(shell);
     },
 
     sendResponse: shell => shell.res.status(shell.body.status).send(shell.body),
+    setResponse: data => shell => {
+        return {
+            ...shell,
+            body: {
+                ...shell.body,
+                data
+            }
+        }
+    },
     onSuccessStatus: status => shell => {
         return {
             ...shell,
@@ -51,7 +77,7 @@ module.exports = {
                 body: {
                     ...shell.body,
                     status: 200,
-                    data: await fn(shell.query)
+                    data: await fn(...shell.query)
                 }
             });
         } catch(error) {
@@ -66,12 +92,12 @@ module.exports = {
             });
         }
     },
-    setQuery: query => shell => {
+    setQuery: (...query) => shell => {
         return {...shell, query}
     },
     createShell: res => ({ res, error: false, body: {}}),
     log: data => {
-        const { res, ...rest} = data;
+        const { res, ...rest } = data;
         console.log('log:', rest);
         return data;
     },

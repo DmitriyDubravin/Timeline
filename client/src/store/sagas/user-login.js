@@ -12,20 +12,21 @@ export function* userLoginTask({payload}) {
         password: payload.password
     };
 
-    const { success, cause, name, token } = yield call(QM.userLogin, queryData);
-    if (success) {
+    const { status, data } = yield call(QM.userLogin, queryData);
+
+    if (status === 200) {
         yield put(actions.userAdd({
-            name: name,
-            token: token,
+            name: data.name,
+            token: data.token,
             isAuthorized: true
         }));
-        UM.setToken(token);
+        UM.setToken(data.token);
         yield put(actions.togglePopupUserLogin({ show: false }));
     } else {
-        if (cause === 'email') {
-            // TODO
-            // set global message about Email confirmation
-        }
+
+        // TODO
+        // set global message from response
+
         yield put(actions.userAdd({
             name: false,
             token: false,

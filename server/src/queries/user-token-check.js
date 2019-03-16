@@ -7,15 +7,13 @@ module.exports = async function(req, res) {
     console.log('\n\nUSER TOKEN CHECK\n\n');
 
     const {token} = req.body;
-    const query = {
-        token
-    }
+    const userTokenCheckOptions = { token: token };
 
     return await s.composePromise(
         s.sendResponse,
         s.onErrorMessage(e.userTokenCheckError),
         s.fireQuery(f.findUser),
-        s.setQuery(query),
+        s.setQuery(userTokenCheckOptions),
         s.createShell
     )(res);
 
