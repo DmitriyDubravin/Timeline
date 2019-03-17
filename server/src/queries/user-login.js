@@ -11,6 +11,27 @@ module.exports = async function(req, res) {
     const userFindOptions = {name: login}
     const userUpdateOptions = {token: token}
 
+    const userFound = s.composePromise(
+        s.setStatus(200)
+    );
+    const userNotFound = s.composePromise(
+        s.setStatus(500),
+        s.setData(e.findUserNameError),
+    );
+    const ifUserFound = onSuccess => onError => shell => {
+        if (shell.error) return shell;
+        if (shell.data.length) return onSuccess(shell);
+        return onError(shell);
+    }
+
+    const checkPassword = password => shell => {
+        if (shell.error) return shell;
+        if (!f.isPasswordMatches(password, shell.data[0].password)) {
+            s.setError(shell);
+        }
+        return shell;
+    }
+
     return await s.composePromise(
         s.sendResponse,
         s.skipIfError(s.setResponse({name: login, token: token})),
@@ -20,10 +41,10 @@ module.exports = async function(req, res) {
         s.skipIfError(s.onErrorMessage(e.userEmailError)),
         s.skipIfError(s.checkEmailConfirmed),
         s.skipIfError(s.onErrorMessage(e.userPasswordError)),
-        s.skipIfError(s.checkPassword(password)),
-        s.skipIfError(s.onErrorMessage(e.findUserNameError)),
-        s.skipIfError(s.fireQuery(f.findUser)),
-        s.skipIfError(s.setQuery(userFindOptions)),
+        s.log,
+        checkPassword(password),
+        ifUserFound(userFound)(userNotFound),
+        f.userFind(userFindOptions),
         s.createShell
     )(res);
 

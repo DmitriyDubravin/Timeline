@@ -4,6 +4,23 @@ const Events = require('../models/events');
 
 module.exports = {
 
+    userFind: query => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Users.find(query).exec()
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+
     addUser: userData => new Users(userData).save(),
     updateUser: (user, data) => Users.update(user, data),
     removeUser: user => Users.remove(user),

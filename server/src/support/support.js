@@ -12,20 +12,19 @@ const f = require('./functions');
 
 const setError = shell => ({...shell, error: true});
 const setToBody = dataObj => shell => ({...shell, body: {...shell.body, ...dataObj}});
-const setStatus = status => shell => ({...shell, body: {...shell.body, status}});
-const setData = data => shell => ({...shell, body: {...shell.body, data}});
+const setStatus = status => shell => ({...shell, status});
+const setData = data => shell => ({...shell, data});
 
 module.exports = {
 
     setStatus,
     setData,
 
-    checkPassword: password => shell => {
-        if (!f.isPasswordMatches(password, shell.body.data[0].password)) {
-            setError(shell);
-        }
-        return shell;
+    sendResponse: shell => {
+        const { res, status, data } = shell;
+        return res.status(status).send({status, data});
     },
+
     checkEmailConfirmed: shell => {
         if (!f.isUserEmailConfirmed(shell.body.data[0].role)) {
             return setError(shell);
@@ -37,7 +36,6 @@ module.exports = {
         return fn(shell);
     },
 
-    sendResponse: shell => shell.res.status(shell.body.status).send(shell.body),
     setResponse: data => shell => {
         return setToBody({data})(shell);
     },
@@ -103,7 +101,7 @@ module.exports = {
     setQuery: (...query) => shell => {
         return {...shell, query}
     },
-    createShell: res => ({ res, error: false, body: {}}),
+    createShell: res => ({ res }),
     log: data => {
         const { res, ...rest } = data;
         console.log('log:', rest);

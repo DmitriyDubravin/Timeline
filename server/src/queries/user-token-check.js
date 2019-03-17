@@ -9,21 +9,25 @@ module.exports = async function(req, res) {
     const {token} = req.body;
     const userTokenCheckOptions = { token: token };
 
-    const checkUserFound = shell => {
-        if (!shell.body.data.length) {
-            return s.composePromise(
-                s.setStatus(500),
-                s.setData(e.userTokenCheckError),
-            )(shell);
-        }
-        return shell;
+    const userFound = s.composePromise(
+        s.setStatus(200)
+    );
+
+    const userNotFound = s.composePromise(
+        s.setStatus(500),
+        s.setData(e.userTokenCheckError),
+    );
+
+    const ifUserFound = onSuccess => onError => shell => {
+        if (shell.error) return shell;
+        if (shell.data.length) return onSuccess(shell);
+        return onError(shell);
     }
 
     return await s.composePromise(
         s.sendResponse,
-        checkUserFound,
-        s.fireQuery(f.findUser),
-        s.setQuery(userTokenCheckOptions),
+        ifUserFound(userFound)(userNotFound),
+        f.userFind(userTokenCheckOptions),
         s.createShell
     )(res);
 
