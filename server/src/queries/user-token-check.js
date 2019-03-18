@@ -14,11 +14,12 @@ module.exports = async function(req, res) {
     );
 
     const userNotFound = s.composePromise(
+        s.setError,
         s.setStatus(500),
         s.setData(e.userTokenCheckError),
     );
 
-    const ifUserFound = onSuccess => onError => shell => {
+    const checkUserFound = onSuccess => onError => shell => {
         if (shell.error) return shell;
         if (shell.data.length) return onSuccess(shell);
         return onError(shell);
@@ -26,7 +27,7 @@ module.exports = async function(req, res) {
 
     return await s.composePromise(
         s.sendResponse,
-        ifUserFound(userFound)(userNotFound),
+        checkUserFound(userFound)(userNotFound),
         f.userFind(userTokenCheckOptions),
         s.createShell
     )(res);

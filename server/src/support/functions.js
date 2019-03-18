@@ -4,13 +4,29 @@ const Events = require('../models/events');
 
 module.exports = {
 
-    userFind: query => async shell => {
+    userFind: (...query) => async shell => {
         if (shell.error) return shell;
         try {
             return {
                 ...shell,
                 error: false,
-                data: await Users.find(query).exec()
+                data: await Users.find(...query).exec()
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+    userUpdate: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Users.update(...query)
             }
         } catch(error) {
             return {

@@ -17,6 +17,7 @@ const setData = data => shell => ({...shell, data});
 
 module.exports = {
 
+    setError,
     setStatus,
     setData,
 
@@ -25,19 +26,14 @@ module.exports = {
         return res.status(status).send({status, data});
     },
 
-    checkEmailConfirmed: shell => {
-        if (!f.isUserEmailConfirmed(shell.body.data[0].role)) {
-            return setError(shell);
-        }
-        return shell;
-    },
     skipIfError: fn => shell => {
         if (shell.error) return shell;
         return fn(shell);
     },
 
     setResponse: data => shell => {
-        return setToBody({data})(shell);
+        if (shell.error) return shell;
+        return setData(data)(shell);
     },
     onSuccessStatus: status => shell => {
         return setToBody({status})(shell);
