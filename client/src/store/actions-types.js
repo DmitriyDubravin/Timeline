@@ -31,7 +31,7 @@ export default [
     "TOGGLE_POPUP_EVENT_ADD",
     "TOGGLE_POPUP_EVENT_EDIT",
     "TOGGLE_POPUP_EVENT_REMOVE",
-    "TOGGLE_POPUP_USER_REGISTER",
+    "TOGGLE_POPUP_USER_REGISTER", // TODO: change everywhere 'register' -> 'create'
     "TOGGLE_POPUP_USER_LOGIN",
     "TOGGLE_POPUP_DATE_PICKER",
 

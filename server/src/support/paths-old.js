@@ -1,7 +1,6 @@
 
 module.exports = {
 
-    userCreate: "/user-create",
     getTypes: "/get-types",
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",

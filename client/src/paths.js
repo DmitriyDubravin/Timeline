@@ -1,10 +1,10 @@
 
 export default {
 
+    userCreate: "/user-create",
     userTokenCheck: "/user-token-check",
     userLogin: "/user-login",
 
-    userCreate: "/user-create",
     getTypes: "/get-types",
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",

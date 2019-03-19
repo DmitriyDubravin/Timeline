@@ -3,7 +3,7 @@ import AT from 'store/actions-types';
 import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 
-export function* userRegisterTask({payload}) {
+export function* userCreateTask({payload}) {
     console.log('saga: userRegister');
 
     const queryData = {
@@ -12,15 +12,16 @@ export function* userRegisterTask({payload}) {
         password: payload.password
     };
 
-    const {success} = yield call(QM.registerUser, queryData);
-    if (success) {
-        // TODO: handle global messages
-    }
+    const resp = yield call(QM.registerUser, queryData);
+    console.log(resp);
+    // if (success) {
+    //     // TODO: handle global messages
+    // }
 
     yield put(actions.togglePopupUserRegister({ show: false }));
 
 }
 
-export function* userRegisterWatcher() {
-    yield takeEvery(AT.USER_REGISTER_TASK, userRegisterTask);
+export function* userCreateTaskWatcher() {
+    yield takeEvery(AT.USER_REGISTER_TASK, userCreateTask);
 }
