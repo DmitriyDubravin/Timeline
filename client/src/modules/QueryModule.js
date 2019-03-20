@@ -17,6 +17,12 @@ export default (function() {
                     data
                 })
             },
+            changeUserPassword(data) {
+                return queryServer({
+                    path: paths.userPasswordUpdate,
+                    data
+                })
+            },
 
 
 
@@ -92,12 +98,6 @@ export default (function() {
                     data
                 })
             },
-            changeUserPassword(data) {
-                return queryServer({
-                    path: paths.changeUserPassword,
-                    data
-                })
-            }
         }
     }
     return instance;

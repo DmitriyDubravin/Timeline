@@ -4,7 +4,7 @@ export default [
     null,
     dispatch => ({
         change(payload) {
-            dispatch(actions.userPasswordChangeTask(payload))
+            dispatch(actions.userPasswordUpdateTask(payload))
         }
     })
 ];

@@ -4,7 +4,7 @@ import actions from 'store/actions';
 import QM from 'modules/QueryModule';
 
 export function* userCreateTask({payload}) {
-    console.log('saga: userRegister');
+    console.log('saga: userCreate');
 
     const queryData = {
         login: payload.name,

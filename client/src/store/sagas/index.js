@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects';
 
 
 import { userCreateTaskWatcher } from './user-create-task';
+import { userPasswordUpdateWatcher } from './user-password-update-task';
 
 import { eventAddWatcher } from './event-add';
 import { eventEditWatcher } from './event-edit';
@@ -13,7 +14,6 @@ import { usersAddWatcher } from './users-add';
 import { userLoginWatcher } from './user-login';
 import { userRemoveWatcher } from './user-remove';
 import { userLogoutWatcher } from './user-logout';
-import { userPasswordChangeWatcher } from './user-password-change';
 import { typesAddWatcher } from './types-add';
 import { categoriesAddWatcher } from './categories-add';
 import { subcategoriesAddWatcher } from './subcategories-add';
@@ -23,6 +23,7 @@ export function* rootSaga() {
     yield all([
 
         userCreateTaskWatcher(),
+        userPasswordUpdateWatcher(),
 
         eventAddWatcher(),
         eventEditWatcher(),
@@ -33,7 +34,6 @@ export function* rootSaga() {
         userLoginWatcher(),
         userRemoveWatcher(),
         userLogoutWatcher(),
-        userPasswordChangeWatcher(),
         userAddWatcher(),
         typesAddWatcher(),
         categoriesAddWatcher(),

@@ -6,19 +6,22 @@ import UM from 'modules/UserModule';
 
 export const getUser = state => state.user;
 
-export function* userPasswordChangeTask({payload}) {
-    console.log('saga: userPasswordChange');
+export function* userPasswordUpdateTask({payload}) {
+    console.log('saga: userPasswordUpdate');
     
     const { name } = yield select(getUser);
 
+    console.log(payload);
+
     const queryData = {
         login: name,
-        currentPassword: payload.password,
+        password: payload.password,
         newPassword: payload.newPassword
     };
-    const {success} = yield call(QM.changeUserPassword, queryData);
+    const { status, data } = yield call(QM.changeUserPassword, queryData);
+    console.log('response', data);
 
-    if (success) {
+    if (status === 200) {
         // TODO: reconsider logout after password changing
         yield put(actions.userAdd({
             name: false,
@@ -29,6 +32,6 @@ export function* userPasswordChangeTask({payload}) {
     }
 }
 
-export function* userPasswordChangeWatcher() {
-    yield takeEvery(AT.USER_PASSWORD_CHANGE_TASK, userPasswordChangeTask);
+export function* userPasswordUpdateWatcher() {
+    yield takeEvery(AT.USER_PASSWORD_UPDATE_TASK, userPasswordUpdateTask);
 }
