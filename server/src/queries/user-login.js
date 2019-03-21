@@ -33,7 +33,7 @@ module.exports = async function(req, res) {
     const checkUserPassword = onError => shell => {
         if (shell.error) return shell;
         if (!f.isPasswordMatches(password, shell.data[0].password)) {
-            onError(shell);
+            return onError(shell);
         }
         return shell;
     }
