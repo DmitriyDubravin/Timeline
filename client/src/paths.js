@@ -5,6 +5,7 @@ export default {
     userTokenCheck: "/user-token-check",
     userLogin: "/user-login",
     userPasswordUpdate: "/user-password-update",
+    userRemove: "/user-remove",
 
     getTypes: "/get-types",
     getCategories: "/get-categories",
@@ -15,7 +16,6 @@ export default {
     getEvent: "/get-event",
     removeEvent: "/remove-event",
     getUsersList: "/get-users-list",
-    deleteUser: "/delete-user",
     getUserData: "/get-user-data",
     emailConfirmation: "/email-confirmation",
     search: "/search",

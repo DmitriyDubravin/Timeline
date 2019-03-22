@@ -23,6 +23,12 @@ export default (function() {
                     data
                 })
             },
+            userRemove(data) {
+                return queryServer({
+                    path: paths.userRemove,
+                    data
+                })
+            },
 
 
 
@@ -83,12 +89,6 @@ export default (function() {
             confirmEmail(data) {
                 return queryServer({
                     path: paths.emailConfirmation,
-                    data
-                })
-            },
-            deleteUser(data) {
-                return queryServer({
-                    path: paths.deleteUser,
                     data
                 })
             },

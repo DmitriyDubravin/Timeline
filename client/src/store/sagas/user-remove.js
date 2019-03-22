@@ -15,9 +15,11 @@ export function* userRemoveTask({payload}) {
         login: name,
         password: payload.password
     }
-    const {success} = yield call(QM.deleteUser, queryData);
+    const resp = yield call(QM.deleteUser, queryData);
+    console.log(resp);
+    const {status} = resp;
 
-    if (success) {
+    if (status === 200) {
         yield put(actions.userAdd({
             name: false,
             token: false,
