@@ -25,21 +25,21 @@ module.exports = async function(req, res) {
 
     // }
 
+
+    const userFound = s.composePromise(
+        s.setStatus(200)
+    );
+    const userNotFound = s.composePromise(
+        s.setError,
+        s.setStatus(500),
+        s.setData('user not found'),
+    );
     const checkUserFound = onSuccess => onError => shell => {
         if (shell.error) return shell;
         if (shell.data.length) return onSuccess(shell);
         return onError(shell);
     }
 
-
-    const userFound = s.composePromise(
-        s.setError,
-        s.setStatus(500),
-        s.setData('username is already taken'),
-    );
-    const userNotFound = s.composePromise(
-        s.setStatus(200)
-    );
 
     const passwordIsWrong = s.composePromise(
         s.setError,
@@ -48,7 +48,8 @@ module.exports = async function(req, res) {
     );
     const checkUserPassword = onError => shell => {
         if (shell.error) return shell;
-        if (!f.isPasswordMatches(password, shell.data[0].password)) {
+        console.log(password, shell.data[0].password);
+        if (!db.isPasswordMatches(password, shell.data[0].password)) {
             return onError(shell);
         }
         return shell;

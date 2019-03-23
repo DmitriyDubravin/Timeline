@@ -11,14 +11,14 @@ module.exports = async function(req, res) {
     const findUserNameOptions = {name: login}
 
     const hashedPassword = db.hashPassword(password);
-    const verificationHash = db.generateVerificationHash(login + password);
+    // const verificationHash = db.generateVerificationHash(login + password);
 
     const addUserOptions = {
         name: login,
         password: hashedPassword,
         email: email,
         token: "no token",
-        role: verificationHash
+        role: "user" // TODO: verificationHash
     };
 
     const userFound = s.composePromise(
@@ -37,7 +37,8 @@ module.exports = async function(req, res) {
 
     const doSomethingElse = shell => {
         if (shell.error) return shell;
-        sendEmail(email, verificationHash);
+        // TODO: got error on creation with a@b.c email : investigate
+        // sendEmail(email, verificationHash);
         return shell;
     }
 

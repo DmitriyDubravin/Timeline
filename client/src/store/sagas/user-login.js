@@ -24,6 +24,7 @@ export function* userLoginTask({payload}) {
         yield put(actions.togglePopupUserLogin({ show: false }));
     } else {
 
+        console.log(status, data);
         // TODO
         // set global message from response
 

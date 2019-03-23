@@ -11,7 +11,7 @@ const UserRemove = ({
         e.preventDefault();
         const isValid = true; // TODO: create local validation logic
         if (isValid) {
-            remove();
+            remove(password);
         }
     }
 
