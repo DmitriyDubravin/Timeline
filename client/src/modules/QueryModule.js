@@ -5,6 +5,12 @@ export default (function() {
     var instance = null;
     if (!instance) {
         instance = {
+            userCreate(data) {
+                return queryServer({
+                    path: paths.userCreate,
+                    data
+                })
+            },
             userTokenCheck(data) {
                 return queryServer({
                     path: paths.userTokenCheck,
@@ -17,7 +23,7 @@ export default (function() {
                     data
                 })
             },
-            changeUserPassword(data) {
+            userPasswordUpdate(data) {
                 return queryServer({
                     path: paths.userPasswordUpdate,
                     data
@@ -89,12 +95,6 @@ export default (function() {
             confirmEmail(data) {
                 return queryServer({
                     path: paths.emailConfirmation,
-                    data
-                })
-            },
-            registerUser(data) {
-                return queryServer({
-                    path: paths.userCreate,
                     data
                 })
             },

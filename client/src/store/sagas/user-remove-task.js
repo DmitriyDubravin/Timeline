@@ -2,12 +2,11 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import AT from 'store/actions-types';
 import actions from 'store/actions';
 import QM from 'modules/QueryModule';
-import UM from 'modules/UserModule';
 
 export const getUser = state => state.user;
 
 export function* userRemoveTask({payload}) {
-    console.log('saga: userRemove');
+    console.log('saga: userRemoveTask');
 
     const { name } = yield select(getUser);
 
@@ -20,15 +19,10 @@ export function* userRemoveTask({payload}) {
     const {status} = resp;
 
     if (status === 200) {
-        yield put(actions.userAdd({
-            name: false,
-            token: false,
-            isAuthorized: false
-        }));
-        UM.deleteToken();
+        yield put(actions.userLogoutTask());
     }
 }
 
-export function* userRemoveWatcher() {
+export function* userRemoveTaskWatcher() {
     yield takeEvery(AT.USER_REMOVE_TASK, userRemoveTask);
 }

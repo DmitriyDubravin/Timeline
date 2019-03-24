@@ -7,7 +7,7 @@ import MM from 'modules/MessageModule';
 
 export function* userAddTask() {
 
-    console.log('saga: setUser');
+    console.log('saga: userAddTask');
 
     const isToken = UM.checkToken();
 
@@ -28,12 +28,7 @@ export function* userAddTask() {
             MM.tokenAcknowledgeSuccess().log();
 
         } else {
-            yield put(actions.userAdd({
-                name: false,
-                token: false,
-                isAuthorized: false
-            }))
-            UM.deleteToken();
+            yield put(actions.userLogoutTask());
             MM.tokenAcknowledgeFailure().log();
         }
     } else {
@@ -46,6 +41,6 @@ export function* userAddTask() {
     }
 }
 
-export function* userAddWatcher() {
+export function* userAddTaskWatcher() {
     yield takeEvery(AT.USER_ADD_TASK, userAddTask)
 }

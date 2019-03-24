@@ -4,7 +4,7 @@ import actions from 'store/actions';
 import UM from 'modules/UserModule';
 
 export function* userLogoutTask() {
-    console.log('saga: userLogout');
+    console.log('saga: userLogoutTask');
 
     // TODO: check UM for unsetUser function
     yield put(actions.userAdd({
@@ -15,6 +15,6 @@ export function* userLogoutTask() {
     UM.deleteToken();
 }
 
-export function* userLogoutWatcher() {
+export function* userLogoutTaskWatcher() {
     yield takeEvery(AT.USER_LOGOUT_TASK, userLogoutTask);
 }

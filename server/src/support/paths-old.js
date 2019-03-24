@@ -10,7 +10,6 @@ module.exports = {
     getEvent: "/get-event",
     removeEvent: "/remove-event",
     getUsersList: "/get-users-list",
-    getUserData: "/get-user-data",
     emailConfirmation: "/email-confirmation",
     search: "/search",
 }

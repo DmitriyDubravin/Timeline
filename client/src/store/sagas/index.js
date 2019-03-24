@@ -1,19 +1,19 @@
 import { all } from 'redux-saga/effects';
 
-
 import { userCreateTaskWatcher } from './user-create-task';
-import { userPasswordUpdateWatcher } from './user-password-update-task';
+import { userAddTaskWatcher } from './user-add-task';
+import { userLoginTaskWatcher } from './user-login-task';
+import { userLogoutTaskWatcher } from './user-logout-task';
+import { userPasswordUpdateTaskWatcher } from './user-password-update-task';
+import { userRemoveTaskWatcher } from './user-remove-task';
+
 
 import { eventAddWatcher } from './event-add';
 import { eventEditWatcher } from './event-edit';
 import { eventRemoveWatcher } from './event-remove';
 import { eventsAddWatcher } from './events-add';
 import { eventsSearchWatcher } from './events-search';
-import { userAddWatcher } from './user-add';
 import { usersAddWatcher } from './users-add';
-import { userLoginWatcher } from './user-login';
-import { userRemoveWatcher } from './user-remove';
-import { userLogoutWatcher } from './user-logout';
 import { typesAddWatcher } from './types-add';
 import { categoriesAddWatcher } from './categories-add';
 import { subcategoriesAddWatcher } from './subcategories-add';
@@ -23,7 +23,12 @@ export function* rootSaga() {
     yield all([
 
         userCreateTaskWatcher(),
-        userPasswordUpdateWatcher(),
+        userAddTaskWatcher(),
+        userLoginTaskWatcher(),
+        userPasswordUpdateTaskWatcher(),
+        userRemoveTaskWatcher(),
+
+        userLogoutTaskWatcher(),
 
         eventAddWatcher(),
         eventEditWatcher(),
@@ -31,10 +36,6 @@ export function* rootSaga() {
         eventsAddWatcher(),
         eventsSearchWatcher(),
         usersAddWatcher(),
-        userLoginWatcher(),
-        userRemoveWatcher(),
-        userLogoutWatcher(),
-        userAddWatcher(),
         typesAddWatcher(),
         categoriesAddWatcher(),
         subcategoriesAddWatcher()

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import UserPasswordChange from 'components/user-password-change';
+import UserPasswordUpdate from 'components/user-password-update';
 import UserRemove from 'components/user-remove';
 
 const PageUser = ({
@@ -15,7 +15,7 @@ const PageUser = ({
             <h2>{pathName}'s page</h2>
             {!owner && <h4>{pathName}'s public data</h4>}
             {owner && <h4>{name}'s secured data</h4>}
-            {owner && <UserPasswordChange x={333} />}
+            {owner && <UserPasswordUpdate x={333} />}
             {owner && <UserRemove />}
         </Fragment>
     )

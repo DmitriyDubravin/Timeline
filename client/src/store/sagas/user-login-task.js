@@ -5,7 +5,7 @@ import QM from 'modules/QueryModule';
 import UM from 'modules/UserModule';
 
 export function* userLoginTask({payload}) {
-    console.log('saga: userLogin');
+    console.log('saga: userLoginTask');
 
     const queryData = {
         login: payload.name,
@@ -36,6 +36,6 @@ export function* userLoginTask({payload}) {
     }
 }
 
-export function* userLoginWatcher() {
+export function* userLoginTaskWatcher() {
     yield takeEvery(AT.USER_LOGIN_TASK, userLoginTask);
 }
