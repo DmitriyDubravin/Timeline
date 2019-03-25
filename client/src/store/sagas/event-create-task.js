@@ -6,14 +6,14 @@ import QM from 'modules/QueryModule';
 export const getUser = state => state.user;
 export const getDate = state => state.date;
 
-export function* eventAddTask({payload}) {
+export function* eventCreateTask({payload}) {
 
     const { name } = yield select(getUser);
     const { format } = yield select(getDate);
 
     const queryData = {...payload, author: name};
 
-    const {success, addedEvent} = yield call(QM.addEvent, queryData);
+    const {success, addedEvent} = yield call(QM.eventCreate, queryData);
     if (success) {
         yield put(actions.togglePopupEventAdd({ show: false }));
         yield put(actions.eventAdd({
@@ -26,6 +26,6 @@ export function* eventAddTask({payload}) {
     }
 }
 
-export function* eventAddWatcher() {
-    yield takeEvery(AT.EVENT_ADD_TASK, eventAddTask);
+export function* eventCreateTaskWatcher() {
+    yield takeEvery(AT.EVENT_CREATE_TASK, eventCreateTask);
 }

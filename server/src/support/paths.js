@@ -5,6 +5,8 @@ module.exports = {
     userTokenCheck: "/user-token-check",
     userLogin: "/user-login",
     userPasswordUpdate: "/user-password-update",
-    user: "/user-remove"
+    user: "/user-remove",
+
+    eventCreate: "/event-create"
 
 }

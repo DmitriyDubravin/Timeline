@@ -38,6 +38,15 @@ export default (function() {
 
 
 
+            eventCreate(data) {
+                return queryServer({
+                    path: paths.eventCreate,
+                    data
+                })
+            },
+
+
+
             getTypes(data) {
                 return queryServer({
                     path: paths.getTypes,
@@ -61,12 +70,6 @@ export default (function() {
                     path: paths.getEventsList,
                     data
                 });
-            },
-            addEvent(data) {
-                return queryServer({
-                    path: paths.addEvent,
-                    data
-                })
             },
             editEvent(data) {
                 return queryServer({

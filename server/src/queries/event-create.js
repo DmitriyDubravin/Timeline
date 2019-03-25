@@ -1,9 +1,9 @@
-const f = require('./support/functions');
-const e = require('./support/errors');
+const f = require('./../support/functions');
+const e = require('./../support/errors');
 
 module.exports = async function(req, res) {
 
-    console.log('\n\n\nADD EVENT QUERY\n\n\n');
+    console.log('\n\n\nEVENT CREATE QUERY\n\n\n');
 
     const {author, ...rest} = req.body;
     const eventData = {

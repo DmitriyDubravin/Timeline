@@ -8,7 +8,9 @@ import { userPasswordUpdateTaskWatcher } from './user-password-update-task';
 import { userRemoveTaskWatcher } from './user-remove-task';
 
 
-import { eventAddWatcher } from './event-add';
+import { eventCreateTaskWatcher } from './event-create-task';
+
+
 import { eventEditWatcher } from './event-edit';
 import { eventRemoveWatcher } from './event-remove';
 import { eventsAddWatcher } from './events-add';
@@ -25,12 +27,12 @@ export function* rootSaga() {
         userCreateTaskWatcher(),
         userAddTaskWatcher(),
         userLoginTaskWatcher(),
+        userLogoutTaskWatcher(),
         userPasswordUpdateTaskWatcher(),
         userRemoveTaskWatcher(),
 
-        userLogoutTaskWatcher(),
+        eventCreateTaskWatcher(),
 
-        eventAddWatcher(),
         eventEditWatcher(),
         eventRemoveWatcher(),
         eventsAddWatcher(),
