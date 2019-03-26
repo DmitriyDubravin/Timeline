@@ -13,12 +13,15 @@ export function* eventCreateTask({payload}) {
 
     const queryData = {...payload, author: name};
 
-    const {success, addedEvent} = yield call(QM.eventCreate, queryData);
-    if (success) {
+    const {status, data} = yield call(QM.eventCreate, queryData);
+
+    console.log(999, status, data);
+
+    if (status === 200) {
         yield put(actions.togglePopupEventAdd({ show: false }));
         yield put(actions.eventAdd({
             range: format,
-            event: addedEvent
+            event: data
         }));
     } else {
         // TODO!

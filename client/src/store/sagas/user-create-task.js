@@ -23,5 +23,5 @@ export function* userCreateTask({payload}) {
 }
 
 export function* userCreateTaskWatcher() {
-    yield takeEvery(AT.USER_REGISTER_TASK, userCreateTask);
+    yield takeEvery(AT.USER_CREATE_TASK, userCreateTask);
 }

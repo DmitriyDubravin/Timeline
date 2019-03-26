@@ -4,22 +4,6 @@ const Events = require('../models/events');
 
 module.exports = {
 
-    userRemove: (...query) => async shell => {
-        if (shell.error) return shell;
-        try {
-            return {
-                ...shell,
-                error: false,
-                data: await Users.remove(...query)
-            }
-        } catch(error) {
-            return {
-                ...shell,
-                error: true,
-                data: error
-            }
-        }
-    },
     userCreate: (...query) => async shell => {
         if (shell.error) return shell;
         try {
@@ -68,6 +52,40 @@ module.exports = {
             }
         }
     },
+    userRemove: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Users.remove(...query)
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+
+    eventCreate: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await new Events(...query).save()
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+
 
     addUser: userData => new Users(userData).save(),
     updateUser: (user, data) => Users.update(user, data),

@@ -18,7 +18,7 @@ export default [
             dispatch(actions.subcategoriesAddTask(payload));
         },
         addEvent(payload) {
-            dispatch(actions.eventAddTask(payload))
+            dispatch(actions.eventCreateTask(payload))
         }
     })
 ];

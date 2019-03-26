@@ -7,9 +7,7 @@ import { userLogoutTaskWatcher } from './user-logout-task';
 import { userPasswordUpdateTaskWatcher } from './user-password-update-task';
 import { userRemoveTaskWatcher } from './user-remove-task';
 
-
 import { eventCreateTaskWatcher } from './event-create-task';
-
 
 import { eventEditWatcher } from './event-edit';
 import { eventRemoveWatcher } from './event-remove';
