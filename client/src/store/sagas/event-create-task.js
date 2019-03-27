@@ -8,10 +8,10 @@ export const getDate = state => state.date;
 
 export function* eventCreateTask({payload}) {
 
-    const { name } = yield select(getUser);
+    const { name, token } = yield select(getUser);
     const { format } = yield select(getDate);
 
-    const queryData = {...payload, author: name};
+    const queryData = {...payload, author: name, token: token};
 
     const {status, data} = yield call(QM.eventCreate, queryData);
 

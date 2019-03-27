@@ -86,6 +86,22 @@ module.exports = {
         }
     },
 
+    eventsFind: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Events.find(...query).sort({start: 1}).exec()
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
 
     addUser: userData => new Users(userData).save(),
     updateUser: (user, data) => Users.update(user, data),

@@ -7,6 +7,8 @@ module.exports = {
     userPasswordUpdate: "/user-password-update",
     user: "/user-remove",
 
+    eventsGet: "/events-get",
+
     eventCreate: "/event-create"
 
 }

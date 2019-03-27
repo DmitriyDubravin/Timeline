@@ -18,7 +18,8 @@ export function* eventsAddTask() {
         finish
     };
 
-    const resp = yield call(QM.getEvents, queryData);
+    console.log(1);
+    const resp = yield call(QM.eventsGet, queryData);
 
     console.log(resp);
 

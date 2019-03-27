@@ -7,6 +7,8 @@ export default {
     userPasswordUpdate: "/user-password-update",
     userRemove: "/user-remove",
 
+    eventsGet: "/events-get",
+
     eventCreate: "/event-create",
 
 
@@ -16,7 +18,6 @@ export default {
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",
     editEvent: "/edit-event",
-    getEventsList: "/get-events-list",
     getEvent: "/get-event",
     removeEvent: "/remove-event",
     emailConfirmation: "/email-confirmation",

@@ -45,7 +45,12 @@ export default (function() {
                 })
             },
 
-
+            eventsGet(data) {
+                return queryServer({
+                    path: paths.eventsGet,
+                    data
+                });
+            },
 
             getTypes(data) {
                 return queryServer({
@@ -64,12 +69,6 @@ export default (function() {
                     path: paths.getSubcategories,
                     data
                 })
-            },
-            getEvents(data) {
-                return queryServer({
-                    path: paths.getEventsList,
-                    data
-                });
             },
             editEvent(data) {
                 return queryServer({
