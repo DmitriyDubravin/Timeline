@@ -107,7 +107,6 @@ module.exports = {
     updateUser: (user, data) => Users.update(user, data),
     removeUser: user => Users.remove(user),
     findUser: user => {
-        // throw 'Errrooor';
         return Users.find(user).exec()
     },
 
