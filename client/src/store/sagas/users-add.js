@@ -5,9 +5,10 @@ import QM from 'modules/QueryModule';
 
 export function* usersAddTask() {
 
-    const {success, usersList} = yield call(QM.getUsers);
-    if (success) {
-        yield put(actions.usersAdd({usersList}));
+    const { status, data } = yield call(QM.usersGet);
+
+    if (status === 200) {
+        yield put(actions.usersAdd({data}));
     } else {
         // TODO!
         console.log('c%Adding Error', 'color: red');

@@ -7,7 +7,6 @@ module.exports = {
     editEvent: "/edit-event",
     getEvent: "/get-event",
     removeEvent: "/remove-event",
-    getUsersList: "/get-users-list",
     emailConfirmation: "/email-confirmation",
     search: "/search",
 }

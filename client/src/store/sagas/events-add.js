@@ -18,12 +18,7 @@ export function* eventsAddTask() {
         finish
     };
 
-    console.log(1);
-    const resp = yield call(QM.eventsGet, queryData);
-
-    console.log(resp);
-
-    const {status, data} = resp;
+    const {status, data} = yield call(QM.eventsGet, queryData);
 
     if (status === 200) {
         yield put(actions.eventsAdd({

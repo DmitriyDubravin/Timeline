@@ -5,7 +5,7 @@ const initialState = [];
 export default (state = initialState, {type, payload}) => {
     switch (type) {
         case AT.USERS_ADD:
-            return payload.usersList;
+            return payload.data;
         default:
             return state;
     }

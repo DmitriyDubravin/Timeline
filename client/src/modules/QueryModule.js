@@ -51,6 +51,12 @@ export default (function() {
                     data
                 });
             },
+            usersGet(data) {
+                return queryServer({
+                    path: paths.usersGet,
+                    data
+                });
+            },
 
             getTypes(data) {
                 return queryServer({
@@ -87,12 +93,6 @@ export default (function() {
                     path: paths.search + '' + query,
                     data
                 })
-            },
-            getUsers(data) {
-                return queryServer({
-                    path: paths.getUsersList,
-                    data: {}
-                });
             },
             confirmEmail(data) {
                 return queryServer({

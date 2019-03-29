@@ -7,13 +7,14 @@ import { userLogoutTaskWatcher } from './user-logout-task';
 import { userPasswordUpdateTaskWatcher } from './user-password-update-task';
 import { userRemoveTaskWatcher } from './user-remove-task';
 
+import { eventsAddWatcher } from './events-add';
+import { usersAddWatcher } from './users-add';
+
 import { eventCreateTaskWatcher } from './event-create-task';
 
 import { eventEditWatcher } from './event-edit';
 import { eventRemoveWatcher } from './event-remove';
-import { eventsAddWatcher } from './events-add';
 import { eventsSearchWatcher } from './events-search';
-import { usersAddWatcher } from './users-add';
 import { typesAddWatcher } from './types-add';
 import { categoriesAddWatcher } from './categories-add';
 import { subcategoriesAddWatcher } from './subcategories-add';
@@ -29,13 +30,14 @@ export function* rootSaga() {
         userPasswordUpdateTaskWatcher(),
         userRemoveTaskWatcher(),
 
+        eventsAddWatcher(),
+        usersAddWatcher(),
+
         eventCreateTaskWatcher(),
 
         eventEditWatcher(),
         eventRemoveWatcher(),
-        eventsAddWatcher(),
         eventsSearchWatcher(),
-        usersAddWatcher(),
         typesAddWatcher(),
         categoriesAddWatcher(),
         subcategoriesAddWatcher()

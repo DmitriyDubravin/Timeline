@@ -8,11 +8,11 @@ export default {
     userRemove: "/user-remove",
 
     eventsGet: "/events-get",
+    usersGet: "/users-get",
 
     eventCreate: "/event-create",
 
 
-    getUsersList: "/get-users-list",
 
     getTypes: "/get-types",
     getCategories: "/get-categories",
