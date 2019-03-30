@@ -11,8 +11,8 @@ import { eventsAddWatcher } from './events-add';
 import { usersAddWatcher } from './users-add';
 
 import { eventCreateTaskWatcher } from './event-create-task';
+import { eventUpdateTaskWatcher } from './event-update-task';
 
-import { eventEditWatcher } from './event-edit';
 import { eventRemoveWatcher } from './event-remove';
 import { eventsSearchWatcher } from './events-search';
 import { typesAddWatcher } from './types-add';
@@ -34,8 +34,8 @@ export function* rootSaga() {
         usersAddWatcher(),
 
         eventCreateTaskWatcher(),
+        eventUpdateTaskWatcher(),
 
-        eventEditWatcher(),
         eventRemoveWatcher(),
         eventsSearchWatcher(),
         typesAddWatcher(),

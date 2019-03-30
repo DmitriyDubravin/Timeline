@@ -6,17 +6,18 @@ import QM from 'modules/QueryModule';
 export const getUser = state => state.user;
 export const getDate = state => state.date;
 
-export function* eventEditTask({payload}) {
+export function* eventUpdateTask({payload}) {
 
     const { name } = yield select(getUser);
 
     const queryData = {...payload, author: name};
 
-    const {success, updatedEvent} = yield call(QM.editEvent, queryData);
-    if (success) {
+    const { status, data } = yield call(QM.eventUpdate, queryData);
+
+    if (status === 200) {
         yield put(actions.togglePopupEventEdit({ show: false }));
         yield put(actions.eventEdit({
-            event: updatedEvent
+            event: data
         }));
     } else {
         // TODO!
@@ -24,6 +25,6 @@ export function* eventEditTask({payload}) {
     }
 }
 
-export function* eventEditWatcher() {
-    yield takeEvery(AT.EVENT_EDIT_TASK, eventEditTask);
+export function* eventUpdateTaskWatcher() {
+    yield takeEvery(AT.EVENT_UPDATE_TASK, eventUpdateTask);
 }

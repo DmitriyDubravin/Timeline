@@ -85,6 +85,22 @@ module.exports = {
             }
         }
     },
+    eventUpdate: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Events.findOneAndUpdate(...query)
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
 
     eventsFind: (...query) => async shell => {
         if (shell.error) return shell;

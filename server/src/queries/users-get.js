@@ -8,17 +8,6 @@ module.exports = async function(req, res) {
 
     const findUsersOptions = {}
 
-    // const {data, err} = await f.tryCatch(f.findUsers(findUsersOptions));
-    // err && e.findUsersError(res);
-
-    // const usersList = data.map(user => {
-    //     return {
-    //         _id: user._id,
-    //         name: user.name
-    //     }
-    // });
-    // f.success(res, {usersList: usersList});
-
     const usersFound = s.composePromise(
         s.setStatus(200)
     );

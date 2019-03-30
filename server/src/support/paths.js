@@ -10,6 +10,7 @@ module.exports = {
     eventsGet: "/events-get",
     usersGet: "/users-get",
 
-    eventCreate: "/event-create"
+    eventCreate: "/event-create",
+    eventUpdate: "/event-update"
 
 }

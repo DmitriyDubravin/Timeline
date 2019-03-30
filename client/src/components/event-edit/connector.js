@@ -19,7 +19,7 @@ export default [
             dispatch(actions.subcategoriesAddTask(payload));
         },
         editEvent(payload) {
-            dispatch(actions.eventEditTask(payload))
+            dispatch(actions.eventUpdateTask(payload))
         }
     })
 ];

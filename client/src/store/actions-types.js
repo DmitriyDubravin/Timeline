@@ -9,8 +9,8 @@ export default [
     'USER_REMOVE_TASK',
 
     'EVENT_CREATE_TASK',
+    'EVENT_UPDATE_TASK',
 
-    'EVENT_EDIT_TASK',
     'EVENT_REMOVE_TASK',
     'EVENTS_ADD_TASK',
     'EVENTS_SEARCH_TASK',
