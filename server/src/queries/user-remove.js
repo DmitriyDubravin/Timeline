@@ -9,23 +9,6 @@ module.exports = async function(req, res) {
         name: login
     };
 
-    // const foundUser = await f.tryCatch(f.findUser(findUserNameOptions));
-    // foundUser.err && e.findUserNameError(res);
-
-    // if (f.isUserFound(foundUser.data) && f.isPasswordMatches(password, foundUser.data)) {
-
-    //     const removedUser = await f.tryCatch(f.removeUser(findUserNameOptions));
-    //     removedUser.err && e.removeUserError(res);
-
-    //     f.success(res);
-
-    // } else {
-
-    //     f.failure(res);
-
-    // }
-
-
     const userFound = s.composePromise(
         s.setStatus(200)
     );
@@ -40,7 +23,6 @@ module.exports = async function(req, res) {
         return onError(shell);
     }
 
-
     const passwordIsWrong = s.composePromise(
         s.setError,
         s.setStatus(500),
@@ -48,7 +30,6 @@ module.exports = async function(req, res) {
     );
     const checkUserPassword = onError => shell => {
         if (shell.error) return shell;
-        console.log(password, shell.data[0].password);
         if (!db.isPasswordMatches(password, shell.data[0].password)) {
             return onError(shell);
         }

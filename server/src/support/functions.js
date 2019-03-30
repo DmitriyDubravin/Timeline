@@ -101,6 +101,23 @@ module.exports = {
             }
         }
     },
+    eventRemove: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Events.remove(...query)
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+
 
     eventsFind: (...query) => async shell => {
         if (shell.error) return shell;

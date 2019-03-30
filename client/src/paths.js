@@ -12,13 +12,13 @@ export default {
 
     eventCreate: "/event-create",
     eventUpdate: "/event-update",
+    eventRemove: "/event-remove",
 
 
 
     getTypes: "/get-types",
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",
-    removeEvent: "/remove-event",
     emailConfirmation: "/email-confirmation",
     search: "/search",
 }

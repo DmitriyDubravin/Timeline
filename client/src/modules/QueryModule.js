@@ -50,6 +50,14 @@ export default (function() {
                     data
                 })
             },
+            eventRemove(data) {
+                return queryServer({
+                    path: paths.eventRemove,
+                    data
+                })
+            },
+
+
 
             eventsGet(data) {
                 return queryServer({
@@ -79,12 +87,6 @@ export default (function() {
             getSubcategories(data) {
                 return queryServer({
                     path: paths.getSubcategories,
-                    data
-                })
-            },
-            removeEvent(data) {
-                return queryServer({
-                    path: paths.removeEvent,
                     data
                 })
             },

@@ -11,6 +11,7 @@ module.exports = {
     usersGet: "/users-get",
 
     eventCreate: "/event-create",
-    eventUpdate: "/event-update"
+    eventUpdate: "/event-update",
+    eventRemove: "/event-remove"
 
 }

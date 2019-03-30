@@ -15,8 +15,9 @@ export function* eventRemoveTask({payload}) {
         author: name,
         _id: payload.eventId
     };
-    const { success } = yield call(QM.removeEvent, queryData);
-    if (success) {
+    const { status } = yield call(QM.eventRemove, queryData);
+
+    if (status === 200) {
         yield put(actions.eventRemove({
             range: format,
             eventId: payload.eventId
@@ -26,6 +27,6 @@ export function* eventRemoveTask({payload}) {
     }
 }
 
-export function* eventRemoveWatcher() {
+export function* eventRemoveTaskWatcher() {
     yield takeEvery(AT.EVENT_REMOVE_TASK, eventRemoveTask);
 }

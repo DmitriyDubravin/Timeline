@@ -14,9 +14,7 @@ export function* userRemoveTask({payload}) {
         login: name,
         password: payload
     }
-    const resp = yield call(QM.userRemove, queryData);
-    console.log(resp);
-    const {status} = resp;
+    const {status} = yield call(QM.userRemove, queryData);
 
     if (status === 200) {
         yield put(actions.userLogoutTask());
