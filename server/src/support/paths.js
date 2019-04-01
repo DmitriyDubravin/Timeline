@@ -13,6 +13,8 @@ module.exports = {
 
     eventCreate: "/event-create",
     eventUpdate: "/event-update",
-    eventRemove: "/event-remove"
+    eventRemove: "/event-remove",
+
+    typesGet: "/types-get",
 
 }

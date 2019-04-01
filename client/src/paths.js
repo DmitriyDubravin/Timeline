@@ -17,7 +17,7 @@ export default {
 
 
 
-    getTypes: "/get-types",
+    typesGet: "/types-get",
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",
     emailConfirmation: "/email-confirmation",

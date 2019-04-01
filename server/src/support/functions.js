@@ -152,7 +152,6 @@ module.exports = {
         }
     },
     
-    
     usersFind: (...query) => async shell => {
         if (shell.error) return shell;
         try {
@@ -169,6 +168,57 @@ module.exports = {
             }
         }
     },
+
+    typesGet: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Events.distinct("type", ...query) // TODO: move "type" to "types-get" ?
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+    categoriesGet: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Events.distinct("category", ...query)
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+    subcategoriesGet: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data: await Events.distinct("subcategory", ...query)
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+
+
 
     addUser: userData => new Users(userData).save(),
     updateUser: (user, data) => Users.update(user, data),

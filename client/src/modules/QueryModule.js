@@ -72,9 +72,9 @@ export default (function() {
                 });
             },
 
-            getTypes(data) {
+            typesGet(data) {
                 return queryServer({
-                    path: paths.getTypes,
+                    path: paths.typesGet,
                     data
                 });
             },

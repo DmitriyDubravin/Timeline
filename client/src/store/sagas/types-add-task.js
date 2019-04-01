@@ -13,15 +13,16 @@ export function* typesAddTask() {
     const queryData = {
         author: name
     };
-    const {success, typesList} = yield call(QM.getTypes, queryData);
-    if (success) {
-        const sortedDataList = typesList.filter(item => item.length !== 0).sort();
+    const {status, data} = yield call(QM.typesGet, queryData);
+
+    if (status === 200) {
+        const sortedDataList = data.filter(item => item.length !== 0).sort(); // TODO: this could be done on server side ?
         yield put(actions.typesAdd(sortedDataList));
     } else {
         // TODO: no errors handling
     }
 }
 
-export function* typesAddWatcher() {
+export function* typesAddTaskWatcher() {
     yield takeEvery(AT.TYPES_ADD_TASK, typesAddTask);
 }
