@@ -90,9 +90,9 @@ export default (function() {
                     data
                 })
             },
-            search(query, data) {
+            eventsSearch(query, data) {
                 return queryServer({
-                    path: paths.search + '' + query,
+                    path: paths.eventsSearch + '' + query,
                     data
                 })
             },

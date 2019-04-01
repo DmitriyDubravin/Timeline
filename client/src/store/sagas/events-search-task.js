@@ -13,17 +13,17 @@ export function* eventsSearchTask({payload}) {
         author: name,
     };
 
-    const {success, eventsList} = yield call(QM.search, payload.query, queryData);
+    const {status, data} = yield call(QM.eventsSearch, payload.query, queryData);
 
-    if (success) {
+    if (status === 200) {
         yield put(actions.eventsAdd({
             range: payload.query,
-            events: eventsList
+            events: data
         }));
     }
 
 }
 
-export function* eventsSearchWatcher() {
+export function* eventsSearchTaskWatcher() {
     yield takeEvery(AT.EVENTS_SEARCH_TASK, eventsSearchTask);
 }

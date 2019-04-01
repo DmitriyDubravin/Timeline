@@ -8,6 +8,7 @@ module.exports = {
     user: "/user-remove",
 
     eventsGet: "/events-get",
+    eventsSearch: "/events-search",
     usersGet: "/users-get",
 
     eventCreate: "/event-create",

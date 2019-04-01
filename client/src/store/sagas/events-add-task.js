@@ -30,6 +30,6 @@ export function* eventsAddTask() {
     }
 }
 
-export function* eventsAddWatcher() {
+export function* eventsAddTaskWatcher() {
     yield takeEvery(AT.EVENTS_ADD_TASK, eventsAddTask);
 }

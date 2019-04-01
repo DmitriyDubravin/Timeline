@@ -135,6 +135,23 @@ module.exports = {
             }
         }
     },
+    eventsSearch: (...query) => async shell => {
+        if (shell.error) return shell;
+        try {
+            return {
+                ...shell,
+                error: false,
+                data:  await Events.find(...query) // TODO: same as eventsFind ?
+            }
+        } catch(error) {
+            return {
+                ...shell,
+                error: true,
+                data: error
+            }
+        }
+    },
+    
     
     usersFind: (...query) => async shell => {
         if (shell.error) return shell;

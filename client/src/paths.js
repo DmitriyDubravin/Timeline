@@ -8,6 +8,7 @@ export default {
     userRemove: "/user-remove",
 
     eventsGet: "/events-get",
+    eventsSearch: "/events-search",
     usersGet: "/users-get",
 
     eventCreate: "/event-create",
@@ -20,5 +21,4 @@ export default {
     getCategories: "/get-categories",
     getSubcategories: "/get-subcategories",
     emailConfirmation: "/email-confirmation",
-    search: "/search",
 }
